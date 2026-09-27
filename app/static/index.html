@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MFS Value ETF (MFSV) — Daily Holdings Scraper & Reporting Portal</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --panel-alt: #263349;
+      --border: #334155;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --success: #10b981;
+      --success-bg: rgba(16, 185, 129, 0.12);
+      --danger: #ef4444;
+      --danger-bg: rgba(239, 68, 68, 0.12);
+      --warning: #f59e0b;
+      --warning-bg: rgba(245, 158, 11, 0.14);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    header {
+      background: #111827;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      font-size: 12px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+    .badge-active { background: var(--success-bg); color: var(--success); border: 1px solid var(--success); }
+    .badge-paused { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning); }
+    .badge-stopped { background: var(--danger-bg); color: var(--danger); border: 1px solid var(--danger); }
+    .brand p {
+      margin: 4px 0 0;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .admin-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: var(--panel);
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .admin-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-right: 8px;
+      line-height: 1.35;
+    }
+    .admin-meta strong { color: var(--text); }
+    button, .btn {
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--panel-alt);
+      color: var(--text);
+      padding: 7px 13px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    button:hover, .btn:hover { background: #334155; }
+    .btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-success { background: rgba(16,185,129,0.2); border-color: var(--success); color: #34d399; }
+    .btn-warning { background: rgba(245,158,11,0.2); border-color: var(--warning); color: #fbbf24; }
+    .btn-danger { background: rgba(239,68,68,0.2); border-color: var(--danger); color: #f87171; }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px 28px;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      border-radius: 0;
+      padding: 10px 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .tab-btn.active {
+      color: var(--text);
+      border-bottom-color: var(--primary);
+      background: rgba(59, 130, 246, 0.08);
+    }
+    .tab-pane { display: none; }
+    .tab-pane.active { display: block; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-end;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .field label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    select, input[type="text"] {
+      background: #0f172a;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 13px;
+      min-width: 190px;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .kpi {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .kpi .label { font-size: 12px; color: var(--muted); text-transform: uppercase; }
+    .kpi .value { font-size: 26px; font-weight: 700; margin-top: 4px; }
+    .kpi .sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 1024px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: #111827;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    .ticker-pill {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+    }
+    .pill-added { background: var(--success-bg); color: #34d399; }
+    .pill-removed { background: var(--danger-bg); color: #f87171; }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #1e293b;
+      border: 1px solid var(--primary);
+      color: var(--text);
+      padding: 12px 18px;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      display: none;
+      z-index: 999;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <h1>
+        MFS Value ETF (MFSV) Holdings Tracker
+        <span id="stateBadge" class="badge badge-active">ACTIVE</span>
+      </h1>
+      <p>Automated Daily 7:00 PM PT Scraper • Raw Excel (.xls) Archive • Ticker Addition & Removal Reporting</p>
+    </div>
+
+    <div class="admin-bar">
+      <div class="admin-meta">
+        <div>Schedule: <strong id="schedTime">19:00 PT (Daily)</strong></div>
+        <div>Next Run: <strong id="nextRunTime">Loading...</strong></div>
+      </div>
+      <button class="btn-success" onclick="setScraperState('ACTIVE')" title="Run autonomously at 7:00 PM PT">▶ Start</button>
+      <button class="btn-warning" onclick="setScraperState('PAUSED')" title="Pause scheduled daily runs">⏸ Pause</button>
+      <button class="btn-danger" onclick="setScraperState('STOPPED')" title="Stop autonomous scraper">⏹ Stop</button>
+      <button class="btn-primary" id="runNowBtn" onclick="triggerScrapeNow()">⚡ Scrape MFS Now</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('compareTab', this)">1. Position Changes (Date A vs Date B)</button>
+      <button class="tab-btn" onclick="switchTab('holdingsTab', this)">2. Parsed Database & Raw Excel Files</button>
+      <button class="tab-btn" onclick="switchTab('alertsTab', this)">3. Error Handling & Email Alerts (gvarun@gmail.com)</button>
+    </div>
+
+    <!-- TAB 1: DATE A vs DATE B REPORTING -->
+    <div id="compareTab" class="tab-pane active">
+      <div class="card">
+        <div class="controls-row">
+          <div class="field">
+            <label for="dateASelect">Date A (Earlier / Baseline Date)</label>
+            <select id="dateASelect" onchange="loadComparison()"></select>
+          </div>
+          <div class="field">
+            <label for="dateBSelect">Date B (Later / Comparison Date)</label>
+            <select id="dateBSelect" onchange="loadComparison()"></select>
+          </div>
+          <div class="field" style="justify-content:center; padding-bottom: 6px;">
+            <label style="display:flex; align-items:center; gap:8px; cursor:pointer; text-transform:none; color:var(--text);">
+              <input type="checkbox" id="excludeCashToggle" checked onchange="loadComparison()" />
+              Exclude Cash & Money Market Sweep rows (Track Stock Tickers Only)
+            </label>
+          </div>
+          <div style="margin-left:auto; display:flex; gap:8px;">
+            <button onclick="exportComparisonCSV('newly_added')">⬇ Export Added CSV</button>
+            <button onclick="exportComparisonCSV('completely_removed')">⬇ Export Removed CSV</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="label">Date A Stock Positions</div>
+          <div class="value" id="kpiDateACount">-</div>
+          <div class="sub" id="kpiDateALabel">-</div>
+        </div>
+        <div class="kpi">
+          <div class="label">Date B Stock Positions</div>
+          <div class="value" id="kpiDateBCount">-</div>
+          <div class="sub" id="kpiDateBLabel">-</div>
+        </div>
+        <div class="kpi" style="border-color: rgba(16,185,129,0.4);">
+          <div class="label" style="color:#34d399;">Feature 1: Newly Added Positions</div>
+          <div class="value" id="kpiAddedCount" style="color:#34d399;">-</div>
+          <div class="sub">Present on Date B, absent on Date A</div>
+        </div>
+        <div class="kpi" style="border-color: rgba(239,68,68,0.4);">
+          <div class="label" style="color:#f87171;">Feature 2: Completely Removed Positions</div>
+          <div class="value" id="kpiRemovedCount" style="color:#f87171;">-</div>
+          <div class="sub">Present on Date A, exited by Date B</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <!-- Feature 1: Newly Added -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title" style="color:#34d399;">Feature 1: Newly Added Stock Positions (Date A → Date B)</h2>
+            <span class="badge badge-active" id="addedBadge">0 Tickers</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ticker</th>
+                  <th>CUSIP</th>
+                  <th>Company Name</th>
+                  <th class="num">Shares (Date B)</th>
+                  <th class="num">Value (Date B)</th>
+                  <th class="num">% Net Assets</th>
+                  <th>GICS Sector</th>
+                </tr>
+              </thead>
+              <tbody id="addedTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Feature 2: Completely Removed -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title" style="color:#f87171;">Feature 2: Completely Removed Stock Positions (Date A → Date B)</h2>
+            <span class="badge badge-stopped" id="removedBadge">0 Tickers</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Ticker</th>
+                  <th>CUSIP</th>
+                  <th>Company Name</th>
+                  <th class="num">Shares (Date A)</th>
+                  <th class="num">Value (Date A)</th>
+                  <th class="num">% Net Assets</th>
+                  <th>GICS Sector</th>
+                </tr>
+              </thead>
+              <tbody id="removedTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Retained Stock Positions & Share/Weight Changes</h2>
+          <span class="badge" style="background:#334155;" id="retainedBadge">0 Tickers</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Ticker</th>
+                <th>CUSIP</th>
+                <th>Company Name</th>
+                <th>GICS Sector</th>
+                <th class="num">Shares (Date A)</th>
+                <th class="num">Shares (Date B)</th>
+                <th class="num">Share Δ</th>
+                <th class="num">% Assets (Date A)</th>
+                <th class="num">% Assets (Date B)</th>
+                <th class="num">Weight Δ</th>
+              </tr>
+            </thead>
+            <tbody id="retainedTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: FULL HOLDINGS DATABASE & RAW XLS ARCHIVE -->
+    <div id="holdingsTab" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Downloaded Raw Excel (.xls) Files Archive</h2>
+          <span style="font-size:12px; color:var(--muted);">Stored in <code>data/raw_files/</code> stamped with download date</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Raw Excel Filename</th>
+                <th class="num">File Size</th>
+                <th>Download Action</th>
+              </tr>
+            </thead>
+            <tbody id="rawFilesBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="controls-row">
+            <div class="field">
+              <label for="singleDateSelect">Inspect Parsed Database Snapshot Date</label>
+              <select id="singleDateSelect" onchange="loadSingleDateHoldings()"></select>
+            </div>
+            <div class="field">
+              <label for="searchFilter">Filter by Ticker / Company / Sector</label>
+              <input type="text" id="searchFilter" placeholder="e.g. MSFT, Financials..." oninput="renderSingleHoldingsTable()" />
+            </div>
+          </div>
+          <span id="singleCountBadge" class="badge badge-active">0 rows</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Ticker</th>
+                <th>CUSIP</th>
+                <th>Company Name</th>
+                <th class="num">Shares</th>
+                <th class="num">Value</th>
+                <th class="num">% of Net Assets</th>
+                <th>GICS Sector</th>
+                <th>Country</th>
+              </tr>
+            </thead>
+            <tbody id="singleHoldingsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: ERROR HANDLING & EMAIL ALERTS -->
+    <div id="alertsTab" class="tab-pane">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h2 class="card-title">Error Handling & Immediate Email Alert Verification</h2>
+            <p style="margin:4px 0 0; font-size:13px; color:var(--muted);">
+              Per Section 3, any failure immediately dispatches an alert to <strong id="alertRecipientText" style="color:var(--text);">gvarun@gmail.com</strong> with the current date and specific error type. Use the diagnostic simulator below to verify all 4 required error handlers.
+            </p>
+          </div>
+          <div class="controls-row">
+            <select id="errorSimSelect">
+              <option value="Target URL unreachable or layout changed">1. Target URL unreachable or layout changed</option>
+              <option value="Pop-ups failed to clear">2. Pop-ups failed to clear</option>
+              <option value='&quot;Download Daily Fund Holdings&quot; link missing or altered'>3. "Download Daily Fund Holdings" link missing or altered</option>
+              <option value="Excel file download failed or file is corrupted">4. Excel file download failed or file is corrupted</option>
+            </select>
+            <button class="btn-danger" onclick="simulateErrorAlert()">🔔 Trigger Diagnostic Failure & Send Alert</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Email Notifications Dispatched (`gvarun@gmail.com`)</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date (PT)</th>
+                  <th>Recipient</th>
+                  <th>Error Type</th>
+                  <th>Details</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="alertsLogBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Scraper Execution Audit Log</h2>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Run ID</th>
+                  <th>Trigger</th>
+                  <th>Holdings Date</th>
+                  <th>Status</th>
+                  <th class="num">Records</th>
+                  <th>Raw File / Error</th>
+                </tr>
+              </thead>
+              <tbody id="runsLogBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    let latestComparison = null;
+    let currentHoldingsList = [];
+
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 4000);
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function fmtCurrency(val, raw) {
+      if (raw && raw.includes('$')) return raw;
+      if (val === null || val === undefined) return '-';
+      return '$' + Number(val).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function fmtNumber(val, raw) {
+      if (raw && raw !== '-') return raw;
+      if (val === null || val === undefined) return '-';
+      return Number(val).toLocaleString('en-US', { maximumFractionDigits: 2 });
+    }
+
+    async function loadStatus(preserveSelection = true) {
+      const res = await fetch('/api/status');
+      const data = await res.json();
+
+      // Update Scheduler Header
+      const sched = data.scheduler;
+      const badge = document.getElementById('stateBadge');
+      badge.textContent = sched.scraper_state;
+      badge.className = 'badge ' + (
+        sched.scraper_state === 'ACTIVE' ? 'badge-active' :
+        sched.scraper_state === 'PAUSED' ? 'badge-paused' : 'badge-stopped'
+      );
+      document.getElementById('schedTime').textContent = sched.schedule_time_pt + ' (Daily)';
+      document.getElementById('nextRunTime').textContent = sched.next_scheduled_run_pt;
+      document.getElementById('alertRecipientText').textContent = sched.alert_email;
+
+      // Populate date dropdowns
+      const dates = data.available_dates || [];
+      const selA = document.getElementById('dateASelect');
+      const selB = document.getElementById('dateBSelect');
+      const selSingle = document.getElementById('singleDateSelect');
+
+      const prevA = selA.value;
+      const prevB = selB.value;
+      const prevSingle = selSingle.value;
+
+      const optionsHtml = dates.map(d =>
+        `<option value="${d.holding_date}">${d.holding_date} (${d.stock_positions} stocks)</option>`
+      ).join('');
+
+      selA.innerHTML = optionsHtml;
+      selB.innerHTML = optionsHtml;
+      selSingle.innerHTML = optionsHtml;
+
+      if (dates.length > 0) {
+        selB.value = (preserveSelection && prevB) ? prevB : dates[0].holding_date;
+        const defaultIdxA = dates.length > 1 ? 1 : 0;
+        selA.value = (preserveSelection && prevA) ? prevA : dates[defaultIdxA].holding_date;
+        selSingle.value = (preserveSelection && prevSingle) ? prevSingle : dates[0].holding_date;
+      }
+
+      // Raw files table
+      const rawBody = document.getElementById('rawFilesBody');
+      rawBody.innerHTML = (data.raw_files || []).map(f => `
+        <tr>
+          <td><code>${f.filename}</code></td>
+          <td class="num">${(f.size_bytes / 1024).toFixed(1)} KB</td>
+          <td><a class="btn" href="/api/raw-files/${encodeURIComponent(f.filename)}">⬇ Download .xls</a></td>
+        </tr>
+      `).join('') || '<tr><td colspan="3">No raw files downloaded yet.</td></tr>';
+
+      // Alerts table
+      const alertsBody = document.getElementById('alertsLogBody');
+      alertsBody.innerHTML = (data.recent_alerts || []).map(a => `
+        <tr>
+          <td>${a.error_date}</td>
+          <td><code>${a.recipient_email}</code></td>
+          <td><span class="ticker-pill pill-removed">${a.error_type}</span></td>
+          <td>${a.error_details || ''}</td>
+          <td>${a.delivery_status}</td>
+        </tr>
+      `).join('') || '<tr><td colspan="5" style="color:var(--muted);">No failure alerts triggered yet. Click "Trigger Diagnostic Failure & Send Alert" above to test.</td></tr>';
+
+      // Runs table
+      const runsBody = document.getElementById('runsLogBody');
+      runsBody.innerHTML = (data.recent_runs || []).map(r => `
+        <tr>
+          <td>#${r.id}</td>
+          <td>${r.trigger_type}</td>
+          <td>${r.holding_date || '-'}</td>
+          <td>
+            <span class="badge ${r.status === 'SUCCESS' ? 'badge-active' : 'badge-stopped'}">${r.status}</span>
+          </td>
+          <td class="num">${r.records_parsed || 0}</td>
+          <td style="font-size:12px; color:var(--muted);">${r.error_type ? ('[' + r.error_type + '] ' + r.error_message) : (r.raw_file_path ? r.raw_file_path.split('/').pop() : '-')}</td>
+        </tr>
+      `).join('');
+    }
+
+    async function loadComparison() {
+      const dateA = document.getElementById('dateASelect').value;
+      const dateB = document.getElementById('dateBSelect').value;
+      const excludeCash = document.getElementById('excludeCashToggle').checked;
+      if (!dateA || !dateB) return;
+
+      const res = await fetch(`/api/compare?date_a=${encodeURIComponent(dateA)}&date_b=${encodeURIComponent(dateB)}&exclude_cash=${excludeCash}`);
+      const data = await res.json();
+      latestComparison = data;
+
+      document.getElementById('kpiDateACount').textContent = data.summary.date_a_count;
+      document.getElementById('kpiDateALabel').textContent = `Holdings on ${data.date_a}`;
+      document.getElementById('kpiDateBCount').textContent = data.summary.date_b_count;
+      document.getElementById('kpiDateBLabel').textContent = `Holdings on ${data.date_b}`;
+      document.getElementById('kpiAddedCount').textContent = '+' + data.summary.newly_added_count;
+      document.getElementById('kpiRemovedCount').textContent = '-' + data.summary.completely_removed_count;
+
+      document.getElementById('addedBadge').textContent = `${data.newly_added.length} Newly Added`;
+      document.getElementById('removedBadge').textContent = `${data.completely_removed.length} Completely Removed`;
+      document.getElementById('retainedBadge').textContent = `${data.retained_changes.length} Retained`;
+
+      const addedBody = document.getElementById('addedTableBody');
+      addedBody.innerHTML = data.newly_added.map(r => `
+        <tr>
+          <td><span class="ticker-pill pill-added">${r.ticker}</span></td>
+          <td>${r.cusip || '-'}</td>
+          <td><strong>${r.company_name}</strong></td>
+          <td class="num">${fmtNumber(r.shares, r.shares_raw)}</td>
+          <td class="num">${fmtCurrency(r.value, r.value_raw)}</td>
+          <td class="num">${r.percent_raw || (r.percent_net_assets ? r.percent_net_assets + '%' : '-')}</td>
+          <td>${r.gics_sector || '-'}</td>
+        </tr>
+      `).join('') || `<tr><td colspan="7" style="text-align:center; color:var(--muted);">No newly added stock positions between ${dateA} and ${dateB}.</td></tr>`;
+
+      const removedBody = document.getElementById('removedTableBody');
+      removedBody.innerHTML = data.completely_removed.map(r => `
+        <tr>
+          <td><span class="ticker-pill pill-removed">${r.ticker}</span></td>
+          <td>${r.cusip || '-'}</td>
+          <td><strong>${r.company_name}</strong></td>
+          <td class="num">${fmtNumber(r.shares, r.shares_raw)}</td>
+          <td class="num">${fmtCurrency(r.value, r.value_raw)}</td>
+          <td class="num">${r.percent_raw || (r.percent_net_assets ? r.percent_net_assets + '%' : '-')}</td>
+          <td>${r.gics_sector || '-'}</td>
+        </tr>
+      `).join('') || `<tr><td colspan="7" style="text-align:center; color:var(--muted);">No completely removed stock positions between ${dateA} and ${dateB}.</td></tr>`;
+
+      const retainedBody = document.getElementById('retainedTableBody');
+      retainedBody.innerHTML = data.retained_changes.map(r => {
+        const sDiff = r.shares_diff;
+        const pDiff = r.percent_diff;
+        const sColor = sDiff > 0 ? '#34d399' : (sDiff < 0 ? '#f87171' : 'var(--muted)');
+        const pColor = pDiff > 0 ? '#34d399' : (pDiff < 0 ? '#f87171' : 'var(--muted)');
+        return `
+          <tr>
+            <td><span class="ticker-pill">${r.ticker}</span></td>
+            <td>${r.cusip || '-'}</td>
+            <td>${r.company_name}</td>
+            <td>${r.gics_sector || '-'}</td>
+            <td class="num">${fmtNumber(r.shares_date_a)}</td>
+            <td class="num">${fmtNumber(r.shares_date_b)}</td>
+            <td class="num" style="color:${sColor}; font-weight:600;">${sDiff > 0 ? '+' : ''}${fmtNumber(sDiff)}</td>
+            <td class="num">${r.percent_date_a.toFixed(2)}%</td>
+            <td class="num">${r.percent_date_b.toFixed(2)}%</td>
+            <td class="num" style="color:${pColor}; font-weight:600;">${pDiff > 0 ? '+' : ''}${pDiff.toFixed(2)}%</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function loadSingleDateHoldings() {
+      const date = document.getElementById('singleDateSelect').value;
+      if (!date) return;
+      const res = await fetch(`/api/holdings?date=${encodeURIComponent(date)}`);
+      const data = await res.json();
+      currentHoldingsList = data.holdings || [];
+      renderSingleHoldingsTable();
+    }
+
+    function renderSingleHoldingsTable() {
+      const q = (document.getElementById('searchFilter').value || '').toLowerCase().trim();
+      const filtered = currentHoldingsList.filter(r =>
+        !q ||
+        (r.ticker || '').toLowerCase().includes(q) ||
+        (r.company_name || '').toLowerCase().includes(q) ||
+        (r.cusip || '').toLowerCase().includes(q) ||
+        (r.gics_sector || '').toLowerCase().includes(q)
+      );
+      document.getElementById('singleCountBadge').textContent = `${filtered.length} records`;
+      const tbody = document.getElementById('singleHoldingsBody');
+      tbody.innerHTML = filtered.map(r => `
+        <tr>
+          <td>${r.holding_date}</td>
+          <td><span class="ticker-pill">${r.ticker}</span></td>
+          <td>${r.cusip || '-'}</td>
+          <td><strong>${r.company_name}</strong></td>
+          <td class="num">${fmtNumber(r.shares, r.shares_raw)}</td>
+          <td class="num">${fmtCurrency(r.value, r.value_raw)}</td>
+          <td class="num">${r.percent_raw || '-'}</td>
+          <td>${r.gics_sector || '-'}</td>
+          <td>${r.country || '-'}</td>
+        </tr>
+      `).join('');
+    }
+
+    async function setScraperState(state) {
+      const res = await fetch('/api/admin/toggle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ state })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        showToast(`Scraper state changed to ${state}`);
+        await loadStatus(true);
+      }
+    }
+
+    async function triggerScrapeNow() {
+      const btn = document.getElementById('runNowBtn');
+      btn.disabled = true;
+      btn.textContent = '⏳ Scraping MFS...';
+      try {
+        const res = await fetch('/api/admin/scrape-now', { method: 'POST' });
+        const data = await res.json();
+        if (data.status === 'SUCCESS') {
+          showToast(`Scraped ${data.records_inserted} holdings for ${data.holding_date} (${data.raw_file})`);
+        } else {
+          showToast(`Scrape failed: ${data.error_type}`);
+        }
+        await loadStatus(true);
+        await loadComparison();
+        await loadSingleDateHoldings();
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '⚡ Scrape MFS Now';
+      }
+    }
+
+    async function simulateErrorAlert() {
+      const errorType = document.getElementById('errorSimSelect').value;
+      const res = await fetch('/api/admin/test-error', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ error_type: errorType })
+      });
+      const data = await res.json();
+      showToast(`Alert triggered for "${errorType}" → dispatched to gvarun@gmail.com`);
+      await loadStatus(true);
+    }
+
+    function exportComparisonCSV(key) {
+      if (!latestComparison || !latestComparison[key]) return;
+      const rows = latestComparison[key];
+      const headers = ['Holding Date', 'Ticker', 'CUSIP', 'Company Name', 'Shares', 'Value', 'Percent of Net Assets', 'GICS Sector', 'Country'];
+      const csvLines = [headers.join(',')];
+      for (const r of rows) {
+        csvLines.push([
+          r.holding_date,
+          `"${r.ticker}"`,
+          `"${r.cusip || ''}"`,
+          `"${(r.company_name || '').replace(/"/g, '""')}"`,
+          r.shares || 0,
+          r.value || 0,
+          r.percent_net_assets || 0,
+          `"${r.gics_sector || ''}"`,
+          `"${r.country || ''}"`
+        ].join(','));
+      }
+      const blob = new Blob([csvLines.join('\n')], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `MFSV_${key}_${latestComparison.date_a}_to_${latestComparison.date_b}.csv`;
+      a.click();
+    }
+
+    (async function init() {
+      await loadStatus(false);
+      await loadComparison();
+      await loadSingleDateHoldings();
+    })();
+  </script>
+</body>
+</html>
