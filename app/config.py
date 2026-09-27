@@ -6,6 +6,16 @@ DATA_DIR = BASE_DIR / "data"
 RAW_FILES_DIR = DATA_DIR / "raw_files"
 DB_PATH = DATA_DIR / "etf_holdings.db"
 
+# Load local .env file if present (without requiring python-dotenv)
+ENV_FILE = BASE_DIR / ".env"
+if ENV_FILE.exists():
+    for line in ENV_FILE.read_text(encoding="utf-8", errors="ignore").splitlines():
+        stripped = line.strip()
+        if not stripped or stripped.startswith("#") or "=" not in stripped:
+            continue
+        k, v = stripped.split("=", 1)
+        os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+
 # Ensure directories exist
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 RAW_FILES_DIR.mkdir(parents=True, exist_ok=True)
@@ -21,6 +31,44 @@ HISTORICAL_BASE_URL = (
     "https://www.mfs.com/en-us/individual-investor/product-strategies/"
     "exchange-traded-funds/full-holdings/MFSV-active-value-etf"
 )
+
+PRESET_ETF_TARGETS = [
+    {
+        "etf_symbol": "MFSV",
+        "etf_name": "MFS Active Value ETF",
+        "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/MFSV-active-value-etf.html#",
+        "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/MFSV-active-value-etf",
+        "is_active": 1,
+    },
+    {
+        "etf_symbol": "MFSG",
+        "etf_name": "MFS Active Growth ETF",
+        "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/MFSG-active-growth-etf.html#",
+        "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/MFSG-active-growth-etf",
+        "is_active": 1,
+    },
+    {
+        "etf_symbol": "MMID",
+        "etf_name": "MFS Active Mid Cap ETF",
+        "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/MMID-active-mid-cap-etf.html#",
+        "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/MMID-active-mid-cap-etf",
+        "is_active": 1,
+    },
+    {
+        "etf_symbol": "MFSI",
+        "etf_name": "MFS Active International ETF",
+        "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/MFSI-active-international-etf.html#",
+        "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/MFSI-active-international-etf",
+        "is_active": 1,
+    },
+    {
+        "etf_symbol": "BRCE",
+        "etf_name": "MFS Blended Research Core Equity ETF",
+        "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/BRCE-blended-research-core-equity-etf.html#",
+        "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/BRCE-blended-research-core-equity-etf",
+        "is_active": 1,
+    },
+]
 
 # Schedule Config: 7:00 PM PT daily
 SCHEDULE_TIMEZONE = "America/Los_Angeles"

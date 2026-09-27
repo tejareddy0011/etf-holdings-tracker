@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 from typing import Any, Dict, Optional
 from zoneinfo import ZoneInfo
 
-from app.config import SCHEDULE_HOUR, SCHEDULE_MINUTE, SCHEDULE_TIMEZONE
-from app.database import get_settings, update_setting
+from app.config import DEFAULT_ETF_SYMBOL, SCHEDULE_HOUR, SCHEDULE_MINUTE, SCHEDULE_TIMEZONE
+from app.database import get_etf_targets, get_settings, update_setting
 from app.scraper import run_daily_scrape
 
 
@@ -58,7 +58,12 @@ class DailyScraperScheduler:
                         self._is_job_running = True
                         self._last_scheduled_run_date = today_str
                     try:
-                        run_daily_scrape(trigger_type="SCHEDULED_7PM_PT")
+                        for target in get_etf_targets():
+                            if target.get("is_active", 1):
+                                run_daily_scrape(
+                                    trigger_type="SCHEDULED_7PM_PT",
+                                    etf_symbol=target["etf_symbol"],
+                                )
                     finally:
                         with self._lock:
                             self._is_job_running = False
@@ -102,13 +107,22 @@ class DailyScraperScheduler:
         update_setting("scraper_state", normalized)
         return self.get_status()
 
-    def run_now(self, trigger_type: str = "MANUAL_ADMIN", simulate_error: Optional[str] = None) -> Dict[str, Any]:
+    def run_now(
+        self,
+        trigger_type: str = "MANUAL_ADMIN",
+        etf_symbol: str = DEFAULT_ETF_SYMBOL,
+        simulate_error: Optional[str] = None,
+    ) -> Dict[str, Any]:
         with self._lock:
             if self._is_job_running:
                 return {"status": "BUSY", "message": "A scrape job is already in progress."}
             self._is_job_running = True
         try:
-            return run_daily_scrape(trigger_type=trigger_type, simulate_error=simulate_error)
+            return run_daily_scrape(
+                trigger_type=trigger_type,
+                etf_symbol=etf_symbol,
+                simulate_error=simulate_error,
+            )
         finally:
             with self._lock:
                 self._is_job_running = False

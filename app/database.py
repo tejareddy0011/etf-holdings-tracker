@@ -2,7 +2,12 @@ import sqlite3
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
-from app.config import DB_PATH, DEFAULT_ETF_SYMBOL, ALERT_RECIPIENT_EMAIL
+from app.config import (
+    ALERT_RECIPIENT_EMAIL,
+    DB_PATH,
+    DEFAULT_ETF_SYMBOL,
+    PRESET_ETF_TARGETS,
+)
 
 CASH_TICKERS = {"CASH", "CASH_USD", "CASHUSD", "SWEEP", "-", "85749270"}
 
@@ -38,6 +43,15 @@ def init_db() -> None:
     with get_conn() as conn:
         conn.executescript(
             """
+            CREATE TABLE IF NOT EXISTS etf_targets (
+                etf_symbol TEXT PRIMARY KEY,
+                etf_name TEXT NOT NULL,
+                daily_url TEXT NOT NULL,
+                historical_base_url TEXT,
+                is_active INTEGER NOT NULL DEFAULT 1,
+                created_at TEXT NOT NULL
+            );
+
             CREATE TABLE IF NOT EXISTS holdings (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 etf_symbol TEXT NOT NULL DEFAULT 'MFSV',
@@ -98,7 +112,7 @@ def init_db() -> None:
             "scraper_state": "ACTIVE",  # ACTIVE, PAUSED, STOPPED
             "schedule_time_pt": "19:00",
             "alert_email": ALERT_RECIPIENT_EMAIL,
-            "scraper_mode": "AUTO",  # AUTO, BROWSER, HTTP
+            "scraper_mode": "AUTO",
             "proxy_enabled": "false",
         }
         for k, v in defaults.items():
@@ -106,6 +120,75 @@ def init_db() -> None:
                 "INSERT OR IGNORE INTO admin_settings (key, value, updated_at) VALUES (?, ?, ?)",
                 (k, v, now),
             )
+        for etf in PRESET_ETF_TARGETS:
+            conn.execute(
+                """
+                INSERT OR IGNORE INTO etf_targets (etf_symbol, etf_name, daily_url, historical_base_url, is_active, created_at)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    etf["etf_symbol"],
+                    etf["etf_name"],
+                    etf["daily_url"],
+                    etf.get("historical_base_url", ""),
+                    etf.get("is_active", 1),
+                    now,
+                ),
+            )
+
+
+def get_etf_targets() -> List[Dict[str, Any]]:
+    with get_conn() as conn:
+        rows = conn.execute(
+            """
+            SELECT t.etf_symbol, t.etf_name, t.daily_url, t.historical_base_url, t.is_active,
+                   COUNT(DISTINCT h.holding_date) AS snapshot_dates_count
+            FROM etf_targets t
+            LEFT JOIN holdings h ON h.etf_symbol = t.etf_symbol
+            GROUP BY t.etf_symbol
+            ORDER BY CASE WHEN t.etf_symbol = 'MFSV' THEN 0 ELSE 1 END, t.etf_symbol ASC
+            """
+        ).fetchall()
+        return [dict(r) for r in rows]
+
+
+def get_etf_target(etf_symbol: str) -> Optional[Dict[str, Any]]:
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT * FROM etf_targets WHERE etf_symbol = ?",
+            (etf_symbol.strip().upper(),),
+        ).fetchone()
+        return dict(row) if row else None
+
+
+def add_or_update_etf_target(
+    etf_symbol: str,
+    etf_name: str,
+    daily_url: str,
+    historical_base_url: str = "",
+) -> Dict[str, Any]:
+    sym = etf_symbol.strip().upper()
+    if not sym:
+        raise ValueError("ETF symbol is required")
+    if not daily_url.strip():
+        raise ValueError("Daily Holdings URL is required")
+    if not historical_base_url and "/daily-holdings/" in daily_url:
+        historical_base_url = daily_url.split("#")[0].replace("/daily-holdings/", "/full-holdings/").replace(".html", "")
+    now = datetime.now(timezone.utc).isoformat()
+    with get_conn() as conn:
+        conn.execute(
+            """
+            INSERT INTO etf_targets (etf_symbol, etf_name, daily_url, historical_base_url, is_active, created_at)
+            VALUES (?, ?, ?, ?, 1, ?)
+            ON CONFLICT(etf_symbol) DO UPDATE SET
+                etf_name = excluded.etf_name,
+                daily_url = excluded.daily_url,
+                historical_base_url = excluded.historical_base_url,
+                is_active = 1
+            """,
+            (sym, etf_name.strip() or sym, daily_url.strip(), historical_base_url.strip(), now),
+        )
+    return get_etf_target(sym) or {}
 
 
 def get_settings() -> Dict[str, str]:
@@ -135,13 +218,13 @@ def save_holdings(
 ) -> int:
     if not records:
         return 0
+    sym = etf_symbol.strip().upper()
     now = datetime.now(timezone.utc).isoformat()
     holding_date = records[0]["holding_date"]
     with get_conn() as conn:
-        # Clear existing records for that ETF and date so re-runs are idempotent
         conn.execute(
             "DELETE FROM holdings WHERE etf_symbol = ? AND holding_date = ?",
-            (etf_symbol, holding_date),
+            (sym, holding_date),
         )
         count = 0
         for r in records:
@@ -161,7 +244,7 @@ def save_holdings(
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
-                    etf_symbol,
+                    sym,
                     r["holding_date"],
                     r["ticker"],
                     r.get("cusip", ""),
@@ -191,7 +274,7 @@ def log_scrape_start(trigger_type: str = "SCHEDULED", etf_symbol: str = DEFAULT_
             INSERT INTO scrape_runs (etf_symbol, trigger_type, started_at, status)
             VALUES (?, ?, ?, 'RUNNING')
             """,
-            (etf_symbol, trigger_type, now),
+            (etf_symbol.strip().upper(), trigger_type, now),
         )
         return int(cur.lastrowid)
 
@@ -260,7 +343,7 @@ def get_available_dates(etf_symbol: str = DEFAULT_ETF_SYMBOL) -> List[Dict[str, 
             GROUP BY holding_date
             ORDER BY holding_date DESC
             """,
-            (etf_symbol,),
+            (etf_symbol.strip().upper(),),
         ).fetchall()
         return [dict(r) for r in rows]
 
@@ -272,13 +355,13 @@ def get_holdings_by_date(
 ) -> List[Dict[str, Any]]:
     with get_conn() as conn:
         query = """
-            SELECT holding_date, ticker, cusip, company_name, shares, shares_raw,
+            SELECT etf_symbol, holding_date, ticker, cusip, company_name, shares, shares_raw,
                    value, value_raw, percent_net_assets, percent_raw,
                    gics_sector, country, is_cash, source_file
             FROM holdings
             WHERE etf_symbol = ? AND holding_date = ?
         """
-        params: List[Any] = [etf_symbol, holding_date]
+        params: List[Any] = [etf_symbol.strip().upper(), holding_date]
         if exclude_cash:
             query += " AND is_cash = 0"
         query += " ORDER BY COALESCE(percent_net_assets, 0) DESC, ticker ASC"
@@ -292,12 +375,9 @@ def compare_holdings(
     etf_symbol: str = DEFAULT_ETF_SYMBOL,
     exclude_cash: bool = True,
 ) -> Dict[str, Any]:
-    """
-    Compares holdings between Date A (earlier/baseline date) and Date B (later/target date).
-    Tracks additions and removals strictly by Ticker as specified in requirements.
-    """
-    rows_a = get_holdings_by_date(date_a, etf_symbol=etf_symbol, exclude_cash=exclude_cash)
-    rows_b = get_holdings_by_date(date_b, etf_symbol=etf_symbol, exclude_cash=exclude_cash)
+    sym = etf_symbol.strip().upper()
+    rows_a = get_holdings_by_date(date_a, etf_symbol=sym, exclude_cash=exclude_cash)
+    rows_b = get_holdings_by_date(date_b, etf_symbol=sym, exclude_cash=exclude_cash)
 
     map_a: Dict[str, Dict[str, Any]] = {}
     for r in rows_a:
@@ -352,7 +432,7 @@ def compare_holdings(
     retained_changes.sort(key=lambda x: abs(x["percent_diff"]), reverse=True)
 
     return {
-        "etf_symbol": etf_symbol,
+        "etf_symbol": sym,
         "date_a": date_a,
         "date_b": date_b,
         "exclude_cash": exclude_cash,
