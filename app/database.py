@@ -120,6 +120,11 @@ def init_db() -> None:
                 "INSERT OR IGNORE INTO admin_settings (key, value, updated_at) VALUES (?, ?, ?)",
                 (k, v, now),
             )
+        # Always sync alert_email from .env if configured
+        conn.execute(
+            "UPDATE admin_settings SET value = ?, updated_at = ? WHERE key = 'alert_email'",
+            (ALERT_RECIPIENT_EMAIL, now),
+        )
         for etf in PRESET_ETF_TARGETS:
             conn.execute(
                 """

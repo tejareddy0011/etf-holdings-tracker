@@ -547,12 +547,22 @@
             </p>
           </div>
           <div class="controls-row">
-            <select id="errorSimSelect">
-              <option value="Target URL unreachable or layout changed">1. Target URL unreachable or layout changed</option>
-              <option value="Pop-ups failed to clear">2. Pop-ups failed to clear</option>
-              <option value='&quot;Download Daily Fund Holdings&quot; link missing or altered'>3. "Download Daily Fund Holdings" link missing or altered</option>
-              <option value="Excel file download failed or file is corrupted">4. Excel file download failed or file is corrupted</option>
-            </select>
+            <div class="field">
+              <label for="alertEmailInput">Alert Recipient Email</label>
+              <div style="display:flex; gap:6px;">
+                <input type="text" id="alertEmailInput" placeholder="gvarun@gmail.com" style="min-width:210px;" />
+                <button onclick="saveAlertEmail()">Save Email</button>
+              </div>
+            </div>
+            <div class="field">
+              <label for="errorSimSelect">Simulate Error Type</label>
+              <select id="errorSimSelect">
+                <option value="Target URL unreachable or layout changed">1. Target URL unreachable or layout changed</option>
+                <option value="Pop-ups failed to clear">2. Pop-ups failed to clear</option>
+                <option value='&quot;Download Daily Fund Holdings&quot; link missing or altered'>3. "Download Daily Fund Holdings" link missing or altered</option>
+                <option value="Excel file download failed or file is corrupted">4. Excel file download failed or file is corrupted</option>
+              </select>
+            </div>
             <button class="btn-danger" onclick="simulateErrorAlert()">🔔 Trigger Diagnostic Failure & Send Alert</button>
           </div>
         </div>
@@ -683,6 +693,8 @@
       document.getElementById('schedTime').textContent = sched.schedule_time_pt + ' (Daily)';
       document.getElementById('nextRunTime').textContent = sched.next_scheduled_run_pt;
       document.getElementById('alertRecipientText').textContent = sched.alert_email;
+      const emailInput = document.getElementById('alertEmailInput');
+      if (emailInput && !emailInput.value) emailInput.value = sched.alert_email;
 
       // Populate date dropdowns
       const dates = data.available_dates || [];
@@ -987,14 +999,31 @@
       }
     }
 
+    async function saveAlertEmail() {
+      const email = document.getElementById('alertEmailInput').value.trim();
+      if (!email) return;
+      const res = await fetch('/api/admin/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ alert_email: email })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        showToast(`Alert recipient email updated to ${email}`);
+        await loadStatus(true);
+      }
+    }
+
     async function simulateErrorAlert() {
       const errorType = document.getElementById('errorSimSelect').value;
-      await fetch('/api/admin/test-error', {
+      const res = await fetch('/api/admin/test-error', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ etf_symbol: selectedEtf, error_type: errorType })
       });
-      showToast(`Alert triggered for "${errorType}" → dispatched to gvarun@gmail.com`);
+      const data = await res.json();
+      const rec = (data.alert_sent && data.alert_sent.recipient) || document.getElementById('alertRecipientText').textContent;
+      showToast(`Alert triggered for "${errorType}" → dispatched to ${rec}`);
       await loadStatus(true);
     }
 
