@@ -134,3 +134,20 @@ Known Error Categories Monitored:
   3. "Download Daily Fund Holdings" link missing or altered
   4. Excel file download failed or file is corrupted
 
+
+--- EMAIL NOTIFICATION [SENT_SMTP] ---
+To: tejareddi0011@gmail.com
+Subject: [ETF Scraper Alert] Failure on 2026-09-27: Target URL unreachable or layout changed
+Automated ETF Holdings Scraper Failure Notification
+===================================================
+Current Date: 2026-09-27 01:14:17 PDT
+Target ETF:   MFS Value ETF (MFSV)
+Error Type:   Target URL unreachable or layout changed
+Details:      Live SMTP verification test: confirming immediate failure email delivery.
+
+Known Error Categories Monitored:
+  1. Target URL unreachable or layout changed
+  2. Pop-ups failed to clear
+  3. "Download Daily Fund Holdings" link missing or altered
+  4. Excel file download failed or file is corrupted
+

@@ -1,8 +1,7 @@
 import unittest
-from pathlib import Path
+from unittest.mock import patch
 from app.config import RAW_FILES_DIR
 from app.database import (
-    add_or_update_etf_target,
     compare_holdings,
     get_available_dates,
     get_etf_targets,
@@ -52,7 +51,6 @@ class TestETFPipeline(unittest.TestCase):
         self.assertIn("MFSV", symbols)
         self.assertIn("MFSG", symbols)
 
-        # Scrape MFS Active Growth ETF (MFSG)
         res_growth = run_daily_scrape(trigger_type="UNIT_TEST", etf_symbol="MFSG")
         self.assertEqual(res_growth["status"], "SUCCESS")
         self.assertGreater(res_growth["records_inserted"], 20)
@@ -76,6 +74,7 @@ class TestETFPipeline(unittest.TestCase):
         st = scheduler.set_admin_state("ACTIVE")
         self.assertEqual(st["scraper_state"], "ACTIVE")
 
+    @patch("app.notifier.SMTP_USER", "")
     def test_06_all_four_known_error_notifications(self) -> None:
         error_types = [
             KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
