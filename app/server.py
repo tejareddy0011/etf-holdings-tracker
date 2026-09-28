@@ -135,6 +135,21 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
         path = parsed.path
         qs = urllib.parse.parse_qs(parsed.query)
 
+        if path == "/favicon.ico":
+            svg_icon = (
+                b'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">'
+                b'<rect width="32" height="32" rx="8" fill="#4f46e5"/>'
+                b'<path d="M7 23V9m0 14h18M23 12l-6 6-4-4-4 4" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
+                b'</svg>'
+            )
+            self.send_response(200)
+            self.send_header("Content-Type", "image/svg+xml")
+            self.send_header("Content-Length", str(len(svg_icon)))
+            self.send_header("Cache-Control", "public, max-age=86400")
+            self.end_headers()
+            self.wfile.write(svg_icon)
+            return
+
         if path in ("/", "/index.html"):
             index_file = STATIC_DIR / "index.html"
             content = index_file.read_bytes()
