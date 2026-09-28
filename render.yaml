@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: etf-holdings-tracker
+    runtime: docker
+    plan: starter
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: ALERT_RECIPIENT_EMAIL
+        value: gvarun@gmail.com
+    disk:
+      name: etf-data
+      mountPath: /app/data
+      sizeGB: 1

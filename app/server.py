@@ -36,7 +36,16 @@ def organize_legacy_raw_files() -> None:
     for p in list(RAW_FILES_DIR.glob("*.xls*")) + list(RAW_FILES_DIR.glob("*.csv")):
         if not p.is_file():
             continue
-        etf_sym = "MFSG" if "Growth" in p.name else "MFSV"
+        if "Growth" in p.name:
+            etf_sym = "MFSG"
+        elif "Mid_Cap" in p.name:
+            etf_sym = "MMID"
+        elif "International" in p.name:
+            etf_sym = "MFSI"
+        elif "Blended_Research" in p.name:
+            etf_sym = "BRCE"
+        else:
+            etf_sym = "MFSV"
         target_dir = get_etf_raw_dir(etf_sym)
         dest = target_dir / p.name
         if not dest.exists():
