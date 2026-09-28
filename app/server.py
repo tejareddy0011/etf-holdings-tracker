@@ -1,10 +1,11 @@
+import html as html_lib
 import json
 import os
 import urllib.parse
 from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, List
 from zoneinfo import ZoneInfo
 
 from app.config import DEFAULT_ETF_SYMBOL, RAW_FILES_DIR, SCHEDULE_TIMEZONE
@@ -20,31 +21,70 @@ from app.database import (
     log_scrape_finish,
     log_scrape_start,
     save_holdings,
+    set_etf_bot_state,
     update_setting,
 )
 from app.parser import parse_mfs_xls_file
 from app.scheduler import scheduler
-from app.scraper import seed_historical_mfs_dates
+from app.scraper import get_etf_raw_dir, seed_historical_mfs_dates
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 
-def list_raw_files() -> list:
-    files = []
-    for p in sorted(
-        list(RAW_FILES_DIR.glob("*.xls*")) + list(RAW_FILES_DIR.glob("*.csv")),
-        key=lambda x: x.stat().st_mtime,
-        reverse=True,
-    ):
-        stat = p.stat()
-        files.append(
-            {
-                "filename": p.name,
-                "size_bytes": stat.st_size,
-                "modified_at": stat.st_mtime,
-            }
-        )
+def organize_legacy_raw_files() -> None:
+    """Ensures any top-level .xls/.csv files are also organized inside data/raw_files/<ETF_SYMBOL>/."""
+    for p in list(RAW_FILES_DIR.glob("*.xls*")) + list(RAW_FILES_DIR.glob("*.csv")):
+        if not p.is_file():
+            continue
+        etf_sym = "MFSG" if "Growth" in p.name else "MFSV"
+        target_dir = get_etf_raw_dir(etf_sym)
+        dest = target_dir / p.name
+        if not dest.exists():
+            dest.write_bytes(p.read_bytes())
+
+
+def list_raw_files(etf_symbol: str = "") -> List[Dict[str, Any]]:
+    organize_legacy_raw_files()
+    files: List[Dict[str, Any]] = []
+    sym_filter = etf_symbol.strip().upper()
+
+    subdirs = [d for d in RAW_FILES_DIR.iterdir() if d.is_dir()]
+    for d in sorted(subdirs, key=lambda x: x.name):
+        if sym_filter and d.name.upper() != sym_filter:
+            continue
+        for p in sorted(
+            list(d.glob("*.xls*")) + list(d.glob("*.csv")),
+            key=lambda x: x.stat().st_mtime,
+            reverse=True,
+        ):
+            stat = p.stat()
+            files.append(
+                {
+                    "etf_symbol": d.name.upper(),
+                    "directory": f"data/raw_files/{d.name.upper()}/",
+                    "relative_path": f"{d.name.upper()}/{p.name}",
+                    "filename": p.name,
+                    "size_bytes": stat.st_size,
+                    "modified_at": stat.st_mtime,
+                }
+            )
     return files
+
+
+def resolve_raw_file(rel_path: str) -> Path:
+    parts = [Path(part).name for part in rel_path.split("/") if part and part != ".."]
+    if len(parts) >= 2:
+        candidate = RAW_FILES_DIR / parts[0] / parts[1]
+        if candidate.exists() and candidate.is_file():
+            return candidate
+    if parts:
+        candidate = RAW_FILES_DIR / parts[-1]
+        if candidate.exists() and candidate.is_file():
+            return candidate
+        for sub in RAW_FILES_DIR.iterdir():
+            if sub.is_dir() and (sub / parts[-1]).exists():
+                return sub / parts[-1]
+    return RAW_FILES_DIR / "__nonexistent__"
 
 
 class ETFReportingHandler(BaseHTTPRequestHandler):
@@ -93,7 +133,8 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                     "available_dates": dates,
                     "recent_runs": get_recent_runs(15),
                     "recent_alerts": get_recent_alerts(15),
-                    "raw_files": list_raw_files(),
+                    "raw_files": list_raw_files(etf),
+                    "all_raw_files": list_raw_files(""),
                 }
             )
             return
@@ -151,16 +192,51 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
             )
             return
 
+        if path.startswith("/api/raw-files-view/"):
+            rel = urllib.parse.unquote(path.replace("/api/raw-files-view/", ""))
+            fpath = resolve_raw_file(rel)
+            if not fpath.exists() or not fpath.is_file():
+                self._send_json({"error": "File not found"}, status=404)
+                return
+            raw_text = fpath.read_text(encoding="utf-8", errors="ignore")
+            if "<table" in raw_text.lower():
+                styled_html = (
+                    "<!DOCTYPE html><html><head><meta charset='utf-8'>"
+                    f"<title>{html_lib.escape(fpath.name)}</title>"
+                    "<style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:20px;}"
+                    "table{width:100%;border-collapse:collapse;font-size:13px;background:#1e293b;}"
+                    "th,td{border:1px solid #334155;padding:8px 10px;text-align:left;}"
+                    "th{background:#111827;color:#94a3b8;}</style></head><body>"
+                    f"<h2>Original File Preview: {html_lib.escape(fpath.name)}</h2>"
+                    f"{raw_text}</body></html>"
+                )
+            else:
+                styled_html = (
+                    "<!DOCTYPE html><html><head><meta charset='utf-8'>"
+                    f"<title>{html_lib.escape(fpath.name)}</title>"
+                    "<style>body{font-family:monospace;background:#0f172a;color:#f8fafc;padding:20px;white-space:pre-wrap;}</style>"
+                    f"</head><body><h2>Original File Preview: {html_lib.escape(fpath.name)}</h2>"
+                    f"{html_lib.escape(raw_text)}</body></html>"
+                )
+            data = styled_html.encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+            return
+
         if path.startswith("/api/raw-files/"):
-            fname = Path(urllib.parse.unquote(path.replace("/api/raw-files/", ""))).name
-            fpath = RAW_FILES_DIR / fname
+            rel = urllib.parse.unquote(path.replace("/api/raw-files/", ""))
+            fpath = resolve_raw_file(rel)
             if not fpath.exists() or not fpath.is_file():
                 self._send_json({"error": "File not found"}, status=404)
                 return
             data = fpath.read_bytes()
             self.send_response(200)
-            self.send_header("Content-Type", "application/vnd.ms-excel")
-            self.send_header("Content-Disposition", f'attachment; filename="{fname}"')
+            ctype = "text/csv" if fpath.suffix.lower() == ".csv" else "application/vnd.ms-excel"
+            self.send_header("Content-Type", ctype)
+            self.send_header("Content-Disposition", f'attachment; filename="{fpath.name}"')
             self.send_header("Content-Length", str(len(data)))
             self.end_headers()
             self.wfile.write(data)
@@ -182,6 +258,16 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                 self._send_json({"ok": False, "error": str(e)}, status=400)
             return
 
+        if path == "/api/admin/etf-bot-state":
+            try:
+                etf_sym = str(body.get("etf_symbol", "")).strip().upper()
+                bot_state = str(body.get("bot_state", "ACTIVE")).strip().upper()
+                updated = set_etf_bot_state(etf_sym, bot_state)
+                self._send_json({"ok": True, "etf": updated, "etf_targets": get_etf_targets()})
+            except Exception as e:
+                self._send_json({"ok": False, "error": str(e)}, status=400)
+            return
+
         if path == "/api/admin/settings":
             if "alert_email" in body and body["alert_email"]:
                 update_setting("alert_email", str(body["alert_email"]).strip())
@@ -195,7 +281,8 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                 etf_sym = str(body.get("etf_symbol", "")).strip().upper()
                 etf_name = str(body.get("etf_name", "")).strip()
                 daily_url = str(body.get("daily_url", "")).strip()
-                target = add_or_update_etf_target(etf_sym, etf_name, daily_url)
+                file_format = str(body.get("file_format", "XLS")).strip().upper()
+                target = add_or_update_etf_target(etf_sym, etf_name, daily_url, file_format=file_format)
                 self._send_json({"ok": True, "etf": target, "etf_targets": get_etf_targets()})
             except Exception as e:
                 self._send_json({"ok": False, "error": str(e)}, status=400)
@@ -227,7 +314,8 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
             try:
                 stamp = datetime.now(ZoneInfo(SCHEDULE_TIMEZONE)).strftime("%Y-%m-%d")
                 save_name = f"{Path(filename).stem}_uploaded_{stamp}{Path(filename).suffix or '.xls'}"
-                dest = RAW_FILES_DIR / save_name
+                etf_dir = get_etf_raw_dir(etf)
+                dest = etf_dir / save_name
                 dest.write_text(content, encoding="utf-8")
 
                 records = parse_mfs_xls_file(dest, fallback_date=override_date)
@@ -235,12 +323,12 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                     for r in records:
                         r["holding_date"] = override_date
                 holding_date = records[0]["holding_date"]
-                inserted = save_holdings(records=records, etf_symbol=etf, source_file=dest.name)
+                inserted = save_holdings(records=records, etf_symbol=etf, source_file=f"{etf}/{dest.name}")
                 log_scrape_finish(
                     run_id=run_id,
                     status="SUCCESS",
                     holding_date=holding_date,
-                    raw_file_path=str(dest),
+                    raw_file_path=f"{etf}/{dest.name}",
                     records_parsed=inserted,
                 )
                 self._send_json(
@@ -249,7 +337,7 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                         "etf_symbol": etf,
                         "holding_date": holding_date,
                         "records_inserted": inserted,
-                        "saved_file": dest.name,
+                        "saved_file": f"{etf}/{dest.name}",
                     }
                 )
             except Exception as e:
@@ -277,6 +365,7 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
 
 def bootstrap_initial_data() -> None:
     init_db()
+    organize_legacy_raw_files()
     dates = get_available_dates(DEFAULT_ETF_SYMBOL)
     if not dates:
         print("Bootstrapping live MFS Active Value ETF (MFSV) daily & historical holdings...")

@@ -49,6 +49,8 @@ def init_db() -> None:
                 daily_url TEXT NOT NULL,
                 historical_base_url TEXT,
                 is_active INTEGER NOT NULL DEFAULT 1,
+                bot_state TEXT NOT NULL DEFAULT 'ACTIVE',
+                file_format TEXT NOT NULL DEFAULT 'XLS',
                 created_at TEXT NOT NULL
             );
 
@@ -90,6 +92,8 @@ def init_db() -> None:
                 records_parsed INTEGER DEFAULT 0
             );
 
+            CREATE INDEX IF NOT EXISTS idx_alert_logs_date ON scrape_runs(started_at);
+
             CREATE TABLE IF NOT EXISTS alert_logs (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 created_at TEXT NOT NULL,
@@ -107,9 +111,18 @@ def init_db() -> None:
             );
             """
         )
+        # Ensure columns exist on older DBs
+        existing_cols = {
+            r["name"] for r in conn.execute("PRAGMA table_info(etf_targets)").fetchall()
+        }
+        if "bot_state" not in existing_cols:
+            conn.execute("ALTER TABLE etf_targets ADD COLUMN bot_state TEXT NOT NULL DEFAULT 'ACTIVE'")
+        if "file_format" not in existing_cols:
+            conn.execute("ALTER TABLE etf_targets ADD COLUMN file_format TEXT NOT NULL DEFAULT 'XLS'")
+
         now = datetime.now(timezone.utc).isoformat()
         defaults = {
-            "scraper_state": "ACTIVE",  # ACTIVE, PAUSED, STOPPED
+            "scraper_state": "ACTIVE",
             "schedule_time_pt": "19:00",
             "alert_email": ALERT_RECIPIENT_EMAIL,
             "scraper_mode": "AUTO",
@@ -120,7 +133,6 @@ def init_db() -> None:
                 "INSERT OR IGNORE INTO admin_settings (key, value, updated_at) VALUES (?, ?, ?)",
                 (k, v, now),
             )
-        # Always sync alert_email from .env if configured
         conn.execute(
             "UPDATE admin_settings SET value = ?, updated_at = ? WHERE key = 'alert_email'",
             (ALERT_RECIPIENT_EMAIL, now),
@@ -128,8 +140,9 @@ def init_db() -> None:
         for etf in PRESET_ETF_TARGETS:
             conn.execute(
                 """
-                INSERT OR IGNORE INTO etf_targets (etf_symbol, etf_name, daily_url, historical_base_url, is_active, created_at)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT OR IGNORE INTO etf_targets (
+                    etf_symbol, etf_name, daily_url, historical_base_url, is_active, bot_state, file_format, created_at
+                ) VALUES (?, ?, ?, ?, ?, 'ACTIVE', 'XLS', ?)
                 """,
                 (
                     etf["etf_symbol"],
@@ -146,7 +159,9 @@ def get_etf_targets() -> List[Dict[str, Any]]:
     with get_conn() as conn:
         rows = conn.execute(
             """
-            SELECT t.etf_symbol, t.etf_name, t.daily_url, t.historical_base_url, t.is_active,
+            SELECT t.etf_symbol, t.etf_name, t.daily_url, t.historical_base_url,
+                   t.is_active, COALESCE(t.bot_state, 'ACTIVE') AS bot_state,
+                   COALESCE(t.file_format, 'XLS') AS file_format,
                    COUNT(DISTINCT h.holding_date) AS snapshot_dates_count
             FROM etf_targets t
             LEFT JOIN holdings h ON h.etf_symbol = t.etf_symbol
@@ -166,11 +181,26 @@ def get_etf_target(etf_symbol: str) -> Optional[Dict[str, Any]]:
         return dict(row) if row else None
 
 
+def set_etf_bot_state(etf_symbol: str, bot_state: str) -> Optional[Dict[str, Any]]:
+    sym = etf_symbol.strip().upper()
+    state = bot_state.strip().upper()
+    if state not in {"ACTIVE", "PAUSED", "STOPPED"}:
+        raise ValueError(f"Invalid bot_state: {bot_state}")
+    is_active = 1 if state == "ACTIVE" else 0
+    with get_conn() as conn:
+        conn.execute(
+            "UPDATE etf_targets SET bot_state = ?, is_active = ? WHERE etf_symbol = ?",
+            (state, is_active, sym),
+        )
+    return get_etf_target(sym)
+
+
 def add_or_update_etf_target(
     etf_symbol: str,
     etf_name: str,
     daily_url: str,
     historical_base_url: str = "",
+    file_format: str = "XLS",
 ) -> Dict[str, Any]:
     sym = etf_symbol.strip().upper()
     if not sym:
@@ -183,15 +213,17 @@ def add_or_update_etf_target(
     with get_conn() as conn:
         conn.execute(
             """
-            INSERT INTO etf_targets (etf_symbol, etf_name, daily_url, historical_base_url, is_active, created_at)
-            VALUES (?, ?, ?, ?, 1, ?)
+            INSERT INTO etf_targets (
+                etf_symbol, etf_name, daily_url, historical_base_url, is_active, bot_state, file_format, created_at
+            )
+            VALUES (?, ?, ?, ?, 1, 'ACTIVE', ?, ?)
             ON CONFLICT(etf_symbol) DO UPDATE SET
                 etf_name = excluded.etf_name,
                 daily_url = excluded.daily_url,
                 historical_base_url = excluded.historical_base_url,
-                is_active = 1
+                file_format = excluded.file_format
             """,
-            (sym, etf_name.strip() or sym, daily_url.strip(), historical_base_url.strip(), now),
+            (sym, etf_name.strip() or sym, daily_url.strip(), historical_base_url.strip(), file_format.upper(), now),
         )
     return get_etf_target(sym) or {}
 
@@ -416,7 +448,7 @@ def compare_holdings(
         shares_a = a.get("shares") or 0.0
         shares_b = b.get("shares") or 0.0
         pct_a = a.get("percent_net_assets") or 0.0
-        pct_b = b.get("percent_net_assets") or 0.0
+        pct_b = a_pct_b = b.get("percent_net_assets") or 0.0
         retained_changes.append(
             {
                 "ticker": t,
@@ -430,8 +462,8 @@ def compare_holdings(
                 "value_date_a": a.get("value") or 0.0,
                 "value_date_b": b.get("value") or 0.0,
                 "percent_date_a": pct_a,
-                "percent_date_b": pct_b,
-                "percent_diff": round(pct_b - pct_a, 2),
+                "percent_date_b": a_pct_b,
+                "percent_diff": round(a_pct_b - pct_a, 2),
             }
         )
     retained_changes.sort(key=lambda x: abs(x["percent_diff"]), reverse=True)

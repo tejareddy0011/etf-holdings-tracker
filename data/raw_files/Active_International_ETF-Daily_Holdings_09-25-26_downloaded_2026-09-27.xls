@@ -1,0 +1,2833 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Daily Holdings</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table class="table table-hover js-full-holding-table" data-daily-holdings-securitiesdate="09-25-26">
+<thead>
+<tr class="performance-attribution__table-col-group-header">
+<th class="performance-attribution__table-cell-col-group with-border" colspan="4"></th>
+<th class="performance-attribution__table-cell-col-group" colspan="2">
+                                            Based on Market Value
+                                        </th>
+<th class="performance-attribution__table-cell-col-group" colspan="3"></th>
+</tr>
+<tr class="performance-attribution__table-col-header performance-attribution__table-col-header_gray">
+<th class="performance-attribution__table-cell border-right-none with-border">
+                                                CUSIP/SEDOL
+                                            </th>
+<th class="performance-attribution__table-cell border-none">
+                                                Ticker
+                                            </th>
+<th class="performance-attribution__table-cell border-none text-left">
+                                            Securities
+                                            <div class="performance-attribution__table-cell-sub-text">
+                                                
+                                                    (on 09-25-26)
+                                                
+                                                
+                                            </div>
+</th>
+<th class="performance-attribution__table-cell border-none">
+                                            Shares or Par Amount
+                                        </th>
+<th class="performance-attribution__table-cell border-right-none">
+                                            Value
+                                        </th>
+<th class="performance-attribution__table-cell border-none">
+                                            Percent of Net Assets
+                                        </th>
+<th class="performance-attribution__table-cell border-right-none">
+                                                
+                                            GICS Sectors
+                                            
+                                            
+                                                
+    
+        
+            
+                <span class="tooltip-pop" data-key="dailyHoldingsGicsDislosure">
+<div class="hide js-tooltip-content">
+<span>
+<p>The Global Industry Classification Standard (GICS®) was developed by and/or is the exclusive property of MSCI, Inc. and S&amp;P Global Market Intelligence Inc. ("S&amp;P Global Market Intelligence"). GICS is a service mark of MSCI and S&amp;P Global Market Intelligence and has been licensed for use by MFS. MFS has applied its own internal sector/industry classification methodology for equity securities and non-equity securities that are unclassified by GICS.</p>
+</span>
+</div>
+<em aria-describedby="popover61180" class="redPop" data-placement="auto left" data-popvariation="red  " data-toggle="popover" tabindex="0">
+<svg class="icon icon-info size-16-16" height="16" viewbox="0 0 16 16" width="16">
+<use xlink:href="#icon-info" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+</svg>
+</em>
+</span>
+</th>
+<th class="performance-attribution__table-cell border-left-none">
+                                            Country
+                                        </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    874039100
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    TSM US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                TAIWAN SEMICONDUCTOR SP ADR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                220,516.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $99,366,714.76
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                8.11%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Information Technology
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Taiwan, Province Of China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6771720
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    005930 KS
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                SAMSUNG ELECTRONICS CO LTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                230,677.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $48,451,928.33
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                3.95%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Information Technology
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Korea, Republic Of
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    88032Q109
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    TCEHY US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                TENCENT HOLDINGS LTD UNS ADR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                500,296.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $27,841,472.40
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                2.27%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Communication Services
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6429104
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    6501 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                HITACHI LTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                739,200.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $26,028,566.26
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                2.12%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    4834108
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    SU FP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                SCHNEIDERELECTRIC SE
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                76,250.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $25,286,295.99
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                2.06%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                France
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BZ57390
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    INGA NA
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                ING GROEPNV
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                657,040.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $23,806,909.43
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.94%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Netherlands
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B63H849
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    RR/ LN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                ROLLS ROYCE HOLDINGS PLC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1,195,521.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $23,465,472.19
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.91%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BTMJD19
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    ROP SW
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                ROCHE HOLDING AG
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                53,572.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $23,300,327.86
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.90%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Health Care
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Switzerland
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B15C557
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    TTE FP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                TOTALENERGIES SE
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                250,680.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $22,851,134.23
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.86%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Energy
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                France
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    7103065
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    NOVN SW
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                NOVARTIS AG REG
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                155,186.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $22,442,398.28
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.83%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Health Care
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Switzerland
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    891160509
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    TD US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                TORONTO DOMINION BANK
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                184,752.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $22,290,328.80
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.82%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Canada
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    4076836
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    ISP IM
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                INTESA SANPAOLO
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                2,841,637.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $21,981,778.54
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.79%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Italy
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BCRWZ18
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    CFR SW
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                CIE FINANCIERE RICHEMO A REG
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                105,782.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $21,886,811.70
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.79%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Switzerland
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B1YXBJ7
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    AI FP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                AIR LIQUIDE SA
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                112,808.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $21,533,126.42
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.76%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Materials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                France
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6597045
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    6503 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                MITSUBISHIELECTRIC CORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                615,290.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $20,503,143.77
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.67%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BM8PJY7
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    NWG LN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                NATWEST GROUP PLC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                2,191,313.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $20,161,083.22
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.65%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    7145056
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    ENI IM
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                ENI SPA
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                733,030.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $20,123,843.27
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.64%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Energy
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Italy
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    7309681
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    BNP FP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                BNP PARIBAS
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                175,892.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $19,904,336.94
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.62%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                France
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6563024
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    8316 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                SUMITOMO MITSUI FINANCIAL GR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                415,164.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $18,270,701.72
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.49%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    M22465104
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    CHKP US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                CHECK POINT SOFTWARE TECH
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                136,109.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $17,862,945.16
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.46%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Information Technology
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Israel
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BD1RP61
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    BIRG ID
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                BANK OF IRELAND GROUP PLC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                776,124.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $17,786,707.68
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.45%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Ireland
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    4846288
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    SAP GY
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                SAP SE
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                83,500.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $17,691,512.57
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.44%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Information Technology
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Germany
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BD6K457
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    CPG LN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                COMPASS GROUP PLC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                569,125.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $16,755,040.00
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.37%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B62G7K6
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    8630 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                SOMPO HOLDINGS INC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                375,705.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $16,460,094.41
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.34%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B0C2CQ3
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    ENGI FP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                ENGIE
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                591,490.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $15,739,345.43
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.28%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Utilities
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                France
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    H42097107
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    UBS US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                UBS GROUPAG REG
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                306,662.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $15,231,901.54
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.24%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Switzerland
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    001317205
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    AAGIY US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                AIA GROUPLTD SP ADR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                405,202.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $15,150,502.78
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.24%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Hong Kong
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6175203
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    DBS SP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                DBS GROUPHOLDINGS LTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                247,350.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $15,103,569.69
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.23%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Singapore
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    4741844
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    MRK GY
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                MERCK KGAA
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                93,778.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $14,427,368.22
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.18%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Health Care
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Germany
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    783513203
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    RYAAY US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                RYANAIR HOLDINGS PLC SP ADR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                253,309.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $14,007,987.70
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.14%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Ireland
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6438564
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    2317 TT
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                HON HAI PRECISION INDUSTRY
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1,736,343.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $13,665,120.12
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.12%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Information Technology
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Taiwan, Province Of China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BLGZ986
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    TSCO LN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                TESCO PLC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                2,161,820.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $13,553,891.51
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.11%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Staples
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6821506
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    6758 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                SONY GROUPCORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                563,180.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $13,289,643.99
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.08%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    7021963
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    DB1 GY
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                DEUTSCHE BOERSE AG
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                38,363.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $12,451,019.90
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.02%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Germany
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6804585
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    4063 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                SHIN ETSUCHEMICAL CO LTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                330,792.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $12,390,498.11
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.01%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Materials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B0FS5D6
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    3382 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                SEVEN + IHOLDINGS CO LTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                966,473.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $12,328,340.22
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.01%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Staples
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    110448107
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    BTI US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                BRITISH AMERICAN TOB SP ADR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                218,836.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $12,173,846.68
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.99%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Staples
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    351858105
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    FNV US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                FRANCO NEVADA CORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                46,072.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $11,880,586.64
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.97%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Materials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Canada
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    G2519Y108
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    BAP US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                CREDICORPLTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                30,097.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $11,622,257.52
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.95%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Peru
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BN7SWP6
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    GSK LN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                GSK PLC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                473,220.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $11,605,644.78
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.95%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Health Care
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    7156036
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    SOON SW
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                SONOVA HOLDING AG REG
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                39,646.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $11,533,903.92
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.94%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Health Care
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Switzerland
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B19NLV4
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    EXPN LN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                EXPERIAN PLC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                327,657.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $11,330,777.49
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.92%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B3MSM28
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    AMS SM
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                AMADEUS ITGROUP SA
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                182,790.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $11,140,282.60
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.91%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Spain
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    5983816
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    ZURN SW
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                ZURICH INSURANCE GROUP AG
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                15,789.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $11,077,458.71
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.90%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Switzerland
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    5107401
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    BEI GY
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                BEIERSDORFAG
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                122,214.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $10,941,448.38
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.89%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Staples
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Germany
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B09M9D2
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    KNEBV FH
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                KONE OYJ B
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                181,483.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $10,651,126.93
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.87%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Finland
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6250724
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    6367 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                DAIKIN INDUSTRIES LTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                78,970.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $10,477,764.95
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.85%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    64110W102
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    NTES US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                NETEASE INC ADR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                89,798.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $10,363,587.18
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.85%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Communication Services
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    373737105
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    GGB US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                GERDAU SASPON ADR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                2,094,778.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $10,159,673.30
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.83%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Materials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Brazil
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BMGT167
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    WDS AU
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                WOODSIDE ENERGY GROUP LTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                454,410.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $10,127,914.16
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.83%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Energy
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Australia
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    059460303
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    BBD US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                BANCO BRADESCO ADR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                2,777,421.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $9,471,005.61
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.77%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Brazil
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BG36ZK1
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    B3SA3 BZ
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                B3 SA BRASIL BOLSA BALCAO
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                2,721,010.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $9,426,865.68
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.77%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Brazil
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    7380482
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    SGO FP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                COMPAGNIEDE SAINT GOBAIN
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                117,702.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $9,365,178.67
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.76%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                France
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    40415F101
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    HDB US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                HDFC BANKLTD ADR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                405,574.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $9,332,257.74
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.76%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                India
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    0718875
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    RIO LN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                RIO TINTOPLC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                93,862.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $8,814,816.30
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.72%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Materials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    4061412
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    MC FP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                LVMH MOETHENNESSY LOUIS VUI
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                19,370.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $8,760,086.32
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.71%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                France
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B04YJV1
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    IFC CN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                INTACT FINANCIAL CORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                49,170.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $8,709,428.95
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.71%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Canada
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6865504
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    7269 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                SUZUKI MOTOR CORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                688,135.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $8,707,826.82
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.71%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6885074
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    4543 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                TERUMO CORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                581,694.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $8,496,757.72
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.69%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Health Care
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    780087102
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    RY US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                ROYAL BANKOF CANADA
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                41,720.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $8,426,605.60
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.69%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Canada
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BNBX1W7
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    KMB IN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                KOTAK MAHINDRA BANK LTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1,973,146.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $8,319,038.07
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.68%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                India
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B2B0DG9
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    REL LN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                RELX PLC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                238,232.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $7,976,366.38
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.65%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    5501906
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    BBVA SM
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                BANCO BILBAO VIZCAYA ARGENTA
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                269,834.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $7,749,070.15
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.63%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Spain
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B1YVKN8
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    2020 HK
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                ANTA SPORTS PRODUCTS LTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                844,963.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $7,669,436.79
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.63%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BLD4QD0
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    6690 HK
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                HAIER SMART HOME CO LTD H
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                3,041,759.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $7,666,148.25
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.63%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BJ2L575
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    GIB/A CN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                CGI INC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                111,742.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $7,571,390.52
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.62%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Information Technology
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Canada
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6099626
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    RELIANCE IN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                RELIANCE INDUSTRIES LIMITED
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                573,458.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $7,337,102.65
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.60%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Energy
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                India
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6084848
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    4689 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                LY CORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                2,234,853.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $7,282,248.39
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.59%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Communication Services
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6640381
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    6902 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                DENSO CORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                592,980.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $7,256,669.24
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.59%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6441506
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    7741 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                HOYA CORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                46,677.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $6,972,454.83
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.57%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Health Care
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    7123870
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    NESN SW
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                NESTLE SAREG
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                70,988.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $6,612,921.21
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.54%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Staples
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Switzerland
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6356525
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    4901 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                FUJIFILM HOLDINGS CORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                301,078.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $6,604,872.43
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.54%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Information Technology
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6132101
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    5108 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                BRIDGESTONE CORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                265,132.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $6,473,996.62
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.53%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BP3R2F1
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    600519 C1
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                KWEICHOW MOUTAI CO LTD A
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                33,400.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $6,154,687.24
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.50%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Staples
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B62G1B5
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    EDEN FP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                EDENRED
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                192,341.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $6,019,006.16
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.49%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                France
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BP3R2V7
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    600887 C1
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                INNER MONGOLIA YILI INDUS A
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1,486,100.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $5,955,114.78
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.49%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Staples
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    4682329
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    RI FP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                PERNOD RICARD SA
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                83,316.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $5,605,665.03
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.46%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Staples
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                France
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B4T3BW6
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    GLEN LN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                GLENCORE PLC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                743,460.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $5,527,103.93
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.45%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Materials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B0SWJX3
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    LSEG LN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                LONDON STOCK EXCHANGE GROUP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                49,464.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $5,374,064.11
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.44%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    722304102
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    PDD US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                PDD HOLDINGS INC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                68,497.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $5,313,312.29
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.43%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    98850P109
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    YUMC US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                YUM CHINAHOLDINGS INC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                119,301.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $4,828,111.47
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.39%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    0709954
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    PRU LN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                PRUDENTIALPLC
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                384,388.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $4,796,542.22
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.39%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                United Kingdom
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6972459
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    291 HK
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                CHINA RESOURCES BEER HOLDING
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1,878,892.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $4,407,226.78
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.36%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Staples
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6100186
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    MM IN
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                MAHINDRA +MAHINDRA LTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                128,109.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $4,057,615.06
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.33%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                India
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    BP6KMJ1
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    NOVOB DC
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                NOVO NORDISK A/S B
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                99,822.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $3,849,871.71
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.31%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Health Care
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Denmark
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B09DHL9
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    MTX GY
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                MTU AERO ENGINES AG
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                8,960.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $3,776,980.31
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.31%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Germany
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6267359
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    388 HK
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                HONG KONGEXCHANGES + CLEAR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                74,176.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $3,672,725.24
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.30%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Financials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Hong Kong
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    B5B23W2
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    1928 HK
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                SANDS CHINA LTD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                2,124,542.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $3,225,692.12
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.26%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Hong Kong
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    05606L100
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    BYDDY US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                BYD CO LTDUNSPONSORED ADR
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                311,275.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $3,106,524.50
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.25%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Discretionary
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                China
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    7792559
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    HEIA NA
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                HEINEKEN NV
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                37,135.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $2,986,877.86
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.24%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Consumer Staples
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Netherlands
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    5671519
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    WKL NA
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                WOLTERS KLUWER
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                35,968.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $2,814,313.46
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.23%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Industrials
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Netherlands
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    N72482156
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    QGEN US
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                QIAGEN N.V.
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                47,893.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $2,115,912.74
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.17%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Health Care
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Germany
+                                            </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                    
+                                                    6870490
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    6857 JP
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                ADVANTESTCORP
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                182.00
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $39,358.86
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                0.00%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                Information Technology
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                Japan
+                                            </td>
+</tr>
+<tr class="noExl">
+<td class="performance-attribution__table-cell border-right-none with-border less-padding-left">
+<button aria-expanded="false" class="isCollapsed js-expand-collapse-btn">
+<span class="mfs-table__cell-icons">
+<svg class="mfs-table__collapse-icon" viewbox="0 0 18 18">
+<use xlink:href="" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+</svg>
+</span>
+</button>
+                                                    
+                                                    CASH
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    CASH
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                Cash &amp; Cash Equivalents
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                -
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                $18,362,417.64
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                1.50%
+                                            </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                -
+                                            </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                -
+                                            </td>
+</tr>
+<tr class="collapsed">
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                        SWEEP
+                                                    </td>
+<td class="performance-attribution__table-cell border-none">
+                                                        CASH
+                                                    </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    Cash &amp; Cash Equivalents
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $18,504,309.67
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    1.51%
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                    -
+                                                </td>
+</tr>
+<tr class="collapsed">
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                        CASHCNY
+                                                    </td>
+<td class="performance-attribution__table-cell border-none">
+                                                        CASH
+                                                    </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    Cash &amp; Cash Equivalents
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $133,265.54
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    0.01%
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                    -
+                                                </td>
+</tr>
+<tr class="collapsed">
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                        CASHEUR
+                                                    </td>
+<td class="performance-attribution__table-cell border-none">
+                                                        CASH
+                                                    </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    Cash &amp; Cash Equivalents
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $276.95
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    0.00%
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                    -
+                                                </td>
+</tr>
+<tr class="collapsed">
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                        CASHKRW
+                                                    </td>
+<td class="performance-attribution__table-cell border-none">
+                                                        CASH
+                                                    </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    Cash &amp; Cash Equivalents
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $3.11
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    0.00%
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                    -
+                                                </td>
+</tr>
+<tr class="collapsed">
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                        CASHHKD
+                                                    </td>
+<td class="performance-attribution__table-cell border-none">
+                                                        CASH
+                                                    </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    Cash &amp; Cash Equivalents
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $0.08
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    0.00%
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                    -
+                                                </td>
+</tr>
+<tr class="collapsed">
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                        CASHTWD
+                                                    </td>
+<td class="performance-attribution__table-cell border-none">
+                                                        CASH
+                                                    </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    Cash &amp; Cash Equivalents
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $0.03
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    0.00%
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                    -
+                                                </td>
+</tr>
+<tr class="collapsed">
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                        CASHCAD
+                                                    </td>
+<td class="performance-attribution__table-cell border-none">
+                                                        CASH
+                                                    </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    Cash &amp; Cash Equivalents
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $0.01
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    0.00%
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                    -
+                                                </td>
+</tr>
+<tr class="collapsed">
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                        CASHUSD
+                                                    </td>
+<td class="performance-attribution__table-cell border-none">
+                                                        CASH
+                                                    </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    Cash &amp; Cash Equivalents
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $-275,437.75
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -0.02%
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-left-none">
+                                                    -
+                                                </td>
+</tr>
+</tbody>
+</table><div class="col-sm-12 no-padding fullholding-disclosure">
+<div data-key="PP_DAILYHLDGS_PAGE_BOTTOM">
+<div class="disclosure-line"><span>Short positions, unlike long positions, lose value if the underlying asset gains value.</span></div>
+<div class="disclosure-line"><span><p>The list of portfolio holdings is as of the date shown and may not represent current or future portfolio composition. This information should not be construed as a recommendation to buy or sell any of the securities mentioned.</p>
+<p>This portfolio data has not been audited or adjusted for certain financial statement reclassifications. An audit could potentially result in adjustments to this data. For adjusted holdings information, please refer to the fund's quarterly portfolio holdings and semiannual reports. For audited portfolio holdings information, please refer to the fund's annual report.<br/>
+</p>
+<p>Top 10 portfolio holdings are generally available at the earliest, 11 calendar days after the end of each month.<br/>
+</p>
+</span></div>
+<div class="disclosure-line"><span>Other. Other consists of: (i) currency derivatives and/or (ii) any derivative offsets.</span></div>
+<div class="disclosure-line"><span>This website is a general communication and is provided for informational and/or educational purposes only. None of the content should be viewed as a suggestion that you take or refrain from taking any action nor as a recommendation for any specific investment product, strategy, plan feature or other such purpose. Your use of this website indicates that you agree with the intended purpose. Prior to making any investment or financial decision, you should seek individualized advice from a personal financial, tax, and other professionals who are able to provide advice in the context of your particular financial situation.</span></div>
+<div class="disclosure-line"><span><p><b>The information provided on this page should be read in conjunction with the fund's prospectus or summary prospectus for the portfolio being offered, which are available online <a href="/en-us/individual-investor/product-strategies/exchange-traded-funds.html">here</a> or by <a href="/en-us/individual-investor/about-mfs/contact-us.html">contacting</a> MFS. Consider the fund's investment objectives, risks, charges, and expenses, and otherwise read these documents carefully before you invest. Shares of the funds are not FDIC-insured and are not deposits or other obligations of, or guaranteed by, any bank. Shares of the funds involve investment risk, including possible loss of principal.</b></p>
+</span></div>
+<div class="disclosure-line"><span><p>MFS registered investment products are offered through MFS® Fund Distributors, Inc., Member SIPC, 111 Huntington Avenue, Boston, MA 02199.</p>
+</span></div>
+</div>
+</div></body></html>

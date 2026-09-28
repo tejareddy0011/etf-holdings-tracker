@@ -435,16 +435,17 @@
 
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title">Downloaded Raw Excel (.xls) Files Archive</h2>
-          <span style="font-size:12px; color:var(--muted);">Stored in <code>data/raw_files/</code> stamped with download date</span>
+          <h2 class="card-title">Downloaded Raw Excel (.xls) & CSV Files Archive (Organized by ETF Directory)</h2>
+          <span style="font-size:12px; color:var(--muted);">Stored in <code>data/raw_files/&lt;ETF_SYMBOL&gt;/</code> stamped with download date</span>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>Raw Excel Filename</th>
+                <th>ETF Directory</th>
+                <th>Original Filename</th>
                 <th class="num">File Size</th>
-                <th>Download Action</th>
+                <th>View / Download Actions</th>
               </tr>
             </thead>
             <tbody id="rawFilesBody"></tbody>
@@ -492,32 +493,39 @@
       <div class="card">
         <div class="card-header">
           <div>
-            <h2 class="card-title">Add or Update ETF Target for Daily 7:00 PM PT Scraping</h2>
+            <h2 class="card-title">Add or Update ETF Bot Target for Daily 7:00 PM PT Scraping</h2>
             <p style="margin:4px 0 0; font-size:13px; color:var(--muted);">
-              Pre-configured with MFS Active ETFs (`MFSV`, `MFSG`, `MMID`, `MFSI`, `BRCE`). Register additional ETFs below to scale the daily scraper.
+              Each ETF has its own dedicated scraper bot (which can be turned On, Paused, or Off independently) and its own file directory under <code>data/raw_files/&lt;ETF&gt;/</code>.
             </p>
           </div>
         </div>
         <div class="controls-row">
           <div class="field">
             <label for="newEtfSymbol">ETF Symbol</label>
-            <input type="text" id="newEtfSymbol" placeholder="e.g. MFSB" style="min-width:120px;" />
+            <input type="text" id="newEtfSymbol" placeholder="e.g. MFSB" style="min-width:110px;" />
           </div>
           <div class="field">
             <label for="newEtfName">ETF Name</label>
-            <input type="text" id="newEtfName" placeholder="e.g. MFS Active Core Plus Bond ETF" style="min-width:260px;" />
+            <input type="text" id="newEtfName" placeholder="e.g. MFS Active Core Plus Bond ETF" style="min-width:240px;" />
+          </div>
+          <div class="field">
+            <label for="newEtfFormat">File Format</label>
+            <select id="newEtfFormat" style="min-width:110px;">
+              <option value="XLS">.XLS</option>
+              <option value="CSV">.CSV</option>
+            </select>
           </div>
           <div class="field" style="flex:1;">
             <label for="newEtfUrl">Daily Holdings Target URL</label>
             <input type="text" id="newEtfUrl" placeholder="https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/..." style="width:100%;" />
           </div>
-          <button class="btn-primary" onclick="addNewEtfTarget()">+ Save ETF Target</button>
+          <button class="btn-primary" onclick="addNewEtfTarget()">+ Save ETF Bot</button>
         </div>
       </div>
 
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title">Configured ETF Targets</h2>
+          <h2 class="card-title">Configured ETF Bots (Individual On / Pause / Off Controls)</h2>
         </div>
         <div class="table-wrap">
           <table>
@@ -525,9 +533,11 @@
               <tr>
                 <th>ETF Symbol</th>
                 <th>ETF Name</th>
-                <th>Target Daily Holdings URL</th>
+                <th>Format</th>
+                <th>Bot Status</th>
+                <th>Directory</th>
                 <th class="num">Dates in DB</th>
-                <th>Actions</th>
+                <th>Bot Controls & Actions</th>
               </tr>
             </thead>
             <tbody id="etfTargetsBody"></tbody>
@@ -654,6 +664,19 @@
       await loadSingleDateHoldings();
     }
 
+    async function setIndividualEtfBotState(etf_symbol, bot_state) {
+      const res = await fetch('/api/admin/etf-bot-state', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ etf_symbol, bot_state })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        showToast(`${etf_symbol} bot state set to ${bot_state}`);
+        await loadStatus(true);
+      }
+    }
+
     async function loadStatus(preserveSelection = true) {
       const res = await fetch(`/api/status?etf=${encodeURIComponent(selectedEtf)}`);
       const data = await res.json();
@@ -662,25 +685,37 @@
       const etfSel = document.getElementById('etfSelector');
       const targets = data.etf_targets || [];
       etfSel.innerHTML = targets.map(t =>
-        `<option value="${t.etf_symbol}">${t.etf_symbol} — ${t.etf_name} (${t.snapshot_dates_count} dates)</option>`
+        `<option value="${t.etf_symbol}">${t.etf_symbol} — ${t.etf_name} [${t.bot_state || 'ACTIVE'}] (${t.snapshot_dates_count} dates)</option>`
       ).join('');
       etfSel.value = selectedEtf;
 
-      // Render ETF Registry Table
+      // Render ETF Registry Table with per-ETF Bot Toggles
       const etfBody = document.getElementById('etfTargetsBody');
-      etfBody.innerHTML = targets.map(t => `
-        <tr>
-          <td><span class="ticker-pill">${t.etf_symbol}</span></td>
-          <td><strong>${t.etf_name}</strong></td>
-          <td style="font-size:12px; color:var(--muted); max-width:460px; overflow:hidden; text-overflow:ellipsis;">
-            <a href="${t.daily_url}" target="_blank" style="color:#60a5fa;">${t.daily_url}</a>
-          </td>
-          <td class="num">${t.snapshot_dates_count}</td>
-          <td>
-            <button onclick="selectAndScrapeEtf('${t.etf_symbol}')">⚡ Scrape & View ${t.etf_symbol}</button>
-          </td>
-        </tr>
-      `).join('');
+      etfBody.innerHTML = targets.map(t => {
+        const bState = t.bot_state || 'ACTIVE';
+        const bClass = bState === 'ACTIVE' ? 'badge-active' : (bState === 'PAUSED' ? 'badge-paused' : 'badge-stopped');
+        return `
+          <tr>
+            <td><span class="ticker-pill">${t.etf_symbol}</span></td>
+            <td>
+              <strong>${t.etf_name}</strong>
+              <div style="font-size:11px; color:var(--muted); max-width:340px; overflow:hidden; text-overflow:ellipsis;">
+                <a href="${t.daily_url}" target="_blank" style="color:#60a5fa;">${t.daily_url}</a>
+              </div>
+            </td>
+            <td><code>.${(t.file_format || 'XLS').toLowerCase()}</code></td>
+            <td><span class="badge ${bClass}">${bState}</span></td>
+            <td><code>data/raw_files/${t.etf_symbol}/</code></td>
+            <td class="num">${t.snapshot_dates_count}</td>
+            <td style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="btn-success" onclick="setIndividualEtfBotState('${t.etf_symbol}', 'ACTIVE')">▶ On</button>
+              <button class="btn-warning" onclick="setIndividualEtfBotState('${t.etf_symbol}', 'PAUSED')">⏸ Pause</button>
+              <button class="btn-danger" onclick="setIndividualEtfBotState('${t.etf_symbol}', 'STOPPED')">⏹ Off</button>
+              <button class="btn-primary" onclick="selectAndScrapeEtf('${t.etf_symbol}')">⚡ Scrape ${t.etf_symbol}</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
 
       // Update Scheduler Header
       const sched = data.scheduler;
@@ -721,15 +756,23 @@
         selSingle.value = (preserveSelection && prevSingle) ? prevSingle : dates[0].holding_date;
       }
 
-      // Raw files table
+      // Raw files table (shows ETF directory + View in Browser + Download)
       const rawBody = document.getElementById('rawFilesBody');
-      rawBody.innerHTML = (data.raw_files || []).map(f => `
-        <tr>
-          <td><code>${f.filename}</code></td>
-          <td class="num">${(f.size_bytes / 1024).toFixed(1)} KB</td>
-          <td><a class="btn" href="/api/raw-files/${encodeURIComponent(f.filename)}">⬇ Download File</a></td>
-        </tr>
-      `).join('') || '<tr><td colspan="3">No raw files downloaded yet.</td></tr>';
+      const filesList = (data.raw_files && data.raw_files.length > 0) ? data.raw_files : (data.all_raw_files || []);
+      rawBody.innerHTML = filesList.map(f => {
+        const rel = f.relative_path || f.filename;
+        return `
+          <tr>
+            <td><code>${f.directory || ('data/raw_files/' + selectedEtf + '/')}</code></td>
+            <td><code>${f.filename}</code></td>
+            <td class="num">${(f.size_bytes / 1024).toFixed(1)} KB</td>
+            <td style="display:flex; gap:8px;">
+              <a class="btn btn-primary" href="/api/raw-files-view/${encodeURIComponent(rel)}" target="_blank">👁 View in Browser</a>
+              <a class="btn" href="/api/raw-files/${encodeURIComponent(rel)}">⬇ Download</a>
+            </td>
+          </tr>
+        `;
+      }).join('') || '<tr><td colspan="4">No raw files downloaded yet for this ETF.</td></tr>';
 
       // Alerts table
       const alertsBody = document.getElementById('alertsLogBody');

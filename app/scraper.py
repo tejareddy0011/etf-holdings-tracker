@@ -38,6 +38,13 @@ MFS_SPLASH_PREFERENCE_COOKIES = (
 )
 
 
+def get_etf_raw_dir(etf_symbol: str) -> Path:
+    """Returns the dedicated directory for a specific ETF's downloaded .xls / .csv files."""
+    d = RAW_FILES_DIR / etf_symbol.strip().upper()
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
 def build_table2excel_xls(product_name: str, holding_date_raw: str, table_html: str, disclosure_html: str = "") -> str:
     sheet_name = "Daily Holdings"
     return (
@@ -113,7 +120,12 @@ def fetch_mfs_page_with_splash_bypass(url: str) -> str:
     return html
 
 
-def extract_and_save_xls(html: str, is_historical: bool = False, fallback_date: Optional[str] = None) -> Path:
+def extract_and_save_xls(
+    html: str,
+    etf_symbol: str = DEFAULT_ETF_SYMBOL,
+    is_historical: bool = False,
+    fallback_date: Optional[str] = None,
+) -> Path:
     soup = BeautifulSoup(html, "html.parser")
 
     download_btn = soup.find("a", class_="js-download-btn")
@@ -138,7 +150,7 @@ def extract_and_save_xls(html: str, is_historical: bool = False, fallback_date: 
         )
 
     product_el = soup.find(class_="product-name")
-    product_name = product_el.get_text(strip=True).replace(" ", "_") if product_el else "Active_Value_ETF"
+    product_name = product_el.get_text(strip=True).replace(" ", "_") if product_el else f"{etf_symbol}_ETF"
     securities_date = table.get("data-daily-holdings-securitiesdate") or fallback_date or datetime.now().strftime("%m-%d-%y")
 
     disclosure_el = soup.find(class_="fullholding-disclosure")
@@ -162,12 +174,15 @@ def extract_and_save_xls(html: str, is_historical: bool = False, fallback_date: 
     stamped_filename = f"{base_filename}_downloaded_{download_stamp}.xls"
     canonical_filename = f"{base_filename}.xls"
 
-    stamped_path = RAW_FILES_DIR / stamped_filename
-    canonical_path = RAW_FILES_DIR / canonical_filename
+    # Store inside the per-ETF subdirectory (data/raw_files/<ETF_SYMBOL>/) as well as top-level compatibility
+    etf_dir = get_etf_raw_dir(etf_symbol)
+    stamped_path = etf_dir / stamped_filename
+    canonical_path = etf_dir / canonical_filename
 
     try:
         stamped_path.write_text(xls_content, encoding="utf-8")
         canonical_path.write_text(xls_content, encoding="utf-8")
+        (RAW_FILES_DIR / canonical_filename).write_text(xls_content, encoding="utf-8")
     except Exception as e:
         raise ScraperBotError(
             KnownErrorType.EXCEL_FAILED_OR_CORRUPTED,
@@ -179,7 +194,7 @@ def extract_and_save_xls(html: str, is_historical: bool = False, fallback_date: 
             from google.cloud import storage  # type: ignore
             client = storage.Client()
             bucket = client.bucket(GCS_BUCKET_NAME)
-            blob = bucket.blob(f"mfs_etf_holdings/{stamped_filename}")
+            blob = bucket.blob(f"mfs_etf_holdings/{etf_symbol.upper()}/{stamped_filename}")
             blob.upload_from_filename(str(stamped_path))
         except Exception as gcs_err:
             print(f"Warning: GCS bucket upload failed ({gcs_err}); local copy saved at {stamped_path}")
@@ -220,12 +235,12 @@ def run_daily_scrape(
             )
 
         html = fetch_mfs_page_with_splash_bypass(target_url)
-        raw_file_path = extract_and_save_xls(html, is_historical=False)
+        raw_file_path = extract_and_save_xls(html, etf_symbol=sym, is_historical=False)
         records = parse_mfs_xls_file(raw_file_path)
         inserted_count = save_holdings(
             records=records,
             etf_symbol=sym,
-            source_file=raw_file_path.name,
+            source_file=f"{sym}/{raw_file_path.name}",
         )
         holding_date = records[0]["holding_date"]
 
@@ -233,7 +248,7 @@ def run_daily_scrape(
             run_id=run_id,
             status="SUCCESS",
             holding_date=holding_date,
-            raw_file_path=str(raw_file_path),
+            raw_file_path=f"{sym}/{raw_file_path.name}",
             records_parsed=inserted_count,
         )
         return {
@@ -241,7 +256,7 @@ def run_daily_scrape(
             "etf_symbol": sym,
             "status": "SUCCESS",
             "holding_date": holding_date,
-            "raw_file": raw_file_path.name,
+            "raw_file": f"{sym}/{raw_file_path.name}",
             "records_inserted": inserted_count,
         }
 
@@ -301,23 +316,23 @@ def seed_historical_mfs_dates(
         run_id = log_scrape_start(trigger_type=f"HISTORICAL_SYNC ({d})", etf_symbol=sym)
         try:
             html = fetch_mfs_page_with_splash_bypass(hist_url)
-            raw_file_path = extract_and_save_xls(html, is_historical=True, fallback_date=d)
+            raw_file_path = extract_and_save_xls(html, etf_symbol=sym, is_historical=True, fallback_date=d)
             records = parse_mfs_xls_file(raw_file_path, fallback_date=d)
             for r in records:
                 r["holding_date"] = d
             inserted = save_holdings(
                 records=records,
                 etf_symbol=sym,
-                source_file=raw_file_path.name,
+                source_file=f"{sym}/{raw_file_path.name}",
             )
             log_scrape_finish(
                 run_id=run_id,
                 status="SUCCESS",
                 holding_date=d,
-                raw_file_path=str(raw_file_path),
+                raw_file_path=f"{sym}/{raw_file_path.name}",
                 records_parsed=inserted,
             )
-            results.append({"etf_symbol": sym, "date": d, "status": "SUCCESS", "records": inserted, "file": raw_file_path.name})
+            results.append({"etf_symbol": sym, "date": d, "status": "SUCCESS", "records": inserted, "file": f"{sym}/{raw_file_path.name}"})
         except Exception as e:
             log_scrape_finish(
                 run_id=run_id,
