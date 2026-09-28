@@ -1,5 +1,7 @@
+import json
 import random
 import urllib.error
+import urllib.parse
 import urllib.request
 from datetime import datetime
 from pathlib import Path
@@ -27,9 +29,9 @@ from app.notifier import KnownErrorType, ScraperBotError, send_failure_notificat
 from app.parser import parse_mfs_xls_file
 
 USER_AGENTS = [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
-    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
 ]
 
 MFS_SPLASH_PREFERENCE_COOKIES = (
@@ -43,6 +45,86 @@ def get_etf_raw_dir(etf_symbol: str) -> Path:
     d = RAW_FILES_DIR / etf_symbol.strip().upper()
     d.mkdir(parents=True, exist_ok=True)
     return d
+
+
+def get_pt_timestamp_str() -> str:
+    """Returns a PT date-and-time stamp string (YYYY-MM-DD_HH-MM-SS_PT) for downloaded files."""
+    return datetime.now(ZoneInfo(SCHEDULE_TIMEZONE)).strftime("%Y-%m-%d_%H-%M-%S_PT")
+
+
+def build_opener_with_proxy() -> urllib.request.OpenerDirector:
+    settings = get_settings()
+    handlers = []
+    if (settings.get("proxy_enabled") == "true" or PROXY_LIST) and PROXY_LIST:
+        proxy_url = random.choice(PROXY_LIST)
+        handlers.append(urllib.request.ProxyHandler({"http": proxy_url, "https": proxy_url}))
+    return urllib.request.build_opener(*handlers)
+
+
+def http_get_text(url: str, extra_headers: Optional[Dict[str, str]] = None, timeout: int = 25) -> str:
+    headers = {
+        "User-Agent": random.choice(USER_AGENTS),
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+    if extra_headers:
+        headers.update(extra_headers)
+    opener = build_opener_with_proxy()
+    req = urllib.request.Request(url.split("#")[0], headers=headers)
+    try:
+        with opener.open(req, timeout=timeout) as resp:
+            return resp.read().decode("utf-8", errors="ignore")
+    except urllib.error.HTTPError as e:
+        raise ScraperBotError(
+            KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
+            f"HTTP {e.code} error fetching {url}: {e.reason}",
+        ) from e
+    except Exception as e:
+        raise ScraperBotError(
+            KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
+            f"Target URL unreachable ({url}): {e}",
+        ) from e
+
+
+def write_stamped_and_canonical_file(etf_symbol: str, base_stem: str, ext: str, content: str) -> Path:
+    """
+    Writes both a timestamped copy (with download date and time in PT) and a canonical copy
+    inside data/raw_files/<ETF_SYMBOL>/ for 5+ year retention.
+    """
+    if not content or len(content) < 50:
+        raise ScraperBotError(
+            KnownErrorType.EXCEL_FAILED_OR_CORRUPTED,
+            f"Downloaded {ext} payload for {etf_symbol} is empty or corrupted.",
+        )
+    ts = get_pt_timestamp_str()
+    clean_ext = ext if ext.startswith(".") else f".{ext}"
+    stamped_filename = f"{base_stem}_downloaded_{ts}{clean_ext}"
+    canonical_filename = f"{base_stem}{clean_ext}"
+
+    etf_dir = get_etf_raw_dir(etf_symbol)
+    stamped_path = etf_dir / stamped_filename
+    canonical_path = etf_dir / canonical_filename
+
+    try:
+        stamped_path.write_text(content, encoding="utf-8")
+        canonical_path.write_text(content, encoding="utf-8")
+    except Exception as e:
+        raise ScraperBotError(
+            KnownErrorType.EXCEL_FAILED_OR_CORRUPTED,
+            f"Failed to write downloaded file to storage directory: {e}",
+        ) from e
+
+    if GCS_BUCKET_NAME:
+        try:
+            from google.cloud import storage  # type: ignore
+            client = storage.Client()
+            bucket = client.bucket(GCS_BUCKET_NAME)
+            blob = bucket.blob(f"etf_holdings/{etf_symbol.upper()}/{stamped_filename}")
+            blob.upload_from_filename(str(stamped_path))
+        except Exception as gcs_err:
+            print(f"Warning: GCS bucket upload failed ({gcs_err}); local copy saved at {stamped_path}")
+
+    return stamped_path
 
 
 def build_table2excel_xls(product_name: str, holding_date_raw: str, table_html: str, disclosure_html: str = "") -> str:
@@ -65,49 +147,14 @@ def build_table2excel_xls(product_name: str, holding_date_raw: str, table_html: 
 
 
 def fetch_mfs_page_with_splash_bypass(url: str) -> str:
-    settings = get_settings()
-    headers = {
-        "User-Agent": random.choice(USER_AGENTS),
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Cookie": MFS_SPLASH_PREFERENCE_COOKIES,
-    }
-
-    handlers = []
-    if settings.get("proxy_enabled") == "true" and PROXY_LIST:
-        proxy_url = random.choice(PROXY_LIST)
-        handlers.append(urllib.request.ProxyHandler({"http": proxy_url, "https": proxy_url}))
-
-    opener = urllib.request.build_opener(*handlers)
-    clean_url = url.split("#")[0]
-    req = urllib.request.Request(clean_url, headers=headers)
-
-    try:
-        with opener.open(req, timeout=20) as resp:
-            status_code = resp.getcode()
-            final_url = resp.geturl()
-            html = resp.read().decode("utf-8", errors="ignore")
-    except urllib.error.HTTPError as e:
+    html = http_get_text(url, extra_headers={"Cookie": MFS_SPLASH_PREFERENCE_COOKIES})
+    if len(html) < 500:
         raise ScraperBotError(
             KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
-            f"HTTP {e.code} error fetching target URL {clean_url}: {e.reason}",
-        ) from e
-    except Exception as e:
-        raise ScraperBotError(
-            KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
-            f"Target URL unreachable ({clean_url}): {e}",
-        ) from e
-
-    if status_code != 200 or not html or len(html) < 500:
-        raise ScraperBotError(
-            KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
-            f"Invalid response from target URL (status={status_code}, length={len(html)})",
+            f"Invalid response from MFS URL (length={len(html)})",
         )
-
-    if "select-your-role" in final_url.lower() or (
-        "js-daily-holdings-page" not in html and "js-full-holding-table" not in html
-    ):
-        if "individual investor" in html.lower() and "save my preferences" in html.lower() and "js-full-holding-table" not in html:
+    if "js-daily-holdings-page" not in html and "js-full-holding-table" not in html:
+        if "individual investor" in html.lower() and "save my preferences" in html.lower():
             raise ScraperBotError(
                 KnownErrorType.POPUPS_FAILED_TO_CLEAR,
                 "Splash screen ('Individual Investor' / 'Save my preferences' pop-ups) blocked access to holdings content.",
@@ -116,7 +163,6 @@ def fetch_mfs_page_with_splash_bypass(url: str) -> str:
             KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
             "Page layout changed: expected holdings container (.js-daily-holdings-page / .js-full-holding-table) not found.",
         )
-
     return html
 
 
@@ -163,42 +209,159 @@ def extract_and_save_xls(
         disclosure_html=disclosure_html,
     )
 
-    if not xls_content or len(xls_content) < 200:
+    base_stem = f"{product_name}-Daily_Holdings_{securities_date}"
+    return write_stamped_and_canonical_file(etf_symbol, base_stem, ".xls", xls_content)
+
+
+def scrape_lsvd_csv(target_url: str, etf_symbol: str = "LSVD") -> Path:
+    """
+    Scrapes LSVD (https://www.lsvasset.com/disciplined-value-etf/):
+    Locates the "All Fund Holdings CSV Download" link and downloads LSVD-holdings.csv.
+    """
+    if target_url.lower().endswith(".csv"):
+        csv_url = target_url
+    else:
+        page_html = http_get_text(target_url)
+        soup = BeautifulSoup(page_html, "html.parser")
+        csv_link = None
+        for a in soup.find_all("a"):
+            txt = " ".join(a.get_text(" ", strip=True).split()).lower()
+            href = a.get("href", "")
+            if "all fund holdings csv download" in txt or "lsvd-holdings.csv" in href.lower():
+                csv_link = href
+                break
+        if not csv_link:
+            raise ScraperBotError(
+                KnownErrorType.DOWNLOAD_LINK_MISSING_OR_ALTERED,
+                'Could not locate "All Fund Holdings CSV Download" link on LSVD page.',
+            )
+        csv_url = urllib.parse.urljoin(target_url, csv_link)
+
+    csv_text = http_get_text(csv_url)
+    if "Ticker" not in csv_text and "ISIN" not in csv_text:
         raise ScraperBotError(
             KnownErrorType.EXCEL_FAILED_OR_CORRUPTED,
-            "Generated Excel (.xls) payload is empty or corrupted.",
+            "Downloaded LSVD CSV is missing expected header columns (Name, Ticker, ISIN).",
+        )
+    return write_stamped_and_canonical_file(etf_symbol, "LSVD-holdings", ".csv", csv_text)
+
+
+def scrape_vflo_csv(target_url: str, etf_symbol: str = "VFLO") -> Path:
+    """
+    Scrapes VFLO (https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-free-cash-flow-etf):
+    Verifies the "All Holdings" link (#allholdingsCSVExport), calls the VictoryShares AllHoldings API,
+    and generates VictorySharesFreeCashFlowETF_<MM_DD_YYYY>.csv.
+    """
+    page_html = http_get_text(target_url)
+    soup = BeautifulSoup(page_html, "html.parser")
+
+    export_btn = soup.find("a", id="allholdingsCSVExport")
+    if not export_btn or "all holdings" not in export_btn.get_text(" ", strip=True).lower():
+        raise ScraperBotError(
+            KnownErrorType.DOWNLOAD_LINK_MISSING_OR_ALTERED,
+            'Could not locate the "All Holdings" (#allholdingsCSVExport) link on VictoryShares page.',
         )
 
-    download_stamp = datetime.now(ZoneInfo(SCHEDULE_TIMEZONE)).strftime("%Y-%m-%d")
-    base_filename = f"{product_name}-Daily_Holdings_{securities_date}"
-    stamped_filename = f"{base_filename}_downloaded_{download_stamp}.xls"
-    canonical_filename = f"{base_filename}.xls"
-
-    # Store inside the per-ETF subdirectory (data/raw_files/<ETF_SYMBOL>/)
-    etf_dir = get_etf_raw_dir(etf_symbol)
-    stamped_path = etf_dir / stamped_filename
-    canonical_path = etf_dir / canonical_filename
+    cfg_input = soup.find("input", {"id": "productDetailConfigJson"})
+    labels_input = soup.find("input", {"id": "productLabels"})
+    api_key_input = soup.find("input", {"id": "fundApiKey"})
+    if not cfg_input or not labels_input or not api_key_input:
+        raise ScraperBotError(
+            KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
+            "VictoryShares page layout changed: missing productDetailConfigJson or fundApiKey inputs.",
+        )
 
     try:
-        stamped_path.write_text(xls_content, encoding="utf-8")
-        canonical_path.write_text(xls_content, encoding="utf-8")
+        cfg = json.loads(cfg_input["value"])
+        labels = json.loads(labels_input["value"])
+        api_key = api_key_input["value"]
+        api_url = cfg["allholdings"]
+    except Exception as e:
+        raise ScraperBotError(
+            KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
+            f"Failed to parse VictoryShares holdings configuration JSON: {e}",
+        ) from e
+
+    raw_json = http_get_text(api_url, extra_headers={"x-api-key": api_key})
+    try:
+        arr_data = json.loads(raw_json)
     except Exception as e:
         raise ScraperBotError(
             KnownErrorType.EXCEL_FAILED_OR_CORRUPTED,
-            f"Failed to write downloaded Excel file to storage directory: {e}",
+            f"Invalid JSON returned from VictoryShares AllHoldings endpoint: {e}",
         ) from e
 
-    if GCS_BUCKET_NAME:
-        try:
-            from google.cloud import storage  # type: ignore
-            client = storage.Client()
-            bucket = client.bucket(GCS_BUCKET_NAME)
-            blob = bucket.blob(f"mfs_etf_holdings/{etf_symbol.upper()}/{stamped_filename}")
-            blob.upload_from_filename(str(stamped_path))
-        except Exception as gcs_err:
-            print(f"Warning: GCS bucket upload failed ({gcs_err}); local copy saved at {stamped_path}")
+    if not isinstance(arr_data, list) or not arr_data:
+        raise ScraperBotError(
+            KnownErrorType.EXCEL_FAILED_OR_CORRUPTED,
+            "VictoryShares AllHoldings returned zero rows.",
+        )
 
-    return stamped_path
+    etf_data_div = soup.find("div", class_="etf-fund-data")
+    active_tmpl = etf_data_div.get("data-active-etf-template", "false") if etf_data_div else "false"
+    json_row = labels.get("etfActiveAllholdings") if active_tmpl == "true" else labels.get("etfPassiveAllholdings")
+    if not json_row:
+        json_row = {
+            "as_of_date": "Date",
+            "stock_symbol": "Stock Symbol",
+            "etfname": "ETF Name",
+            "isin": "ISIN",
+            "holding_name": "Holding",
+            "security_type": "Security Type",
+            "shares": "Shares",
+            "market_value": "Market Value",
+            "portfolio_percentage": "Portfolio %",
+        }
+
+    fund_name = "VictoryShares Free Cash Flow ETF"
+    header_line = ",".join(json_row.values())
+    lines = [header_line]
+    for item in arr_data:
+        item["etfname"] = fund_name
+        row_cells = []
+        for k in json_row.keys():
+            val = item.get(k)
+            s_val = "" if val is None else str(val)
+            row_cells.append(f'"{s_val}"')
+        lines.append(",".join(row_cells) + ",")
+
+    csv_content = "\r\n".join(lines) + "\r\n"
+    date_part = datetime.now(ZoneInfo(SCHEDULE_TIMEZONE)).strftime("%m_%d_%Y")
+    if arr_data and arr_data[0].get("as_of_date"):
+        date_part = str(arr_data[0]["as_of_date"]).replace("/", "_")
+    base_stem = f"VictorySharesFreeCashFlowETF_{date_part}"
+    return write_stamped_and_canonical_file(etf_symbol, base_stem, ".csv", csv_content)
+
+
+def scrape_ivv_xls(target_url: str, etf_symbol: str = "IVV") -> Path:
+    """
+    Scrapes IVV (https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf):
+    Locates the "Data download" link and downloads iShares-Core-SP-500-ETF_fund.xls.
+    """
+    page_html = http_get_text(target_url)
+    soup = BeautifulSoup(page_html, "html.parser")
+    dl_href = None
+    for a in soup.find_all("a"):
+        txt = " ".join(a.get_text(" ", strip=True).split()).lower()
+        href = a.get("href", "")
+        if "data download" in txt or "component=funddownload" in href.lower():
+            dl_href = href
+            break
+
+    if not dl_href:
+        raise ScraperBotError(
+            KnownErrorType.DOWNLOAD_LINK_MISSING_OR_ALTERED,
+            'Could not locate the "Data download" link on iShares IVV page.',
+        )
+
+    xls_url = urllib.parse.urljoin(target_url, dl_href)
+    xls_content = http_get_text(xls_url, timeout=45)
+    if "<ss:workbook" not in xls_content.lower() and "<table" not in xls_content.lower():
+        raise ScraperBotError(
+            KnownErrorType.EXCEL_FAILED_OR_CORRUPTED,
+            "Downloaded iShares IVV file is not a valid Excel workbook.",
+        )
+    return write_stamped_and_canonical_file(etf_symbol, "iShares-Core-SP-500-ETF_fund", ".xls", xls_content)
 
 
 def run_daily_scrape(
@@ -234,18 +397,16 @@ def run_daily_scrape(
                 error_descriptions.get(simulate_error, f"Simulated failure for {simulate_error}"),
             )
 
-        if target_url.lower().endswith(".csv") or (file_fmt.upper() == "CSV" and "mfs.com" not in target_url.lower()):
-            session = get_anonymous_session()
-            resp = session.get(target_url, timeout=REQUEST_TIMEOUT_SECONDS)
-            if resp.status_code != 200 or not resp.text.strip():
-                raise ScraperBotError(
-                    KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
-                    f"CSV target URL returned HTTP {resp.status_code}",
-                )
-            download_stamp = datetime.now(ZoneInfo(SCHEDULE_TIMEZONE)).strftime("%Y-%m-%d")
-            etf_dir = get_etf_raw_dir(sym)
-            raw_file_path = etf_dir / f"{sym}_Daily_Holdings_downloaded_{download_stamp}.csv"
-            raw_file_path.write_text(resp.text, encoding="utf-8")
+        url_lower = target_url.lower()
+        if sym == "LSVD" or "lsvasset.com" in url_lower:
+            raw_file_path = scrape_lsvd_csv(target_url, etf_symbol=sym)
+        elif sym == "VFLO" or "vcm.com" in url_lower:
+            raw_file_path = scrape_vflo_csv(target_url, etf_symbol=sym)
+        elif sym == "IVV" or "ishares.com" in url_lower or "blackrock.com" in url_lower:
+            raw_file_path = scrape_ivv_xls(target_url, etf_symbol=sym)
+        elif url_lower.endswith(".csv") or (file_fmt.upper() == "CSV" and "mfs.com" not in url_lower):
+            csv_text = http_get_text(target_url)
+            raw_file_path = write_stamped_and_canonical_file(sym, f"{sym}_Daily_Holdings", ".csv", csv_text)
         else:
             html = fetch_mfs_page_with_splash_bypass(target_url)
             raw_file_path = extract_and_save_xls(html, etf_symbol=sym, is_historical=False)

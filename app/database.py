@@ -9,7 +9,7 @@ from app.config import (
     PRESET_ETF_TARGETS,
 )
 
-CASH_TICKERS = {"CASH", "CASH_USD", "CASHUSD", "SWEEP", "-", "85749270"}
+CASH_TICKERS = {"CASH", "CASH_USD", "CASHUSD", "SWEEP", "-", "85749270", "XTSLA"}
 
 
 def is_cash_or_sweep(ticker: str, cusip: str, company_name: str, gics_sector: str) -> bool:
@@ -21,7 +21,13 @@ def is_cash_or_sweep(ticker: str, cusip: str, company_name: str, gics_sector: st
         return True
     if t.isdigit():
         return True
-    if "CASH & CASH EQUIVALENTS" in name or "MONEY MARKET" in name:
+    if (
+        "CASH & CASH EQUIVALENTS" in name
+        or "CASH AND CASH EQUIVALENTS" in name
+        or "MONEY MARKET" in name
+        or "TREASURY OBLIGATIONS FUND" in name
+        or "BLK CSH FND" in name
+    ):
         return True
     if sec in ("-", "") and "CASH" in name:
         return True
@@ -134,22 +140,37 @@ def init_db() -> None:
                 (k, v, now),
             )
         conn.execute(
+            "UPDATE admin_settings SET value = ?, updated_at = ? WHERE key = 'alert_email' AND value = 'gvarun@gmail.com'",
+            (ALERT_RECIPIENT_EMAIL, now),
+        )
+        conn.execute(
             "UPDATE admin_settings SET value = ?, updated_at = ? WHERE key = 'alert_email'",
             (ALERT_RECIPIENT_EMAIL, now),
         )
+        conn.execute("DELETE FROM etf_targets WHERE etf_symbol IN ('MMID', 'MFSI', 'BRCE')")
         for etf in PRESET_ETF_TARGETS:
+            is_act = int(etf.get("is_active", 1))
+            b_state = "ACTIVE" if is_act else "PAUSED"
+            f_fmt = (etf.get("file_format") or "XLS").upper()
             conn.execute(
                 """
-                INSERT OR IGNORE INTO etf_targets (
+                INSERT INTO etf_targets (
                     etf_symbol, etf_name, daily_url, historical_base_url, is_active, bot_state, file_format, created_at
-                ) VALUES (?, ?, ?, ?, ?, 'ACTIVE', 'XLS', ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(etf_symbol) DO UPDATE SET
+                    etf_name = excluded.etf_name,
+                    daily_url = excluded.daily_url,
+                    historical_base_url = excluded.historical_base_url,
+                    file_format = excluded.file_format
                 """,
                 (
                     etf["etf_symbol"],
                     etf["etf_name"],
                     etf["daily_url"],
                     etf.get("historical_base_url", ""),
-                    etf.get("is_active", 1),
+                    is_act,
+                    b_state,
+                    f_fmt,
                     now,
                 ),
             )
@@ -166,7 +187,13 @@ def get_etf_targets() -> List[Dict[str, Any]]:
             FROM etf_targets t
             LEFT JOIN holdings h ON h.etf_symbol = t.etf_symbol
             GROUP BY t.etf_symbol
-            ORDER BY CASE WHEN t.etf_symbol = 'MFSV' THEN 0 ELSE 1 END, t.etf_symbol ASC
+            ORDER BY CASE t.etf_symbol
+                WHEN 'MFSV' THEN 0
+                WHEN 'LSVD' THEN 1
+                WHEN 'VFLO' THEN 2
+                WHEN 'IVV' THEN 3
+                ELSE 4
+            END, t.etf_symbol ASC
             """
         ).fetchall()
         return [dict(r) for r in rows]

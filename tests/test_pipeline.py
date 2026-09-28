@@ -7,6 +7,7 @@ from app.database import (
     get_etf_targets,
     get_recent_alerts,
     init_db,
+    update_setting,
 )
 from app.notifier import KnownErrorType
 from app.parser import parse_csv_holdings
@@ -18,15 +19,15 @@ class TestETFPipeline(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
         init_db()
+        update_setting("alert_email", "Adam.smith.fintech@gmail.com")
 
-    def test_01_live_daily_scrape_and_xls_archive(self) -> None:
+    def test_01_live_daily_scrape_and_xls_archive_mfsv(self) -> None:
         res = run_daily_scrape(trigger_type="UNIT_TEST", etf_symbol="MFSV")
         self.assertEqual(res["status"], "SUCCESS")
         self.assertGreater(res["records_inserted"], 50)
         raw_path = RAW_FILES_DIR / res["raw_file"]
         self.assertTrue(raw_path.exists())
-        canonical_path = RAW_FILES_DIR / "MFSV" / "Active_Value_ETF-Daily_Holdings_09-25-26.xls"
-        self.assertTrue(canonical_path.exists())
+        self.assertIn("_downloaded_", res["raw_file"])
 
     def test_02_historical_seed_and_date_comparison(self) -> None:
         seed_res = seed_historical_mfs_dates(["2026-08-31", "2026-06-30", "2026-03-31"], etf_symbol="MFSV")
@@ -45,15 +46,29 @@ class TestETFPipeline(unittest.TestCase):
         self.assertIn("CAT US", removed_tickers)
         self.assertIn("C US", removed_tickers)
 
-    def test_03_multi_etf_registry_and_second_etf_scrape(self) -> None:
+    def test_03_all_four_phase1_etf_bots_scrape(self) -> None:
         targets = get_etf_targets()
         symbols = [t["etf_symbol"] for t in targets]
-        self.assertIn("MFSV", symbols)
-        self.assertIn("MFSG", symbols)
+        for sym in ["MFSV", "LSVD", "VFLO", "IVV"]:
+            self.assertIn(sym, symbols)
 
-        res_growth = run_daily_scrape(trigger_type="UNIT_TEST", etf_symbol="MFSG")
-        self.assertEqual(res_growth["status"], "SUCCESS")
-        self.assertGreater(res_growth["records_inserted"], 20)
+        # Scrape LSVD (CSV)
+        res_lsvd = run_daily_scrape(trigger_type="UNIT_TEST", etf_symbol="LSVD")
+        self.assertEqual(res_lsvd["status"], "SUCCESS")
+        self.assertGreater(res_lsvd["records_inserted"], 50)
+        self.assertTrue((RAW_FILES_DIR / res_lsvd["raw_file"]).exists())
+
+        # Scrape VFLO (CSV)
+        res_vflo = run_daily_scrape(trigger_type="UNIT_TEST", etf_symbol="VFLO")
+        self.assertEqual(res_vflo["status"], "SUCCESS")
+        self.assertGreater(res_vflo["records_inserted"], 30)
+        self.assertTrue((RAW_FILES_DIR / res_vflo["raw_file"]).exists())
+
+        # Scrape IVV (XLS)
+        res_ivv = run_daily_scrape(trigger_type="UNIT_TEST", etf_symbol="IVV")
+        self.assertEqual(res_ivv["status"], "SUCCESS")
+        self.assertGreater(res_ivv["records_inserted"], 400)
+        self.assertTrue((RAW_FILES_DIR / res_ivv["raw_file"]).exists())
 
     def test_04_manual_csv_upload_parser(self) -> None:
         sample_csv = (
@@ -75,11 +90,11 @@ class TestETFPipeline(unittest.TestCase):
         st = scheduler.set_admin_state("ACTIVE")
         self.assertEqual(st["scraper_state"], "ACTIVE")
 
-        etf_paused = set_etf_bot_state("BRCE", "PAUSED")
+        etf_paused = set_etf_bot_state("VFLO", "PAUSED")
         self.assertEqual(etf_paused["bot_state"], "PAUSED")
-        etf_stopped = set_etf_bot_state("BRCE", "STOPPED")
+        etf_stopped = set_etf_bot_state("VFLO", "STOPPED")
         self.assertEqual(etf_stopped["bot_state"], "STOPPED")
-        etf_active = set_etf_bot_state("BRCE", "ACTIVE")
+        etf_active = set_etf_bot_state("VFLO", "ACTIVE")
         self.assertEqual(etf_active["bot_state"], "ACTIVE")
 
     @patch("app.notifier.SMTP_USER", "")
@@ -94,7 +109,7 @@ class TestETFPipeline(unittest.TestCase):
             res = run_daily_scrape(trigger_type="ERROR_TEST", simulate_error=et)
             self.assertEqual(res["status"], "FAILED")
             self.assertEqual(res["error_type"], et)
-            self.assertEqual(res["alert_sent"]["recipient"], "gvarun@gmail.com")
+            self.assertEqual(res["alert_sent"]["recipient"], "Adam.smith.fintech@gmail.com")
 
         alerts = get_recent_alerts(10)
         self.assertGreaterEqual(len(alerts), 4)
@@ -102,3 +117,4 @@ class TestETFPipeline(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+

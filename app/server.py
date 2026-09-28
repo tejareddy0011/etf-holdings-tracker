@@ -60,9 +60,11 @@ def list_raw_files(etf_symbol: str = "") -> List[Dict[str, Any]]:
     organize_legacy_raw_files()
     files: List[Dict[str, Any]] = []
     sym_filter = etf_symbol.strip().upper()
+    tz = ZoneInfo(SCHEDULE_TIMEZONE)
 
+    priority_order = {"MFSV": 0, "LSVD": 1, "VFLO": 2, "IVV": 3, "MFSG": 4}
     subdirs = [d for d in RAW_FILES_DIR.iterdir() if d.is_dir()]
-    for d in sorted(subdirs, key=lambda x: x.name):
+    for d in sorted(subdirs, key=lambda x: (priority_order.get(x.name.upper(), 99), x.name)):
         if sym_filter and d.name.upper() != sym_filter:
             continue
         for p in sorted(
@@ -72,6 +74,7 @@ def list_raw_files(etf_symbol: str = "") -> List[Dict[str, Any]]:
         ):
             stat = p.stat()
             rel = f"{d.name.upper()}/{p.name}"
+            dt_pt = datetime.fromtimestamp(stat.st_mtime, tz=tz).strftime("%Y-%m-%d %I:%M:%S %p %Z")
             files.append(
                 {
                     "etf_symbol": d.name.upper(),
@@ -80,10 +83,14 @@ def list_raw_files(etf_symbol: str = "") -> List[Dict[str, Any]]:
                     "filename": p.name,
                     "size_bytes": stat.st_size,
                     "modified_at": stat.st_mtime,
+                    "downloaded_at_pt": dt_pt,
+                    "retention_policy": "5+ Years (1,825+ Days)",
                     "view_url": f"/api/raw-files-view/{urllib.parse.quote(rel)}",
                     "download_url": f"/api/raw-files/{urllib.parse.quote(rel)}",
                 }
             )
+    if not sym_filter:
+        files.sort(key=lambda x: x["modified_at"], reverse=True)
     return files
 
 
@@ -240,7 +247,7 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
             dl_href = f"/api/raw-files/{urllib.parse.quote(rel)}"
             top_bar = (
                 f"<div class='topbar'><div><h2>Original File Preview: {html_lib.escape(fpath.name)}</h2>"
-                f"<span>Directory: data/raw_files/{html_lib.escape(rel)}</span></div>"
+                f"<span>Directory: data/raw_files/{html_lib.escape(rel)} • Retention: 5+ Years</span></div>"
                 f"<a class='btn-dl' href='{dl_href}'>⬇ Download Original File</a></div>"
             )
             if "<table" in raw_text.lower():
@@ -249,6 +256,35 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                     f"<title>{html_lib.escape(fpath.name)}</title>"
                     f"<style>{preview_css}</style></head><body>"
                     f"{top_bar}<div class='card'>{raw_text}</div></body></html>"
+                )
+            elif "<ss:workbook" in raw_text.lower() or "<ss:worksheet" in raw_text.lower():
+                import re
+                start = raw_text.find('<ss:Worksheet ss:Name="Holdings">')
+                if start == -1:
+                    start = raw_text.find("<ss:Worksheet")
+                end = raw_text.find("</ss:Worksheet>", start)
+                sheet_xml = raw_text[start:end] if end != -1 else raw_text
+                row_blocks = re.findall(r"<ss:Row[^>]*>(.*?)</ss:Row>", sheet_xml, re.S)
+                rows_html = []
+                header_rendered = False
+                for rb in row_blocks:
+                    cells = [
+                        re.sub(r"<[^>]+>", "", c).strip()
+                        for c in re.findall(r"<ss:Data[^>]*>(.*?)</ss:Data>", rb, re.S)
+                    ]
+                    if not any(cells):
+                        continue
+                    is_hdr = not header_rendered and "TICKER" in " ".join(cells).upper()
+                    if is_hdr:
+                        header_rendered = True
+                    tag = "th" if is_hdr else "td"
+                    cells_html = "".join(f"<{tag}>{html_lib.escape(c)}</{tag}>" for c in cells)
+                    rows_html.append(f"<tr>{cells_html}</tr>")
+                styled_html = (
+                    "<!DOCTYPE html><html><head><meta charset='utf-8'>"
+                    f"<title>{html_lib.escape(fpath.name)}</title>"
+                    f"<style>{preview_css}</style></head><body>"
+                    f"{top_bar}<div class='card'><table>{''.join(rows_html)}</table></div></body></html>"
                 )
             elif fpath.suffix.lower() == ".csv":
                 import csv, io
@@ -347,6 +383,15 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
             self._send_json(res)
             return
 
+        if path == "/api/admin/scrape-all-active":
+            results = []
+            for target in get_etf_targets():
+                if target.get("is_active", 1) and target.get("bot_state", "ACTIVE") == "ACTIVE":
+                    r = scheduler.run_now(trigger_type="MANUAL_ALL_ACTIVE", etf_symbol=target["etf_symbol"])
+                    results.append(r)
+            self._send_json({"ok": True, "results": results})
+            return
+
         if path == "/api/admin/seed-history":
             etf = str(body.get("etf_symbol", DEFAULT_ETF_SYMBOL)).strip().upper()
             res = seed_historical_mfs_dates(etf_symbol=etf)
@@ -365,7 +410,7 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
 
             run_id = log_scrape_start(trigger_type="MANUAL_FILE_UPLOAD", etf_symbol=etf)
             try:
-                stamp = datetime.now(ZoneInfo(SCHEDULE_TIMEZONE)).strftime("%Y-%m-%d")
+                stamp = datetime.now(ZoneInfo(SCHEDULE_TIMEZONE)).strftime("%Y-%m-%d_%H-%M-%S_PT")
                 save_name = f"{Path(filename).stem}_uploaded_{stamp}{Path(filename).suffix or '.xls'}"
                 etf_dir = get_etf_raw_dir(etf)
                 dest = etf_dir / save_name

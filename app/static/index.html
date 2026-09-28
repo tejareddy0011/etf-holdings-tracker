@@ -797,7 +797,7 @@
             ETF Holdings Intelligence
             <span id="stateBadge" class="badge badge-active">ACTIVE</span>
           </h1>
-          <p>Automated 7:00 PM PT Cloud Scraper • Multi ETF Bot Registry • Per ETF File Archive & Position Diffing</p>
+          <p>Automated 7:00 PM PT Anonymous Cloud Scraper • MFSV, LSVD, VFLO, IVV • 5+ Year Raw File Retention</p>
         </div>
       </div>
 
@@ -815,8 +815,9 @@
           <button class="btn-sm btn-warning" onclick="setScraperState('PAUSED')" title="Pause scheduled daily runs">⏸ Pause</button>
           <button class="btn-sm btn-danger" onclick="setScraperState('STOPPED')" title="Stop autonomous scraper">⏹ Off</button>
         </div>
-        <button class="btn-primary" id="runNowBtn" onclick="triggerScrapeNow()">⚡ Scrape Daily</button>
-        <button id="seedBtn" onclick="triggerSeedHistory()" title="Pull historical MFS snapshots for selected ETF">📅 Sync History</button>
+        <button class="btn-primary" id="runNowBtn" onclick="triggerScrapeNow()">⚡ Scrape Selected</button>
+        <button class="btn-success" id="runAllBtn" onclick="triggerScrapeAllActive()" title="Download all active ETFs (MFSV, LSVD, VFLO, IVV) right now">🚀 Scrape All 4 ETFs</button>
+        <button id="seedBtn" onclick="triggerSeedHistory()" title="Pull historical snapshots for selected ETF">📅 Sync History</button>
       </div>
     </div>
   </header>
@@ -824,9 +825,9 @@
   <main class="container">
     <div class="tabs-wrapper">
       <nav class="tabs" aria-label="Dashboard Sections">
-        <button class="tab-btn active" onclick="switchTab('compareTab', this)">1. Position Changes (Date A vs Date B)</button>
-        <button class="tab-btn" onclick="switchTab('holdingsTab', this)">2. Raw Files Archive (.xls / .csv) & Database</button>
-        <button class="tab-btn" onclick="switchTab('etfRegistryTab', this)">3. Multi ETF Bot Controls (On / Off)</button>
+        <button class="tab-btn active" onclick="switchTab('compareTab', this)">1. Position Changes (Phase 2: Date A vs Date B)</button>
+        <button class="tab-btn" onclick="switchTab('holdingsTab', this)">2. Raw Files Archive (Phase 1: .xls / .csv • 5-Yr Retention)</button>
+        <button class="tab-btn" onclick="switchTab('etfRegistryTab', this)">3. Multi-ETF Bot Controls (MFSV • LSVD • VFLO • IVV)</button>
         <button class="tab-btn" onclick="switchTab('alertsTab', this)">4. Error Alerts & Audit Log</button>
       </nav>
     </div>
@@ -990,10 +991,16 @@
       <div class="card">
         <div class="card-header">
           <div>
-            <h2 class="card-title">Downloaded Original Excel (.xls) & CSV Files (Per ETF Directory)</h2>
+            <h2 class="card-title">Phase 1: Downloaded Original Excel (.xls) & CSV Files (Per-ETF Directory & 5-Year Retention)</h2>
             <p class="card-subtitle">
-              Every daily file is stored in its own dedicated ETF folder (<code>data/raw_files/&lt;ETF_SYMBOL&gt;/</code>). Click <strong>View in Browser</strong> to inspect the original file directly in your browser.
+              Every daily file is time-stamped with download date &amp; time in PT and stored in its dedicated ETF folder (<code>data/raw_files/&lt;ETF_SYMBOL&gt;/</code>) with a minimum <strong>5-year retention policy</strong>.
             </p>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <select id="rawFilesFilterSelect" onchange="renderRawFilesTable()" style="min-width:210px;">
+              <option value="ALL">Show All ETF Directories (MFSV, LSVD, VFLO, IVV)</option>
+              <option value="ACTIVE">Show Selected ETF Directory Only</option>
+            </select>
           </div>
         </div>
         <div class="table-wrap">
@@ -1001,9 +1008,11 @@
             <thead>
               <tr>
                 <th>ETF Folder</th>
-                <th>Original Downloaded Filename</th>
+                <th>Original Time-Stamped Filename</th>
+                <th>Download Date &amp; Time (PT)</th>
+                <th>Retention Policy</th>
                 <th class="num">File Size</th>
-                <th>Browser Preview & Download</th>
+                <th>Browser Preview &amp; Download</th>
               </tr>
             </thead>
             <tbody id="rawFilesBody"></tbody>
@@ -1029,7 +1038,7 @@
             <label for="uploadDateInput">Holdings Date Override (Optional)</label>
             <input type="date" id="uploadDateInput" />
           </div>
-          <button class="btn-primary" onclick="uploadHoldingsFile()">⬆ Upload & Parse into DB</button>
+          <button class="btn-primary" onclick="uploadHoldingsFile()">⬆ Upload &amp; Parse into DB</button>
         </div>
       </div>
 
@@ -1092,13 +1101,14 @@
               Turn each ETF bot On, Pause, or Off independently. Only ETF bots set to <strong>ACTIVE</strong> run during the daily 7:00 PM PT schedule.
             </p>
           </div>
+          <button class="btn-success" onclick="triggerScrapeAllActive()">🚀 Scrape All Active ETFs Now</button>
         </div>
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
                 <th>ETF Symbol</th>
-                <th>ETF Name & Target URL</th>
+                <th>ETF Name &amp; Target URL</th>
                 <th>Format</th>
                 <th>Bot Status</th>
                 <th>Dedicated Directory</th>
@@ -1150,9 +1160,9 @@
       <div class="card">
         <div class="card-header">
           <div>
-            <h2 class="card-title">Error Handling & Immediate Email Alert Verification</h2>
+            <h2 class="card-title">Error Handling &amp; Immediate Email Alert Verification</h2>
             <p class="card-subtitle">
-              Any scraper failure immediately sends an email alert to <strong id="alertRecipientText" style="color:var(--text-primary);">gvarun@gmail.com</strong> with the current date and error type.
+              Any scraper failure immediately sends an email alert to <strong id="alertRecipientText" style="color:var(--text-primary);">Adam.smith.fintech@gmail.com</strong> with the current date and error type.
             </p>
           </div>
         </div>
@@ -1160,7 +1170,7 @@
           <div class="field">
             <label for="alertEmailInput">Alert Recipient Email</label>
             <div style="display:flex; gap:8px;">
-              <input type="text" id="alertEmailInput" placeholder="gvarun@gmail.com" style="min-width:220px;" />
+              <input type="text" id="alertEmailInput" placeholder="Adam.smith.fintech@gmail.com" style="min-width:240px;" />
               <button onclick="saveAlertEmail()">Save Email</button>
             </div>
           </div>
@@ -1253,6 +1263,7 @@
     let selectedEtf = 'MFSV';
     let latestComparison = null;
     let currentHoldingsList = [];
+    let latestStatusData = null;
 
     function showToast(msg) {
       const el = document.getElementById('toast');
@@ -1326,9 +1337,40 @@
       }
     }
 
+    function renderRawFilesTable() {
+      if (!latestStatusData) return;
+      const rawBody = document.getElementById('rawFilesBody');
+      const mode = document.getElementById('rawFilesFilterSelect')?.value || 'ALL';
+      const filesList = mode === 'ACTIVE'
+        ? (latestStatusData.raw_files || [])
+        : (latestStatusData.all_raw_files || latestStatusData.raw_files || []);
+      rawBody.innerHTML = filesList.map(f => {
+        const rel = f.relative_path || f.filename;
+        const safeRel = rel.replace(/'/g, "\\'");
+        const safeName = (f.filename || '').replace(/'/g, "\\'");
+        return `
+          <tr>
+            <td><code>${f.directory || ('data/raw_files/' + selectedEtf + '/')}</code></td>
+            <td><strong style="font-family:'JetBrains Mono',monospace; font-size:12.5px;">${f.filename}</strong></td>
+            <td class="mono">${f.downloaded_at_pt || '-'}</td>
+            <td><span class="badge badge-active">${f.retention_policy || '5+ Years (1,825+ Days)'}</span></td>
+            <td class="num">${(f.size_bytes / 1024).toFixed(1)} KB</td>
+            <td>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn-sm btn-primary" onclick="openFileModal('${safeRel}', '${safeName}')">👁 View in Browser</button>
+                <a class="btn btn-sm" href="/api/raw-files-view/${encodeURIComponent(rel)}" target="_blank">↗ New Tab</a>
+                <a class="btn btn-sm" href="/api/raw-files/${encodeURIComponent(rel)}">⬇ Download</a>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('') || '<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No raw files downloaded yet.</td></tr>';
+    }
+
     async function loadStatus(preserveSelection = true) {
       const res = await fetch(`/api/status?etf=${encodeURIComponent(selectedEtf)}`);
       const data = await res.json();
+      latestStatusData = data;
 
       // Populate ETF Selector
       const etfSel = document.getElementById('etfSelector');
@@ -1401,34 +1443,14 @@
       selSingle.innerHTML = optionsHtml;
 
       if (dates.length > 0) {
-        selB.value = (preserveSelection && prevB) ? prevB : dates[0].holding_date;
+        selB.value = (preserveSelection && prevB && dates.some(d => d.holding_date === prevB)) ? prevB : dates[0].holding_date;
         const defaultIdxA = dates.length > 1 ? 1 : 0;
-        selA.value = (preserveSelection && prevA) ? prevA : dates[defaultIdxA].holding_date;
-        selSingle.value = (preserveSelection && prevSingle) ? prevSingle : dates[0].holding_date;
+        selA.value = (preserveSelection && prevA && dates.some(d => d.holding_date === prevA)) ? prevA : dates[defaultIdxA].holding_date;
+        selSingle.value = (preserveSelection && prevSingle && dates.some(d => d.holding_date === prevSingle)) ? prevSingle : dates[0].holding_date;
       }
 
-      // Raw files table (shows ETF directory + In-App Modal Preview + New Tab + Download)
-      const rawBody = document.getElementById('rawFilesBody');
-      const filesList = (data.raw_files && data.raw_files.length > 0) ? data.raw_files : (data.all_raw_files || []);
-      rawBody.innerHTML = filesList.map(f => {
-        const rel = f.relative_path || f.filename;
-        const safeRel = rel.replace(/'/g, "\\'");
-        const safeName = (f.filename || '').replace(/'/g, "\\'");
-        return `
-          <tr>
-            <td><code>${f.directory || ('data/raw_files/' + selectedEtf + '/')}</code></td>
-            <td><strong style="font-family:'JetBrains Mono',monospace; font-size:12.5px;">${f.filename}</strong></td>
-            <td class="num">${(f.size_bytes / 1024).toFixed(1)} KB</td>
-            <td>
-              <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                <button class="btn-sm btn-primary" onclick="openFileModal('${safeRel}', '${safeName}')">👁 View in Browser</button>
-                <a class="btn btn-sm" href="/api/raw-files-view/${encodeURIComponent(rel)}" target="_blank">↗ New Tab</a>
-                <a class="btn btn-sm" href="/api/raw-files/${encodeURIComponent(rel)}">⬇ Download</a>
-              </div>
-            </td>
-          </tr>
-        `;
-      }).join('') || '<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">No raw files downloaded yet for this ETF.</td></tr>';
+      // Render Raw files table
+      renderRawFilesTable();
 
       // Alerts table
       const alertsBody = document.getElementById('alertsLogBody');
@@ -1468,8 +1490,8 @@
         document.getElementById('kpiDateBCount').textContent = '0';
         document.getElementById('kpiAddedCount').textContent = '0';
         document.getElementById('kpiRemovedCount').textContent = '0';
-        document.getElementById('addedTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:24px;">Click "⚡ Scrape Daily" or "📅 Sync History" in the top bar to load ${selectedEtf} holdings.</td></tr>`;
-        document.getElementById('removedTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:24px;">Click "⚡ Scrape Daily" or "📅 Sync History" in the top bar to load ${selectedEtf} holdings.</td></tr>`;
+        document.getElementById('addedTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:24px;">Click "⚡ Scrape Selected" or "🚀 Scrape All 4 ETFs" in the top bar to load ${selectedEtf} holdings.</td></tr>`;
+        document.getElementById('removedTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:24px;">Click "⚡ Scrape Selected" or "🚀 Scrape All 4 ETFs" in the top bar to load ${selectedEtf} holdings.</td></tr>`;
         document.getElementById('retainedTableBody').innerHTML = '';
         return;
       }
@@ -1684,7 +1706,35 @@
         await loadSingleDateHoldings();
       } finally {
         btn.disabled = false;
-        btn.textContent = '⚡ Scrape Daily';
+        btn.textContent = '⚡ Scrape Selected';
+      }
+    }
+
+    async function triggerScrapeAllActive() {
+      const btn = document.getElementById('runAllBtn');
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = '⏳ Scraping All Active ETFs...';
+      }
+      try {
+        const res = await fetch('/api/admin/scrape-all-active', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({})
+        });
+        const data = await res.json();
+        if (data.ok) {
+          const okCount = (data.results || []).filter(r => r.status === 'SUCCESS').length;
+          showToast(`Downloaded & parsed ${okCount} active ETFs into dedicated folders!`);
+        }
+        await loadStatus(true);
+        await loadComparison();
+        await loadSingleDateHoldings();
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = '🚀 Scrape All 4 ETFs';
+        }
       }
     }
 
@@ -1713,7 +1763,6 @@
       selectedEtf = sym;
       document.getElementById('etfSelector').value = sym;
       await triggerScrapeNow();
-      await triggerSeedHistory();
       document.querySelectorAll('.tab-btn')[0].click();
     }
 

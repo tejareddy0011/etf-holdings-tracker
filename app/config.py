@@ -20,6 +20,10 @@ if ENV_FILE.exists():
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 RAW_FILES_DIR.mkdir(parents=True, exist_ok=True)
 
+# Retention Policy: Retain original .csv and .xls files for at least 5 years
+RETENTION_YEARS = 5
+RETENTION_DAYS = 365 * RETENTION_YEARS
+
 # Target ETF Scraping Config
 DEFAULT_ETF_SYMBOL = "MFSV"
 DEFAULT_ETF_NAME = "MFS Active Value ETF"
@@ -32,12 +36,38 @@ HISTORICAL_BASE_URL = (
     "exchange-traded-funds/full-holdings/MFSV-active-value-etf"
 )
 
+# Phase 1 Core 4 ETFs (MFSV, LSVD, VFLO, IVV) + MFSG
 PRESET_ETF_TARGETS = [
     {
         "etf_symbol": "MFSV",
         "etf_name": "MFS Active Value ETF",
         "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/MFSV-active-value-etf.html#",
         "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/MFSV-active-value-etf",
+        "file_format": "XLS",
+        "is_active": 1,
+    },
+    {
+        "etf_symbol": "LSVD",
+        "etf_name": "LSV Disciplined Value ETF",
+        "daily_url": "https://www.lsvasset.com/disciplined-value-etf/",
+        "historical_base_url": "",
+        "file_format": "CSV",
+        "is_active": 1,
+    },
+    {
+        "etf_symbol": "VFLO",
+        "etf_name": "VictoryShares Free Cash Flow ETF",
+        "daily_url": "https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-free-cash-flow-etf",
+        "historical_base_url": "",
+        "file_format": "CSV",
+        "is_active": 1,
+    },
+    {
+        "etf_symbol": "IVV",
+        "etf_name": "iShares Core S&P 500 ETF",
+        "daily_url": "https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf",
+        "historical_base_url": "",
+        "file_format": "XLS",
         "is_active": 1,
     },
     {
@@ -45,28 +75,8 @@ PRESET_ETF_TARGETS = [
         "etf_name": "MFS Active Growth ETF",
         "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/MFSG-active-growth-etf.html#",
         "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/MFSG-active-growth-etf",
-        "is_active": 1,
-    },
-    {
-        "etf_symbol": "MMID",
-        "etf_name": "MFS Active Mid Cap ETF",
-        "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/MMID-active-mid-cap-etf.html#",
-        "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/MMID-active-mid-cap-etf",
-        "is_active": 1,
-    },
-    {
-        "etf_symbol": "MFSI",
-        "etf_name": "MFS Active International ETF",
-        "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/MFSI-active-international-etf.html#",
-        "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/MFSI-active-international-etf",
-        "is_active": 1,
-    },
-    {
-        "etf_symbol": "BRCE",
-        "etf_name": "MFS Blended Research Core Equity ETF",
-        "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/BRCE-blended-research-core-equity-etf.html#",
-        "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/BRCE-blended-research-core-equity-etf",
-        "is_active": 1,
+        "file_format": "XLS",
+        "is_active": 0,
     },
 ]
 
@@ -75,8 +85,8 @@ SCHEDULE_TIMEZONE = "America/Los_Angeles"
 SCHEDULE_HOUR = int(os.getenv("SCHEDULE_HOUR", "19"))
 SCHEDULE_MINUTE = int(os.getenv("SCHEDULE_MINUTE", "0"))
 
-# Error Notification Config
-ALERT_RECIPIENT_EMAIL = os.getenv("ALERT_RECIPIENT_EMAIL", "gvarun@gmail.com")
+# Error Notification Config (Updated per Phase 1 scope to Adam.smith.fintech@gmail.com)
+ALERT_RECIPIENT_EMAIL = os.getenv("ALERT_RECIPIENT_EMAIL", "Adam.smith.fintech@gmail.com")
 SMTP_HOST = os.getenv("SMTP_HOST", "smtp.gmail.com")
 SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
 SMTP_USER = os.getenv("SMTP_USER", "")
