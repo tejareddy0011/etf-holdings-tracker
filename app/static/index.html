@@ -572,6 +572,72 @@
       }
     }
 
+    @media (max-width: 768px) {
+      header {
+        position: relative;
+        padding: 12px 14px;
+      }
+      .container {
+        padding: 14px 12px 40px;
+      }
+      .admin-bar {
+        width: 100%;
+        padding: 10px;
+        gap: 8px;
+      }
+      .etf-select-group {
+        width: 100%;
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border-subtle);
+        padding-bottom: 8px;
+      }
+      .etf-select-group select {
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+      }
+      .admin-meta {
+        border-right: none;
+        padding-right: 0;
+        width: 100%;
+      }
+      .tabs {
+        width: 100%;
+        display: flex;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+      .tab-btn {
+        font-size: 12.5px;
+        padding: 8px 12px;
+        flex-shrink: 0;
+      }
+      .card {
+        padding: 16px 14px;
+        margin-bottom: 16px;
+      }
+      .kpi-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .kpi {
+        padding: 14px;
+      }
+      .kpi .value {
+        font-size: 22px;
+      }
+      .controls-row .field,
+      .controls-row select,
+      .controls-row input[type="text"],
+      .controls-row input[type="date"],
+      .controls-row input[type="file"] {
+        width: 100%;
+        min-width: 0 !important;
+      }
+    }
+
     /* Clean Modern Data Tables */
     .table-wrap {
       overflow-x: auto;
