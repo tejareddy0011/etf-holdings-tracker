@@ -224,16 +224,31 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                 self._send_json({"error": "File not found"}, status=404)
                 return
             raw_text = fpath.read_text(encoding="utf-8", errors="ignore")
+            preview_css = (
+                "body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#f8fafc;color:#0f172a;padding:28px 36px;}"
+                ".topbar{display:flex;justify-content:space-between;align-items:center;background:#ffffff;border:1px solid #e2e8f0;"
+                "border-radius:12px;padding:16px 22px;margin-bottom:20px;box-shadow:0 1px 3px rgba(15,23,42,0.05);}"
+                ".topbar h2{margin:0;font-size:16px;font-weight:700;color:#0f172a;}"
+                ".topbar span{font-size:12.5px;color:#64748b;}"
+                ".btn-dl{background:#4f46e5;color:#fff;text-decoration:none;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;}"
+                ".card{background:#ffffff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;box-shadow:0 1px 3px rgba(15,23,42,0.05);overflow-x:auto;}"
+                "table{width:100%;border-collapse:collapse;font-size:13px;background:#ffffff;}"
+                "th,td{border-bottom:1px solid #e2e8f0;padding:10px 12px;text-align:left;}"
+                "th{background:#f8fafc;color:#64748b;font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:0.04em;}"
+                "tr:hover td{background:#f8fafc;}"
+            )
+            dl_href = f"/api/raw-files/{urllib.parse.quote(rel)}"
+            top_bar = (
+                f"<div class='topbar'><div><h2>Original File Preview: {html_lib.escape(fpath.name)}</h2>"
+                f"<span>Directory: data/raw_files/{html_lib.escape(rel)}</span></div>"
+                f"<a class='btn-dl' href='{dl_href}'>⬇ Download Original File</a></div>"
+            )
             if "<table" in raw_text.lower():
                 styled_html = (
                     "<!DOCTYPE html><html><head><meta charset='utf-8'>"
                     f"<title>{html_lib.escape(fpath.name)}</title>"
-                    "<style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:20px;}"
-                    "table{width:100%;border-collapse:collapse;font-size:13px;background:#1e293b;}"
-                    "th,td{border:1px solid #334155;padding:8px 10px;text-align:left;}"
-                    "th{background:#111827;color:#94a3b8;}</style></head><body>"
-                    f"<h2>Original File Preview: {html_lib.escape(fpath.name)}</h2>"
-                    f"{raw_text}</body></html>"
+                    f"<style>{preview_css}</style></head><body>"
+                    f"{top_bar}<div class='card'>{raw_text}</div></body></html>"
                 )
             elif fpath.suffix.lower() == ".csv":
                 import csv, io
@@ -246,20 +261,15 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                 styled_html = (
                     "<!DOCTYPE html><html><head><meta charset='utf-8'>"
                     f"<title>{html_lib.escape(fpath.name)}</title>"
-                    "<style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:20px;}"
-                    "table{width:100%;border-collapse:collapse;font-size:13px;background:#1e293b;}"
-                    "th,td{border:1px solid #334155;padding:8px 10px;text-align:left;}"
-                    "th{background:#111827;color:#94a3b8;}</style></head><body>"
-                    f"<h2>Original CSV File Preview: {html_lib.escape(fpath.name)}</h2>"
-                    f"<table>{''.join(rows_html)}</table></body></html>"
+                    f"<style>{preview_css}</style></head><body>"
+                    f"{top_bar}<div class='card'><table>{''.join(rows_html)}</table></div></body></html>"
                 )
             else:
                 styled_html = (
                     "<!DOCTYPE html><html><head><meta charset='utf-8'>"
                     f"<title>{html_lib.escape(fpath.name)}</title>"
-                    "<style>body{font-family:monospace;background:#0f172a;color:#f8fafc;padding:20px;white-space:pre-wrap;}</style>"
-                    f"</head><body><h2>Original File Preview: {html_lib.escape(fpath.name)}</h2>"
-                    f"{html_lib.escape(raw_text)}</body></html>"
+                    f"<style>{preview_css} pre{{white-space:pre-wrap;font-family:monospace;font-size:12.5px;}}</style></head><body>"
+                    f"{top_bar}<div class='card'><pre>{html_lib.escape(raw_text)}</pre></div></body></html>"
                 )
             data = styled_html.encode("utf-8")
             self.send_response(200)
