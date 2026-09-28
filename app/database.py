@@ -6,6 +6,7 @@ from app.config import (
     ALERT_RECIPIENT_EMAIL,
     DB_PATH,
     DEFAULT_ETF_SYMBOL,
+    DEFAULT_PROXY_LIST_URL,
     PRESET_ETF_TARGETS,
 )
 
@@ -132,13 +133,18 @@ def init_db() -> None:
             "schedule_time_pt": "19:00",
             "alert_email": ALERT_RECIPIENT_EMAIL,
             "scraper_mode": "AUTO",
-            "proxy_enabled": "false",
+            "proxy_enabled": "true",
+            "proxy_urls": DEFAULT_PROXY_LIST_URL,
         }
         for k, v in defaults.items():
             conn.execute(
                 "INSERT OR IGNORE INTO admin_settings (key, value, updated_at) VALUES (?, ?, ?)",
                 (k, v, now),
             )
+        conn.execute(
+            "UPDATE admin_settings SET value = ?, updated_at = ? WHERE key = 'proxy_urls' AND (value IS NULL OR value = '')",
+            (DEFAULT_PROXY_LIST_URL, now),
+        )
         conn.execute(
             "UPDATE admin_settings SET value = ?, updated_at = ? WHERE key = 'alert_email' AND value = 'gvarun@gmail.com'",
             (ALERT_RECIPIENT_EMAIL, now),

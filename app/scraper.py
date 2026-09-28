@@ -52,12 +52,56 @@ def get_pt_timestamp_str() -> str:
     return datetime.now(ZoneInfo(SCHEDULE_TIMEZONE)).strftime("%Y-%m-%d_%H-%M-%S_PT")
 
 
+_CACHED_LIST_PROXIES: Dict[str, List[str]] = {}
+
+
+def _parse_single_proxy_line(line: str) -> Optional[str]:
+    s = line.strip()
+    if not s:
+        return None
+    if s.startswith("http://") or s.startswith("https://"):
+        return s
+    parts = s.split(":")
+    if len(parts) == 4:
+        ip, port, user, pw = parts
+        return f"http://{user}:{pw}@{ip}:{port}"
+    if len(parts) == 2:
+        ip, port = parts
+        return f"http://{ip}:{port}"
+    return None
+
+
+def _expand_proxy_entry(entry: str) -> List[str]:
+    s = entry.strip()
+    if not s:
+        return []
+    if "proxy.webshare.io/api/v2/proxy/list/download" in s:
+        if s in _CACHED_LIST_PROXIES and _CACHED_LIST_PROXIES[s]:
+            return _CACHED_LIST_PROXIES[s]
+        try:
+            req = urllib.request.Request(s, headers={"User-Agent": USER_AGENTS[0]})
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                raw = resp.read().decode("utf-8", errors="ignore")
+            parsed = [p for p in (_parse_single_proxy_line(ln) for ln in raw.splitlines()) if p]
+            if parsed:
+                _CACHED_LIST_PROXIES[s] = parsed
+                return parsed
+        except Exception:
+            pass
+        return list(PROXY_LIST)
+    single = _parse_single_proxy_line(s)
+    return [single] if single else []
+
+
 def get_configured_proxies() -> List[str]:
     settings = get_settings()
-    db_proxies = [p.strip() for p in settings.get("proxy_urls", "").split(",") if p.strip()]
-    env_proxies = [p.strip() for p in PROXY_LIST if p.strip()]
-    return list(dict.fromkeys(db_proxies + env_proxies))
-
+    raw_entries = [p.strip() for p in settings.get("proxy_urls", "").replace("\n", ",").split(",") if p.strip()]
+    if not raw_entries:
+        raw_entries = [p.strip() for p in PROXY_LIST if p.strip()]
+    expanded: List[str] = []
+    for entry in raw_entries:
+        expanded.extend(_expand_proxy_entry(entry))
+    return list(dict.fromkeys(expanded))
 
 
 def http_get_text(url: str, extra_headers: Optional[Dict[str, str]] = None, timeout: int = 25) -> str:
@@ -73,8 +117,8 @@ def http_get_text(url: str, extra_headers: Optional[Dict[str, str]] = None, time
     proxies = get_configured_proxies()
     shuffled_proxies = list(proxies)
     random.shuffle(shuffled_proxies)
-    # Try configured proxies in random order, then fall back to direct connection (None)
-    attempts: List[Optional[str]] = shuffled_proxies + [None]
+    # Try up to 2 random proxies from the 100-proxy pool, then fall back to direct connection (None)
+    attempts: List[Optional[str]] = shuffled_proxies[:2] + [None]
 
     last_err: Optional[Exception] = None
     for proxy_url in attempts:
@@ -83,12 +127,12 @@ def http_get_text(url: str, extra_headers: Optional[Dict[str, str]] = None, time
             handlers.append(urllib.request.ProxyHandler({"http": proxy_url, "https": proxy_url}))
         opener = urllib.request.build_opener(*handlers)
         req = urllib.request.Request(clean_url, headers=headers)
+        req_timeout = min(timeout, 12) if proxy_url else timeout
         try:
-            with opener.open(req, timeout=timeout) as resp:
+            with opener.open(req, timeout=req_timeout) as resp:
                 return resp.read().decode("utf-8", errors="ignore")
         except urllib.error.HTTPError as e:
             last_err = e
-            # If proxy returned 403/407/429/5xx, try next proxy or direct
             if proxy_url is not None:
                 continue
             raise ScraperBotError(
@@ -108,6 +152,7 @@ def http_get_text(url: str, extra_headers: Optional[Dict[str, str]] = None, time
         KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
         f"Target URL unreachable ({url}): {last_err}",
     )
+
 
 
 

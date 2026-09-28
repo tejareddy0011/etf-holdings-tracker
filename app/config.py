@@ -93,6 +93,37 @@ SMTP_USER = os.getenv("SMTP_USER", "")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 SMTP_FROM = os.getenv("SMTP_FROM", "etf-scraper-bot@localhost")
 
-# Optional Proxy Rotation & Cloud Storage Config
-PROXY_LIST = [p.strip() for p in os.getenv("SCRAPER_PROXIES", "").split(",") if p.strip()]
+# Proxy Rotation & Cloud Storage Config (Webshare 100-proxy pool configured by default)
+DEFAULT_PROXY_LIST_URL = os.getenv(
+    "WEBSHARE_PROXY_LIST_URL",
+    "https://proxy.webshare.io/api/v2/proxy/list/download/kyrrojrdbhfqbnbbkqppcfkwvfskrbzytjwkxsys/-/any/username/direct/-/?plan_id=14421298",
+)
+DEFAULT_WEBSHARE_PROXIES = [
+    "http://bbaaotlk:rnb5xxvwcopc@198.46.241.137:6672",
+    "http://bbaaotlk:rnb5xxvwcopc@38.154.182.159:7427",
+    "http://bbaaotlk:rnb5xxvwcopc@184.174.27.73:6296",
+    "http://bbaaotlk:rnb5xxvwcopc@23.26.95.229:5711",
+    "http://bbaaotlk:rnb5xxvwcopc@45.38.89.254:6189",
+    "http://bbaaotlk:rnb5xxvwcopc@50.114.8.150:7135",
+    "http://bbaaotlk:rnb5xxvwcopc@64.137.42.210:5255",
+    "http://bbaaotlk:rnb5xxvwcopc@23.236.196.39:6129",
+    "http://bbaaotlk:rnb5xxvwcopc@142.111.48.228:7005",
+    "http://bbaaotlk:rnb5xxvwcopc@173.211.69.148:6741",
+    "http://bbaaotlk:rnb5xxvwcopc@204.217.160.80:7152",
+    "http://bbaaotlk:rnb5xxvwcopc@45.39.15.29:6459",
+    "http://bbaaotlk:rnb5xxvwcopc@172.120.119.254:5914",
+    "http://bbaaotlk:rnb5xxvwcopc@23.129.252.210:6478",
+    "http://bbaaotlk:rnb5xxvwcopc@45.61.96.137:6117",
+    "http://bbaaotlk:rnb5xxvwcopc@104.164.49.24:7679",
+    "http://bbaaotlk:rnb5xxvwcopc@142.202.254.63:6041",
+    "http://bbaaotlk:rnb5xxvwcopc@216.74.80.40:6612",
+    "http://bbaaotlk:rnb5xxvwcopc@38.154.224.73:6614",
+    "http://bbaaotlk:rnb5xxvwcopc@64.188.120.194:7941",
+]
+PROXY_LIST = [
+    p.strip()
+    for p in os.getenv("SCRAPER_PROXIES", "").split(",")
+    if p.strip()
+] or list(DEFAULT_WEBSHARE_PROXIES)
 GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME", "")
+
