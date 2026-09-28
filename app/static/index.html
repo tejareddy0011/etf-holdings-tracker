@@ -1171,8 +1171,15 @@
           <div class="field">
             <label for="alertEmailInput">Alert Recipient Email</label>
             <div style="display:flex; gap:8px;">
-              <input type="text" id="alertEmailInput" placeholder="Adam.smith.fintech@gmail.com" style="min-width:240px;" />
+              <input type="text" id="alertEmailInput" placeholder="Adam.smith.fintech@gmail.com" style="min-width:220px;" />
               <button onclick="saveAlertEmail()">Save Email</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="proxyUrlsInput">Anonymous Rotating Proxy URL(s) (Optional)</label>
+            <div style="display:flex; gap:8px;">
+              <input type="text" id="proxyUrlsInput" placeholder="http://user:pass@p.webshare.io:80" style="min-width:260px;" />
+              <button onclick="saveProxyUrls()">Save Proxy</button>
             </div>
           </div>
           <div class="field" style="flex:1;">
@@ -1424,6 +1431,8 @@
       document.getElementById('alertRecipientText').textContent = sched.alert_email;
       const emailInput = document.getElementById('alertEmailInput');
       if (emailInput && !emailInput.value) emailInput.value = sched.alert_email;
+      const proxyInput = document.getElementById('proxyUrlsInput');
+      if (proxyInput && !proxyInput.value && sched.proxy_urls) proxyInput.value = sched.proxy_urls;
 
       // Populate date dropdowns
       const dates = data.available_dates || [];
@@ -1833,6 +1842,20 @@
       const data = await res.json();
       if (data.ok) {
         showToast(`Alert recipient email updated to ${email}`);
+        await loadStatus(true);
+      }
+    }
+
+    async function saveProxyUrls() {
+      const proxyUrls = document.getElementById('proxyUrlsInput').value.trim();
+      const res = await fetch('/api/admin/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ proxy_urls: proxyUrls })
+      });
+      const data = await res.json();
+      if (data.ok) {
+        showToast(proxyUrls ? `Saved rotating proxy configuration` : `Cleared proxy URLs (using direct connection)`);
         await loadStatus(true);
       }
     }

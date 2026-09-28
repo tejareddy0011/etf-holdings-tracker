@@ -377,6 +377,8 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                 update_setting("alert_email", str(body["alert_email"]).strip())
             if "schedule_time_pt" in body and body["schedule_time_pt"]:
                 update_setting("schedule_time_pt", str(body["schedule_time_pt"]).strip())
+            if "proxy_urls" in body:
+                update_setting("proxy_urls", str(body["proxy_urls"]).strip())
             self._send_json({"ok": True, "scheduler": scheduler.get_status()})
             return
 

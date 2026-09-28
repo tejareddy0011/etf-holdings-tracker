@@ -52,13 +52,12 @@ def get_pt_timestamp_str() -> str:
     return datetime.now(ZoneInfo(SCHEDULE_TIMEZONE)).strftime("%Y-%m-%d_%H-%M-%S_PT")
 
 
-def build_opener_with_proxy() -> urllib.request.OpenerDirector:
+def get_configured_proxies() -> List[str]:
     settings = get_settings()
-    handlers = []
-    if (settings.get("proxy_enabled") == "true" or PROXY_LIST) and PROXY_LIST:
-        proxy_url = random.choice(PROXY_LIST)
-        handlers.append(urllib.request.ProxyHandler({"http": proxy_url, "https": proxy_url}))
-    return urllib.request.build_opener(*handlers)
+    db_proxies = [p.strip() for p in settings.get("proxy_urls", "").split(",") if p.strip()]
+    env_proxies = [p.strip() for p in PROXY_LIST if p.strip()]
+    return list(dict.fromkeys(db_proxies + env_proxies))
+
 
 
 def http_get_text(url: str, extra_headers: Optional[Dict[str, str]] = None, timeout: int = 25) -> str:
@@ -69,21 +68,47 @@ def http_get_text(url: str, extra_headers: Optional[Dict[str, str]] = None, time
     }
     if extra_headers:
         headers.update(extra_headers)
-    opener = build_opener_with_proxy()
-    req = urllib.request.Request(url.split("#")[0], headers=headers)
-    try:
-        with opener.open(req, timeout=timeout) as resp:
-            return resp.read().decode("utf-8", errors="ignore")
-    except urllib.error.HTTPError as e:
-        raise ScraperBotError(
-            KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
-            f"HTTP {e.code} error fetching {url}: {e.reason}",
-        ) from e
-    except Exception as e:
-        raise ScraperBotError(
-            KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
-            f"Target URL unreachable ({url}): {e}",
-        ) from e
+    clean_url = url.split("#")[0]
+
+    proxies = get_configured_proxies()
+    shuffled_proxies = list(proxies)
+    random.shuffle(shuffled_proxies)
+    # Try configured proxies in random order, then fall back to direct connection (None)
+    attempts: List[Optional[str]] = shuffled_proxies + [None]
+
+    last_err: Optional[Exception] = None
+    for proxy_url in attempts:
+        handlers = []
+        if proxy_url:
+            handlers.append(urllib.request.ProxyHandler({"http": proxy_url, "https": proxy_url}))
+        opener = urllib.request.build_opener(*handlers)
+        req = urllib.request.Request(clean_url, headers=headers)
+        try:
+            with opener.open(req, timeout=timeout) as resp:
+                return resp.read().decode("utf-8", errors="ignore")
+        except urllib.error.HTTPError as e:
+            last_err = e
+            # If proxy returned 403/407/429/5xx, try next proxy or direct
+            if proxy_url is not None:
+                continue
+            raise ScraperBotError(
+                KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
+                f"HTTP {e.code} error fetching {url}: {e.reason}",
+            ) from e
+        except Exception as e:
+            last_err = e
+            if proxy_url is not None:
+                continue
+            raise ScraperBotError(
+                KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
+                f"Target URL unreachable ({url}): {e}",
+            ) from e
+
+    raise ScraperBotError(
+        KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
+        f"Target URL unreachable ({url}): {last_err}",
+    )
+
 
 
 def write_stamped_and_canonical_file(etf_symbol: str, base_stem: str, ext: str, content: str) -> Path:

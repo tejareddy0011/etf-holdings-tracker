@@ -97,6 +97,7 @@ class DailyScraperScheduler:
                 next_run.strftime("%Y-%m-%d %I:%M:%S %p %Z") if state == "ACTIVE" else f"None ({state})"
             ),
             "alert_email": settings.get("alert_email", "gvarun@gmail.com"),
+            "proxy_urls": settings.get("proxy_urls", ""),
         }
 
     def set_admin_state(self, new_state: str) -> Dict[str, Any]:
