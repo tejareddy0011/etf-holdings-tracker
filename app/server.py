@@ -479,18 +479,31 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
 def bootstrap_initial_data() -> None:
     init_db()
     organize_legacy_raw_files()
-    dates = get_available_dates(DEFAULT_ETF_SYMBOL)
-    if not dates:
-        print("Bootstrapping live MFS Active Value ETF (MFSV) daily & historical holdings...")
-        scheduler.run_now(trigger_type="INITIAL_BOOTSTRAP", etf_symbol=DEFAULT_ETF_SYMBOL)
-        seed_historical_mfs_dates(["2026-08-31", "2026-07-31", "2026-06-30", "2026-03-31", "2025-12-31"])
+
+    def _async_seed() -> None:
+        try:
+            for sym in ["MFSV", "LSVD", "VFLO", "IVV"]:
+                if not get_available_dates(sym):
+                    print(f"Bootstrapping initial daily holdings for {sym}...")
+                    scheduler.run_now(trigger_type="INITIAL_BOOTSTRAP", etf_symbol=sym)
+            mfsv_dates = get_available_dates("MFSV")
+            if len(mfsv_dates) < 2:
+                seed_historical_mfs_dates(
+                    ["2026-08-31", "2026-07-31", "2026-06-30", "2026-03-31", "2025-12-31"],
+                    etf_symbol="MFSV",
+                )
+        except Exception as e:
+            print(f"Initial bootstrap warning: {e}")
+
+    import threading
+    threading.Thread(target=_async_seed, daemon=True).start()
 
 
 def run_server(host: str = "0.0.0.0", port: int = 8080) -> None:
     bootstrap_initial_data()
     scheduler.start_background_loop()
     server = ThreadingHTTPServer((host, port), ETFReportingHandler)
-    print(f"MFS ETF Scraper & Reporting Server listening on http://{host}:{port}")
+    print(f"ETF Scraper & Reporting Server listening on http://{host}:{port}")
     server.serve_forever()
 
 
