@@ -59,7 +59,7 @@ class DailyScraperScheduler:
                         self._last_scheduled_run_date = today_str
                     try:
                         for target in get_etf_targets():
-                            if target.get("is_active", 1):
+                            if target.get("is_active", 1) and target.get("bot_state", "ACTIVE") == "ACTIVE":
                                 run_daily_scrape(
                                     trigger_type="SCHEDULED_7PM_PT",
                                     etf_symbol=target["etf_symbol"],

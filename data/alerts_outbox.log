@@ -287,3 +287,139 @@ Known Error Categories Monitored:
   3. "Download Daily Fund Holdings" link missing or altered
   4. Excel file download failed or file is corrupted
 
+
+--- EMAIL NOTIFICATION [LOGGED_OUTBOX (SMTP credentials not configured)] ---
+To: gvarun@gmail.com
+Subject: [ETF Scraper Alert] Failure on 2026-09-27: Target URL unreachable or layout changed
+Automated ETF Holdings Scraper Failure Notification
+===================================================
+Current Date: 2026-09-27 19:54:21 PDT
+Target ETF:   MFS Value ETF (MFSV)
+Error Type:   Target URL unreachable or layout changed
+Details:      [ETF: MFSV] Simulated diagnostic check: Target URL returned 503 / layout container missing.
+
+Known Error Categories Monitored:
+  1. Target URL unreachable or layout changed
+  2. Pop-ups failed to clear
+  3. "Download Daily Fund Holdings" link missing or altered
+  4. Excel file download failed or file is corrupted
+
+
+--- EMAIL NOTIFICATION [LOGGED_OUTBOX (SMTP credentials not configured)] ---
+To: gvarun@gmail.com
+Subject: [ETF Scraper Alert] Failure on 2026-09-27: Pop-ups failed to clear
+Automated ETF Holdings Scraper Failure Notification
+===================================================
+Current Date: 2026-09-27 19:54:21 PDT
+Target ETF:   MFS Value ETF (MFSV)
+Error Type:   Pop-ups failed to clear
+Details:      [ETF: MFSV] Simulated diagnostic check: "Individual Investor" / "Save my preferences" modal failed to dismiss.
+
+Known Error Categories Monitored:
+  1. Target URL unreachable or layout changed
+  2. Pop-ups failed to clear
+  3. "Download Daily Fund Holdings" link missing or altered
+  4. Excel file download failed or file is corrupted
+
+
+--- EMAIL NOTIFICATION [LOGGED_OUTBOX (SMTP credentials not configured)] ---
+To: gvarun@gmail.com
+Subject: [ETF Scraper Alert] Failure on 2026-09-27: "Download Daily Fund Holdings" link missing or altered
+Automated ETF Holdings Scraper Failure Notification
+===================================================
+Current Date: 2026-09-27 19:54:21 PDT
+Target ETF:   MFS Value ETF (MFSV)
+Error Type:   "Download Daily Fund Holdings" link missing or altered
+Details:      [ETF: MFSV] Simulated diagnostic check: "Download Daily Fund Holdings" (.js-download-btn) link missing from DOM.
+
+Known Error Categories Monitored:
+  1. Target URL unreachable or layout changed
+  2. Pop-ups failed to clear
+  3. "Download Daily Fund Holdings" link missing or altered
+  4. Excel file download failed or file is corrupted
+
+
+--- EMAIL NOTIFICATION [LOGGED_OUTBOX (SMTP credentials not configured)] ---
+To: gvarun@gmail.com
+Subject: [ETF Scraper Alert] Failure on 2026-09-27: Excel file download failed or file is corrupted
+Automated ETF Holdings Scraper Failure Notification
+===================================================
+Current Date: 2026-09-27 19:54:21 PDT
+Target ETF:   MFS Value ETF (MFSV)
+Error Type:   Excel file download failed or file is corrupted
+Details:      [ETF: MFSV] Simulated diagnostic check: Downloaded .xls file truncated (0 bytes) or corrupted header.
+
+Known Error Categories Monitored:
+  1. Target URL unreachable or layout changed
+  2. Pop-ups failed to clear
+  3. "Download Daily Fund Holdings" link missing or altered
+  4. Excel file download failed or file is corrupted
+
+
+--- EMAIL NOTIFICATION [LOGGED_OUTBOX (SMTP credentials not configured)] ---
+To: gvarun@gmail.com
+Subject: [ETF Scraper Alert] Failure on 2026-09-27: Target URL unreachable or layout changed
+Automated ETF Holdings Scraper Failure Notification
+===================================================
+Current Date: 2026-09-27 19:59:23 PDT
+Target ETF:   MFS Value ETF (MFSV)
+Error Type:   Target URL unreachable or layout changed
+Details:      [ETF: MFSV] Simulated diagnostic check: Target URL returned 503 / layout container missing.
+
+Known Error Categories Monitored:
+  1. Target URL unreachable or layout changed
+  2. Pop-ups failed to clear
+  3. "Download Daily Fund Holdings" link missing or altered
+  4. Excel file download failed or file is corrupted
+
+
+--- EMAIL NOTIFICATION [LOGGED_OUTBOX (SMTP credentials not configured)] ---
+To: gvarun@gmail.com
+Subject: [ETF Scraper Alert] Failure on 2026-09-27: Pop-ups failed to clear
+Automated ETF Holdings Scraper Failure Notification
+===================================================
+Current Date: 2026-09-27 19:59:23 PDT
+Target ETF:   MFS Value ETF (MFSV)
+Error Type:   Pop-ups failed to clear
+Details:      [ETF: MFSV] Simulated diagnostic check: "Individual Investor" / "Save my preferences" modal failed to dismiss.
+
+Known Error Categories Monitored:
+  1. Target URL unreachable or layout changed
+  2. Pop-ups failed to clear
+  3. "Download Daily Fund Holdings" link missing or altered
+  4. Excel file download failed or file is corrupted
+
+
+--- EMAIL NOTIFICATION [LOGGED_OUTBOX (SMTP credentials not configured)] ---
+To: gvarun@gmail.com
+Subject: [ETF Scraper Alert] Failure on 2026-09-27: "Download Daily Fund Holdings" link missing or altered
+Automated ETF Holdings Scraper Failure Notification
+===================================================
+Current Date: 2026-09-27 19:59:23 PDT
+Target ETF:   MFS Value ETF (MFSV)
+Error Type:   "Download Daily Fund Holdings" link missing or altered
+Details:      [ETF: MFSV] Simulated diagnostic check: "Download Daily Fund Holdings" (.js-download-btn) link missing from DOM.
+
+Known Error Categories Monitored:
+  1. Target URL unreachable or layout changed
+  2. Pop-ups failed to clear
+  3. "Download Daily Fund Holdings" link missing or altered
+  4. Excel file download failed or file is corrupted
+
+
+--- EMAIL NOTIFICATION [LOGGED_OUTBOX (SMTP credentials not configured)] ---
+To: gvarun@gmail.com
+Subject: [ETF Scraper Alert] Failure on 2026-09-27: Excel file download failed or file is corrupted
+Automated ETF Holdings Scraper Failure Notification
+===================================================
+Current Date: 2026-09-27 19:59:23 PDT
+Target ETF:   MFS Value ETF (MFSV)
+Error Type:   Excel file download failed or file is corrupted
+Details:      [ETF: MFSV] Simulated diagnostic check: Downloaded .xls/.csv file truncated (0 bytes) or corrupted header.
+
+Known Error Categories Monitored:
+  1. Target URL unreachable or layout changed
+  2. Pop-ups failed to clear
+  3. "Download Daily Fund Holdings" link missing or altered
+  4. Excel file download failed or file is corrupted
+

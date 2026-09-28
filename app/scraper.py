@@ -174,7 +174,7 @@ def extract_and_save_xls(
     stamped_filename = f"{base_filename}_downloaded_{download_stamp}.xls"
     canonical_filename = f"{base_filename}.xls"
 
-    # Store inside the per-ETF subdirectory (data/raw_files/<ETF_SYMBOL>/) as well as top-level compatibility
+    # Store inside the per-ETF subdirectory (data/raw_files/<ETF_SYMBOL>/)
     etf_dir = get_etf_raw_dir(etf_symbol)
     stamped_path = etf_dir / stamped_filename
     canonical_path = etf_dir / canonical_filename
@@ -182,7 +182,6 @@ def extract_and_save_xls(
     try:
         stamped_path.write_text(xls_content, encoding="utf-8")
         canonical_path.write_text(xls_content, encoding="utf-8")
-        (RAW_FILES_DIR / canonical_filename).write_text(xls_content, encoding="utf-8")
     except Exception as e:
         raise ScraperBotError(
             KnownErrorType.EXCEL_FAILED_OR_CORRUPTED,
@@ -211,6 +210,7 @@ def run_daily_scrape(
     sym = etf_symbol.strip().upper()
     target_cfg = get_etf_target(sym)
     target_url = url or (target_cfg["daily_url"] if target_cfg else TARGET_URL)
+    file_fmt = (target_cfg.get("file_format") if target_cfg else "XLS") or "XLS"
     run_id = log_scrape_start(trigger_type=trigger_type, etf_symbol=sym)
 
     try:
@@ -226,7 +226,7 @@ def run_daily_scrape(
                     'Simulated diagnostic check: "Download Daily Fund Holdings" (.js-download-btn) link missing from DOM.'
                 ),
                 KnownErrorType.EXCEL_FAILED_OR_CORRUPTED: (
-                    "Simulated diagnostic check: Downloaded .xls file truncated (0 bytes) or corrupted header."
+                    "Simulated diagnostic check: Downloaded .xls/.csv file truncated (0 bytes) or corrupted header."
                 ),
             }
             raise ScraperBotError(
@@ -234,8 +234,22 @@ def run_daily_scrape(
                 error_descriptions.get(simulate_error, f"Simulated failure for {simulate_error}"),
             )
 
-        html = fetch_mfs_page_with_splash_bypass(target_url)
-        raw_file_path = extract_and_save_xls(html, etf_symbol=sym, is_historical=False)
+        if target_url.lower().endswith(".csv") or (file_fmt.upper() == "CSV" and "mfs.com" not in target_url.lower()):
+            session = get_anonymous_session()
+            resp = session.get(target_url, timeout=REQUEST_TIMEOUT_SECONDS)
+            if resp.status_code != 200 or not resp.text.strip():
+                raise ScraperBotError(
+                    KnownErrorType.URL_UNREACHABLE_OR_LAYOUT_CHANGED,
+                    f"CSV target URL returned HTTP {resp.status_code}",
+                )
+            download_stamp = datetime.now(ZoneInfo(SCHEDULE_TIMEZONE)).strftime("%Y-%m-%d")
+            etf_dir = get_etf_raw_dir(sym)
+            raw_file_path = etf_dir / f"{sym}_Daily_Holdings_downloaded_{download_stamp}.csv"
+            raw_file_path.write_text(resp.text, encoding="utf-8")
+        else:
+            html = fetch_mfs_page_with_splash_bypass(target_url)
+            raw_file_path = extract_and_save_xls(html, etf_symbol=sym, is_historical=False)
+
         records = parse_mfs_xls_file(raw_file_path)
         inserted_count = save_holdings(
             records=records,

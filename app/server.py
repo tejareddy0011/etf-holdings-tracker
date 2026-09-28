@@ -32,7 +32,7 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 
 def organize_legacy_raw_files() -> None:
-    """Ensures any top-level .xls/.csv files are also organized inside data/raw_files/<ETF_SYMBOL>/."""
+    """Ensures any top-level .xls/.csv files are moved cleanly into data/raw_files/<ETF_SYMBOL>/."""
     for p in list(RAW_FILES_DIR.glob("*.xls*")) + list(RAW_FILES_DIR.glob("*.csv")):
         if not p.is_file():
             continue
@@ -50,6 +50,10 @@ def organize_legacy_raw_files() -> None:
         dest = target_dir / p.name
         if not dest.exists():
             dest.write_bytes(p.read_bytes())
+        try:
+            p.unlink()
+        except Exception:
+            pass
 
 
 def list_raw_files(etf_symbol: str = "") -> List[Dict[str, Any]]:
@@ -67,14 +71,17 @@ def list_raw_files(etf_symbol: str = "") -> List[Dict[str, Any]]:
             reverse=True,
         ):
             stat = p.stat()
+            rel = f"{d.name.upper()}/{p.name}"
             files.append(
                 {
                     "etf_symbol": d.name.upper(),
                     "directory": f"data/raw_files/{d.name.upper()}/",
-                    "relative_path": f"{d.name.upper()}/{p.name}",
+                    "relative_path": rel,
                     "filename": p.name,
                     "size_bytes": stat.st_size,
                     "modified_at": stat.st_mtime,
+                    "view_url": f"/api/raw-files-view/{urllib.parse.quote(rel)}",
+                    "download_url": f"/api/raw-files/{urllib.parse.quote(rel)}",
                 }
             )
     return files
@@ -148,6 +155,15 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
             )
             return
 
+        if path == "/api/raw-files":
+            etf = qs.get("etf", [""])[0].strip().upper()
+            files = list_raw_files(etf)
+            by_etf: Dict[str, List[Dict[str, Any]]] = {}
+            for f in files:
+                by_etf.setdefault(f["etf_symbol"], []).append(f)
+            self._send_json({"files": files, "by_etf": by_etf})
+            return
+
         if path == "/api/compare":
             etf = qs.get("etf", [DEFAULT_ETF_SYMBOL])[0].strip().upper()
             dates = get_available_dates(etf)
@@ -218,6 +234,24 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                     "th{background:#111827;color:#94a3b8;}</style></head><body>"
                     f"<h2>Original File Preview: {html_lib.escape(fpath.name)}</h2>"
                     f"{raw_text}</body></html>"
+                )
+            elif fpath.suffix.lower() == ".csv":
+                import csv, io
+                reader = csv.reader(io.StringIO(raw_text))
+                rows_html = []
+                for idx, row in enumerate(reader):
+                    tag = "th" if idx == 0 else "td"
+                    cells = "".join(f"<{tag}>{html_lib.escape(c)}</{tag}>" for c in row)
+                    rows_html.append(f"<tr>{cells}</tr>")
+                styled_html = (
+                    "<!DOCTYPE html><html><head><meta charset='utf-8'>"
+                    f"<title>{html_lib.escape(fpath.name)}</title>"
+                    "<style>body{font-family:sans-serif;background:#0f172a;color:#f8fafc;padding:20px;}"
+                    "table{width:100%;border-collapse:collapse;font-size:13px;background:#1e293b;}"
+                    "th,td{border:1px solid #334155;padding:8px 10px;text-align:left;}"
+                    "th{background:#111827;color:#94a3b8;}</style></head><body>"
+                    f"<h2>Original CSV File Preview: {html_lib.escape(fpath.name)}</h2>"
+                    f"<table>{''.join(rows_html)}</table></body></html>"
                 )
             else:
                 styled_html = (

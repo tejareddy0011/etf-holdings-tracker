@@ -25,7 +25,7 @@ class TestETFPipeline(unittest.TestCase):
         self.assertGreater(res["records_inserted"], 50)
         raw_path = RAW_FILES_DIR / res["raw_file"]
         self.assertTrue(raw_path.exists())
-        canonical_path = RAW_FILES_DIR / "Active_Value_ETF-Daily_Holdings_09-25-26.xls"
+        canonical_path = RAW_FILES_DIR / "MFSV" / "Active_Value_ETF-Daily_Holdings_09-25-26.xls"
         self.assertTrue(canonical_path.exists())
 
     def test_02_historical_seed_and_date_comparison(self) -> None:
@@ -66,13 +66,21 @@ class TestETFPipeline(unittest.TestCase):
         self.assertEqual(records[0]["holding_date"], "2026-09-01")
         self.assertEqual(records[0]["ticker"], "MSFT US")
 
-    def test_05_admin_controls(self) -> None:
+    def test_05_admin_controls_and_per_etf_bot_toggles(self) -> None:
+        from app.database import set_etf_bot_state
         st = scheduler.set_admin_state("PAUSED")
         self.assertEqual(st["scraper_state"], "PAUSED")
         st = scheduler.set_admin_state("STOPPED")
         self.assertEqual(st["scraper_state"], "STOPPED")
         st = scheduler.set_admin_state("ACTIVE")
         self.assertEqual(st["scraper_state"], "ACTIVE")
+
+        etf_paused = set_etf_bot_state("BRCE", "PAUSED")
+        self.assertEqual(etf_paused["bot_state"], "PAUSED")
+        etf_stopped = set_etf_bot_state("BRCE", "STOPPED")
+        self.assertEqual(etf_stopped["bot_state"], "STOPPED")
+        etf_active = set_etf_bot_state("BRCE", "ACTIVE")
+        self.assertEqual(etf_active["bot_state"], "ACTIVE")
 
     @patch("app.notifier.SMTP_USER", "")
     def test_06_all_four_known_error_notifications(self) -> None:
