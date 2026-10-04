@@ -270,9 +270,9 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                         "proxy_bandwidth_used_mb": proxy_mb,
                         "proxy_bandwidth_limit_gb": 250,
                         "railway_monthly_cost_usd": 5.00,
-                        "webshare_monthly_cost_usd": 2.99,
+                        "webshare_monthly_cost_usd": 5.99,
                         "smtp_monthly_cost_usd": 0.00,
-                        "total_monthly_cost_usd": 7.99,
+                        "total_monthly_cost_usd": 10.99,
                     },
                 }
             )
