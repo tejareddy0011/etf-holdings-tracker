@@ -17,6 +17,7 @@ from app.config import (
     AUTH_PASSWORD,
     AUTH_SECRET,
     AUTH_USERNAME,
+    DB_PATH,
     DEFAULT_ETF_SYMBOL,
     RAW_FILES_DIR,
     SCHEDULE_TIMEZONE,
@@ -245,6 +246,11 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
         if path == "/api/status":
             etf = qs.get("etf", [DEFAULT_ETF_SYMBOL])[0].strip().upper()
             dates = get_available_dates(etf)
+            all_raw = list_raw_files("")
+            raw_bytes = sum(int(f.get("size_bytes", 0)) for f in all_raw)
+            db_bytes = DB_PATH.stat().st_size if DB_PATH.exists() else 0
+            total_mb = round((raw_bytes + db_bytes) / (1024 * 1024), 2)
+            proxy_mb = round((raw_bytes * 1.35) / (1024 * 1024), 2)
             self._send_json(
                 {
                     "selected_etf": etf,
@@ -254,7 +260,20 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                     "recent_runs": get_recent_runs(15),
                     "recent_alerts": get_recent_alerts(15),
                     "raw_files": list_raw_files(etf),
-                    "all_raw_files": list_raw_files(""),
+                    "all_raw_files": all_raw,
+                    "usage_tracker": {
+                        "raw_files_count": len(all_raw),
+                        "raw_files_mb": round(raw_bytes / (1024 * 1024), 2),
+                        "db_mb": round(db_bytes / (1024 * 1024), 2),
+                        "total_storage_mb": total_mb,
+                        "storage_limit_mb": 5120,
+                        "proxy_bandwidth_used_mb": proxy_mb,
+                        "proxy_bandwidth_limit_gb": 250,
+                        "railway_monthly_cost_usd": 5.00,
+                        "webshare_monthly_cost_usd": 2.99,
+                        "smtp_monthly_cost_usd": 0.00,
+                        "total_monthly_cost_usd": 7.99,
+                    },
                 }
             )
             return
