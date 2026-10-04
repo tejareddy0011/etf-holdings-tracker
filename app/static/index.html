@@ -556,8 +556,11 @@
     /* Two Column Comparison Layout */
     .two-col {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       gap: 24px;
+    }
+    .two-col > * {
+      min-width: 0;
     }
 
     @media (max-width: 1080px) {
