@@ -1,14 +1,26 @@
+import base64
+import hashlib
+import hmac
 import html as html_lib
 import json
 import os
 import urllib.parse
 from datetime import datetime
+from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Dict, List
 from zoneinfo import ZoneInfo
 
-from app.config import DEFAULT_ETF_SYMBOL, RAW_FILES_DIR, SCHEDULE_TIMEZONE
+from app.config import (
+    AUTH_ENABLED,
+    AUTH_PASSWORD,
+    AUTH_SECRET,
+    AUTH_USERNAME,
+    DEFAULT_ETF_SYMBOL,
+    RAW_FILES_DIR,
+    SCHEDULE_TIMEZONE,
+)
 from app.database import (
     add_or_update_etf_target,
     compare_holdings,
@@ -110,6 +122,22 @@ def resolve_raw_file(rel_path: str) -> Path:
     return RAW_FILES_DIR / "__nonexistent__"
 
 
+def make_session_token(username: str) -> str:
+    msg = f"{username}:{AUTH_PASSWORD}".encode("utf-8")
+    sig = hmac.new(AUTH_SECRET.encode("utf-8"), msg, hashlib.sha256).hexdigest()
+    return f"{username}.{sig}"
+
+
+def verify_session_token(token: str) -> bool:
+    if not token or "." not in token:
+        return False
+    username, _ = token.split(".", 1)
+    if username != AUTH_USERNAME:
+        return False
+    expected = make_session_token(AUTH_USERNAME)
+    return hmac.compare_digest(token, expected)
+
+
 class ETFReportingHandler(BaseHTTPRequestHandler):
     def _send_json(self, payload: Dict[str, Any], status: int = 200) -> None:
         body = json.dumps(payload, indent=2).encode("utf-8")
@@ -129,6 +157,39 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
             return json.loads(raw)
         except Exception:
             return {}
+
+    def _is_authenticated(self) -> bool:
+        if not AUTH_ENABLED:
+            return True
+        cookie_hdr = self.headers.get("Cookie", "")
+        if cookie_hdr:
+            c = SimpleCookie()
+            try:
+                c.load(cookie_hdr)
+                if "etf_session" in c and verify_session_token(c["etf_session"].value):
+                    return True
+            except Exception:
+                pass
+        auth_hdr = self.headers.get("Authorization", "")
+        if auth_hdr.startswith("Basic "):
+            try:
+                decoded = base64.b64decode(auth_hdr[6:].strip()).decode("utf-8", errors="ignore")
+                if ":" in decoded:
+                    u, p = decoded.split(":", 1)
+                    if hmac.compare_digest(u.strip(), AUTH_USERNAME) and hmac.compare_digest(p, AUTH_PASSWORD):
+                        return True
+            except Exception:
+                pass
+        return False
+
+    def _serve_html_file(self, filepath: Path) -> None:
+        content = filepath.read_bytes()
+        self.send_response(200)
+        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Length", str(len(content)))
+        self.send_header("Cache-Control", "no-store")
+        self.end_headers()
+        self.wfile.write(content)
 
     def do_GET(self) -> None:
         parsed = urllib.parse.urlparse(self.path)
@@ -150,14 +211,35 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
             self.wfile.write(svg_icon)
             return
 
-        if path in ("/", "/index.html"):
-            index_file = STATIC_DIR / "index.html"
-            content = index_file.read_bytes()
-            self.send_response(200)
-            self.send_header("Content-Type", "text/html; charset=utf-8")
-            self.send_header("Content-Length", str(len(content)))
+        if path == "/api/health":
+            self._send_json({"ok": True, "status": "healthy"})
+            return
+
+        if path == "/logout":
+            self.send_response(302)
+            self.send_header("Set-Cookie", "etf_session=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax")
+            self.send_header("Location", "/login")
             self.end_headers()
-            self.wfile.write(content)
+            return
+
+        if path == "/login":
+            if self._is_authenticated():
+                self.send_response(302)
+                self.send_header("Location", "/")
+                self.end_headers()
+                return
+            self._serve_html_file(STATIC_DIR / "login.html")
+            return
+
+        if path in ("/", "/index.html"):
+            if not self._is_authenticated():
+                self._serve_html_file(STATIC_DIR / "login.html")
+                return
+            self._serve_html_file(STATIC_DIR / "index.html")
+            return
+
+        if not self._is_authenticated():
+            self._send_json({"ok": False, "error": "Unauthorized. Please log in."}, status=401)
             return
 
         if path == "/api/status":
@@ -352,6 +434,39 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
         body = self._read_json_body()
+
+        if path == "/api/login":
+            u = str(body.get("username", "")).strip()
+            p = str(body.get("password", ""))
+            if hmac.compare_digest(u, AUTH_USERNAME) and hmac.compare_digest(p, AUTH_PASSWORD):
+                token = make_session_token(AUTH_USERNAME)
+                resp_bytes = json.dumps({"ok": True, "username": AUTH_USERNAME}).encode("utf-8")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json; charset=utf-8")
+                self.send_header("Content-Length", str(len(resp_bytes)))
+                self.send_header(
+                    "Set-Cookie",
+                    f"etf_session={token}; HttpOnly; Path=/; Max-Age=2592000; SameSite=Lax",
+                )
+                self.end_headers()
+                self.wfile.write(resp_bytes)
+            else:
+                self._send_json({"ok": False, "error": "Invalid username or password."}, status=401)
+            return
+
+        if path == "/api/logout":
+            resp_bytes = json.dumps({"ok": True}).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(resp_bytes)))
+            self.send_header("Set-Cookie", "etf_session=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax")
+            self.end_headers()
+            self.wfile.write(resp_bytes)
+            return
+
+        if not self._is_authenticated():
+            self._send_json({"ok": False, "error": "Unauthorized. Please log in."}, status=401)
+            return
 
         if path == "/api/admin/toggle":
             state = body.get("state", "ACTIVE")

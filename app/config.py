@@ -127,3 +127,10 @@ PROXY_LIST = [
 ] or list(DEFAULT_WEBSHARE_PROXIES)
 GCS_BUCKET_NAME = os.getenv("GCS_BUCKET_NAME", "")
 
+# Dashboard Authentication Config
+AUTH_USERNAME = os.getenv("AUTH_USERNAME", "gvarun007")
+AUTH_PASSWORD = os.getenv("AUTH_PASSWORD", "tejavarun7$")
+AUTH_SECRET = os.getenv("AUTH_SECRET", "etf-holdings-tracker-hmac-secret-2026")
+AUTH_ENABLED = os.getenv("AUTH_ENABLED", "true").lower() != "false"
+
+
