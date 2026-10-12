@@ -68,3 +68,5 @@ Open `http://127.0.0.1:8080` in your browser (or deploy directly to any cloud ho
 ### 4. Source Control & Handoff (Multi ETF Scaling)
 * **Git Repository**: Hosted on GitHub (or GitLab) with a `main` production branch, protected PR workflow, `.env.example` for secrets (`SMTP_PASSWORD`, `SCRAPER_PROXIES`, `GCS_BUCKET_NAME`), and automated unit tests (`tests/test_pipeline.py`).
 * **Scaling to Additional ETFs**: The database schema already includes an `etf_symbol` column (`MFSV` by default). Adding new ETFs (e.g., iShares, Vanguard, SPDR, or other MFS ETFs) only requires registering a provider adapter in `app/scraper.py` without changing the database or reporting UI.
+* **Contact & Code Issues**: For any repository or code questions, reach out at `tejareddi0011@gmail.com`.
+
