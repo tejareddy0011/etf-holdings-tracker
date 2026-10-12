@@ -1,0 +1,2440 @@
+<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>Daily Holdings</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table class="table table-hover js-full-holding-table">
+<thead>
+<tr class="performance-attribution__table-col-group-header">
+<th class="performance-attribution__table-cell-col-group with-border" colspan="4"></th>
+<th class="performance-attribution__table-cell-col-group" colspan="2">
+                                            Based on Market Value
+                                        </th>
+<th class="performance-attribution__table-cell-col-group" colspan="2">
+                                            Based on Equivalent Exposure
+                                        </th>
+<th class="performance-attribution__table-cell-col-group" colspan="4"></th>
+</tr>
+<tr class="performance-attribution__table-col-header performance-attribution__table-col-header_gray">
+<th class="performance-attribution__table-cell border-right-none with-border">
+                                                CUSIP/SEDOL
+                                            </th>
+<th class="performance-attribution__table-cell border-none">
+                                                Ticker
+                                            </th>
+<th class="performance-attribution__table-cell border-none text-left">
+                                            Securities
+                                            <div class="performance-attribution__table-cell-sub-text">
+                                                
+                                                    (on 06-30-26)
+                                                
+                                                
+                                            </div>
+</th>
+<th class="performance-attribution__table-cell border-none">
+                                            Shares or Par Amount
+                                        </th>
+<th class="performance-attribution__table-cell border-right-none">
+                                            Value
+                                        </th>
+<th class="performance-attribution__table-cell border-none">
+                                            Percent of Net Assets
+                                        </th>
+<th class="performance-attribution__table-cell border-right-none">
+                                            Value
+                                        </th>
+<th class="performance-attribution__table-cell border-none">
+                                            Percent of Net Assets
+                                        </th>
+<th class="performance-attribution__table-cell border-right-none">
+                                            Market Cap ($mm)
+                                        </th>
+<th class="performance-attribution__table-cell border-none">
+                                                
+                                            GICS Sectors
+                                            
+                                            
+                                                
+    
+        
+            
+                <span class="tooltip-pop" data-key="fullHoldingsGicsDislosure">
+<div class="hide js-tooltip-content">
+<span>
+<p>The Global Industry Classification Standard (GICS®) was developed by and/or is the exclusive property of MSCI, Inc. and S&amp;P Global Market Intelligence Inc. ("S&amp;P Global Market Intelligence"). GICS is a service mark of MSCI and S&amp;P Global Market Intelligence and has been licensed for use by MFS. MFS has applied its own internal sector/industry classification methodology for equity securities and non-equity securities that are unclassified by GICS.</p>
+</span>
+</div>
+<em aria-describedby="popover61180" class="redPop" data-placement="auto left" data-popvariation="red  " data-toggle="popover" tabindex="0">
+<svg class="icon icon-info size-16-16" height="16" viewbox="0 0 16 16" width="16">
+<use xlink:href="#icon-info" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+</svg>
+</em>
+</span>
+</th>
+<th class="performance-attribution__table-cell border-left-none">
+                                            Country
+                                        </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                02313510
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                AMZN US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Amazon.com Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            113,529
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $27,058,501.86
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            5.15%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $27,058,501.86
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            5.15%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            2,563,849.36
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Consumer Discretionary
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                46625H10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                JPM US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            JPMorgan Chase &amp; Co
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            68,281
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $22,350,419.73
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            4.25%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $22,350,419.73
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            4.25%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            877,084.66
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                48248010
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                KLAC US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            KLA Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            64,118
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $19,345,041.78
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            3.68%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $19,345,041.78
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            3.68%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            394,365.14
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Information Technology
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                59491810
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                MSFT US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Microsoft Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            47,654
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $17,775,895.08
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            3.38%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $17,775,895.08
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            3.38%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            2,771,165.58
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Information Technology
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                03783310
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                AAPL US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Apple Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            52,105
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $15,077,102.80
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.87%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $15,077,102.80
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.87%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            4,249,933.33
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Information Technology
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                12552310
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                CI US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Cigna Group
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            50,877
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $14,025,771.36
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.67%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $14,025,771.36
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.67%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            72,926.29
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Health Care
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                03265410
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                ADI US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Analog Devices Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            33,787
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $13,419,182.79
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.55%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $13,419,182.79
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.55%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            193,456.36
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Information Technology
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                30231G10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                XOM US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Exxon Mobil Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            95,978
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $13,122,112.16
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.50%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $13,122,112.16
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.50%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            566,697.19
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Energy
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                61744644
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                MS US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Morgan Stanley
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            60,318
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $12,608,874.72
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.40%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $12,608,874.72
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.40%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            330,205.65
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                26441C20
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                DUK US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Duke Energy Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            88,475
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $11,199,165.50
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.13%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $11,199,165.50
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.13%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            98,681.29
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Utilities
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                75513E10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                RTX US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            RTX Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            58,170
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $11,036,594.10
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.10%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $11,036,594.10
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.10%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            255,506.26
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Industrials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                58155Q10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                MCK US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            McKesson Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            14,426
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $10,911,294.92
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.07%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $10,900,285.60
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.07%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            90,672.00
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Health Care
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                89417E10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                TRV US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Travelers Cos Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            32,734
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $10,806,148.08
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.06%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $10,806,148.08
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2.06%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            70,198.27
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                90781810
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                UNP US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Union Pacific Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            38,122
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $10,369,184.00
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.97%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $10,369,184.00
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.97%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            161,489.99
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Industrials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                74331510
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                PGR US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Progressive Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            46,535
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $10,165,570.75
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.93%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $10,165,570.75
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.93%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            127,662.18
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                09702310
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                BA US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Boeing Co
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            46,585
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $10,084,254.95
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.92%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $10,084,254.95
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.92%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            170,643.80
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Industrials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                00287Y10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                ABBV US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            AbbVie Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            39,026
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,820,502.64
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.87%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,820,502.64
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.87%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            444,595.74
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Health Care
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                25746U10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                D US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Dominion Energy Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            138,521
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,459,599.09
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.80%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,459,599.09
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.80%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            60,061.91
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Utilities
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                16676410
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                CVX US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Chevron Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            56,232
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,321,016.32
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.77%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,321,016.32
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.77%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            330,127.28
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Energy
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                G0403H10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                AON US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Aon PLC
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            27,780
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,214,348.20
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.75%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,214,348.20
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.75%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            70,848.98
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                17296742
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                C US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Citigroup Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            64,808
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,070,527.68
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.73%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,070,527.68
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.73%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            240,018.45
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                02581610
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                AXP US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            American Express Co
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            26,665
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,019,436.25
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.72%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,019,436.25
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.72%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            230,796.90
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                43300A20
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                HLT US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Hilton Worldwide Holdings Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            27,245
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,003,382.70
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.71%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $9,003,382.70
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.71%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            75,453.93
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Consumer Discretionary
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                N6596X10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                NXPI US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            NXP Semiconductors NV
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            30,950
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,728,835.92
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.65%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,697,878.50
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.65%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            70,995.20
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Information Technology
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                G2918310
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                ETN US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Eaton Corp PLC
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            20,288
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,645,122.56
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.64%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,645,122.56
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.64%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            165,462.40
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Industrials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                06050510
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                BAC US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Bank of America Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            151,038
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,606,145.24
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.64%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,606,145.24
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.64%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            406,262.16
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                01880210
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                LNT US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Alliant Energy Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            112,025
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,546,387.25
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.63%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,546,387.25
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.63%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            19,703.96
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Utilities
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                74340W10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                PLD US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            ProLogis REIT
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            62,631
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,484,621.57
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.61%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,484,621.57
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.61%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            126,303.83
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Real Estate
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                47816010
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                JNJ US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Johnson &amp; Johnson
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            33,185
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,427,994.45
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.60%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,427,994.45
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.60%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            611,360.90
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Health Care
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                20825C10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                COP US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            ConocoPhillips
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            81,032
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,424,086.72
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.60%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,424,086.72
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.60%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            126,653.85
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Energy
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                43707610
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                HD US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Home Depot Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            23,602
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,323,953.36
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.58%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $8,323,953.36
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.58%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            351,663.12
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Consumer Discretionary
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                84258710
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                SO US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Southern Co
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            83,203
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,963,359.13
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.51%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,963,359.13
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.51%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            107,893.99
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Utilities
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                63110310
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                NDAQ US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Nasdaq Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            99,016
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,804,441.12
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.48%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,804,441.12
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.48%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            44,575.93
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                48251W10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                KKR US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            KKR &amp; Co Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            84,765
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,779,731.70
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.48%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,779,731.70
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.48%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            82,406.77
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                36955010
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                GD US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            General Dynamics Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            21,928
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,767,774.72
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.48%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,767,774.72
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.48%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            95,797.19
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Industrials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                00282410
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                ABT US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Abbott Laboratories
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            83,924
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,615,263.76
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.45%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,615,263.76
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.45%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            158,052.11
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Health Care
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                94974610
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                WFC US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Wells Fargo &amp; Co
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            84,761
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,004,649.04
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.33%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $7,004,649.04
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.33%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            253,237.06
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                88250810
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                TXN US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Texas Instruments Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            22,861
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,814,178.27
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.30%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,814,178.27
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.30%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            271,271.36
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Information Technology
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                69371810
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                PCAR US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            PACCAR Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            53,492
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,425,459.04
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.22%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,425,459.04
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.22%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            63,217.50
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Industrials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                74271810
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                PG US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Procter &amp; Gamble Co
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            43,509
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,380,159.76
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.21%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,380,159.76
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.21%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            341,465.76
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Consumer Staples
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                98389B10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                XEL US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Xcel Energy Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            78,873
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,379,093.00
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.20%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,333,501.90
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.20%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            50,128.84
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Utilities
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                44485910
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                HUM US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Humana Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            15,497
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,172,512.10
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.17%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,155,718.34
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.17%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            47,691.03
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Health Care
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                45687V10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                IR US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            INGERSOLL-RAND INC
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            71,547
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $5,866,138.53
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.12%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $5,866,138.53
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.12%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            32,085.71
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Industrials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                12589610
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                CMS US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            CMS Energy Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            73,003
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $5,584,729.50
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.06%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $5,584,729.50
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.06%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            23,632.35
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Utilities
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                71817210
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                PM US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Philip Morris International Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            28,706
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $5,234,769.65
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.99%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $5,193,202.46
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.99%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            281,958.87
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Consumer Staples
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                G2550810
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                CRH US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            CRH PLC
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            47,257
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $5,056,499.00
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.96%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $5,056,499.00
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.96%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            71,500.50
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Materials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                29442910
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                EFX US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Equifax Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            31,749
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $5,039,201.28
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.96%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $5,039,201.28
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.96%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            18,935.30
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Industrials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                14912310
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                CAT US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Caterpillar Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            4,640
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,941,136.00
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.94%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,941,136.00
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.94%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            490,532.36
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Industrials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                60920710
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                MDLZ US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Mondelez International Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            84,706
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,941,748.04
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.93%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,899,395.04
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.93%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            74,246.30
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Consumer Staples
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                02079K30
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                GOOGL US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Alphabet Inc Class A
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            12,725
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,547,533.25
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.87%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,547,533.25
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.87%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            4,329,894.92
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Communication Services
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                71708110
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                PFE US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Pfizer Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            185,753
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,472,932.24
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.85%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,472,932.24
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.85%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            137,242.62
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Health Care
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                49436810
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                KMB US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Kimberly-Clark Corp
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            40,674
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,515,087.70
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.85%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,464,784.98
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.85%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            36,437.09
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Consumer Staples
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                43851620
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                HON US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Honeywell International Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            19,466
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,358,437.40
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.83%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,358,437.40
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.83%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            70,937.47
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Industrials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                43849R10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                HONA US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Honeywell Aerospace Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            19,440
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,297,795.20
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.82%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $4,297,795.20
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.82%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            70,069.04
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Industrials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                41651510
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                HIG US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Hartford Insurance Group Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            30,107
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $3,989,779.64
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.76%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $3,989,779.64
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.76%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            36,430.01
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                03675210
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                ELV US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Elevance Health Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            10,031
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $3,879,288.63
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.74%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $3,879,288.63
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.74%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            84,062.73
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Health Care
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                G7997R10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                STX US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Seagate Technology Holdings PLC
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            2,879
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $2,780,335.86
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.53%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $2,778,235.00
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.53%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            216,553.72
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Information Technology
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                G2583910
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                CCEP US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Coca-Cola Europacific Partners PLC
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            26,544
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $2,656,258.08
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.51%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $2,656,258.08
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.51%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            46,049.61
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Consumer Staples
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United Kingdom
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                50212V10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                LPLA US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            LPL Financial Holdings Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            9,243
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $2,603,568.24
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.50%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $2,603,568.24
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.50%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            22,587.64
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Financials
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                58507V10
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                MDLN US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Medline Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            57,691
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $2,275,333.04
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.43%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $2,275,333.04
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.43%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            33,366.24
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Health Care
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                79466L30
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                CRM US
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Salesforce Inc
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            13,327
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $2,093,497.46
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.40%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $2,087,807.82
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.40%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            128,304.54
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Information Technology
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            United States
+                                        </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border less-padding-left">
+<button aria-expanded="false" class="isCollapsed js-expand-collapse-btn">
+<span class="mfs-table__cell-icons">
+<svg class="mfs-table__collapse-icon" viewbox="0 0 18 18">
+<use xlink:href="" xmlns:xlink="http://www.w3.org/1999/xlink"></use>
+</svg>
+</span>
+</button>
+                                                
+                                                CASH_USD
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                CASH_USD
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Cash &amp; Cash Equivalents
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            -
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,309,773.40
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.20%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $6,309,773.34
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            1.20%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            -
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            -
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            -
+                                        </td>
+</tr>
+<tr class="collapsed">
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                        CASH_USD
+                                                    </td>
+<td class="performance-attribution__table-cell border-none">
+                                                        CASH_USD
+                                                    </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    Us Dollars
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $3,683,385.72
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    0.70%
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $3,683,385.72
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                                    United States
+                                                </td>
+</tr>
+<tr class="collapsed">
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                        85749270
+                                                    </td>
+<td class="performance-attribution__table-cell border-none">
+                                                        85749270
+                                                    </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    State Street Institutional US Government Money Market Fund
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $2,626,387.59
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    0.50%
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    $2,626,387.62
+                                                </td>
+<td class="performance-attribution__table-cell border-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                                    -
+                                                </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                                    United States
+                                                </td>
+</tr>
+<tr>
+<td class="performance-attribution__table-cell border-right-none with-border">
+                                                
+                                                CASH_DERV
+                                            </td>
+<td class="performance-attribution__table-cell border-none">
+                                                -
+                                            </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            Other
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            -
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $0.00
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            -
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            $0.06
+                                        </td>
+<td class="performance-attribution__table-cell border-none">
+                                            0.00%
+                                        </td>
+<td class="performance-attribution__table-cell border-right-none">
+                                            -
+                                        </td>
+<td class="performance-attribution__table-cell border-none text-left">
+                                            -
+                                        </td>
+<td class="performance-attribution__table-cell border-left-none text-left">
+                                            Other
+                                        </td>
+</tr>
+</tbody>
+</table><div class="col-sm-12 no-padding fullholding-disclosure">
+<div data-key="PP_FULLHLDGS_GICS_DISCLOSURE_BOTTOM">
+<div class="disclosure-line"><span><p><sup>*</sup>Short positions, unlike long positions, lose value if the underlying asset gains value.</p>
+</span></div>
+</div>
+<div data-key="PP_FULLHLDGS_PAGE_BOTTOM">
+<div class="disclosure-line"><span>Portfolio characteristics are based on equivalent exposure, which measures how a portfolio's value would change due to price changes in an asset held either directly or, in the case of a derivative contract, indirectly. The market value of the holding may differ.</span></div>
+<div class="disclosure-line"><span><p>The list of portfolio holdings is as of the date shown and may not represent current or future portfolio composition. This information should not be construed as a recommendation to buy or sell any of the securities mentioned.</p>
+<p>This portfolio data has not been audited or adjusted for certain financial statement reclassifications. An audit could potentially result in adjustments to this data. For adjusted holdings information, please refer to the fund's quarterly portfolio holdings and semiannual reports. For audited portfolio holdings information, please refer to the fund's annual report.<br/>
+</p>
+<p>Top 10 portfolio holdings are generally available at the earliest, 11 calendar days after the end of each month.<br/>
+</p>
+</span></div>
+<div class="disclosure-line"><span>This website is a general communication and is provided for informational and/or educational purposes only. None of the content should be viewed as a suggestion that you take or refrain from taking any action nor as a recommendation for any specific investment product, strategy, plan feature or other such purpose. Your use of this website indicates that you agree with the intended purpose. Prior to making any investment or financial decision, you should seek individualized advice from a personal financial, tax, and other professionals who are able to provide advice in the context of your particular financial situation.</span></div>
+<div class="disclosure-line"><span><p><b>The information provided on this page should be read in conjunction with the fund's prospectus or summary prospectus for the portfolio being offered, which are available online <a href="/en-us/individual-investor/product-strategies/exchange-traded-funds.html">here</a> or by <a href="/en-us/individual-investor/about-mfs/contact-us.html">contacting</a> MFS. Consider the fund's investment objectives, risks, charges, and expenses, and otherwise read these documents carefully before you invest. Shares of the funds are not FDIC-insured and are not deposits or other obligations of, or guaranteed by, any bank. Shares of the funds involve investment risk, including possible loss of principal.</b></p>
+</span></div>
+<div class="disclosure-line"><span><p>MFS registered investment products are offered through MFS® Fund Distributors, Inc., Member SIPC, 111 Huntington Avenue, Boston, MA 02199.</p>
+</span></div>
+</div>
+</div></body></html>
