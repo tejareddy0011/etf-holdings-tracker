@@ -36,7 +36,7 @@ HISTORICAL_BASE_URL = (
     "exchange-traded-funds/full-holdings/MFSV-active-value-etf"
 )
 
-# Phase 1 Core 4 ETFs (MFSV, LSVD, VFLO, IVV) + MFSG
+# Phase 1 & Phase 2 Configured ETFs (7:00 PM PT & 8:00 PM PT Daily Schedules)
 PRESET_ETF_TARGETS = [
     {
         "etf_symbol": "MFSV",
@@ -44,6 +44,7 @@ PRESET_ETF_TARGETS = [
         "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/MFSV-active-value-etf.html#",
         "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/MFSV-active-value-etf",
         "file_format": "XLS",
+        "schedule_time_pt": "19:00",
         "is_active": 1,
     },
     {
@@ -52,6 +53,7 @@ PRESET_ETF_TARGETS = [
         "daily_url": "https://www.lsvasset.com/disciplined-value-etf/",
         "historical_base_url": "",
         "file_format": "CSV",
+        "schedule_time_pt": "19:00",
         "is_active": 1,
     },
     {
@@ -60,6 +62,7 @@ PRESET_ETF_TARGETS = [
         "daily_url": "https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-free-cash-flow-etf",
         "historical_base_url": "",
         "file_format": "CSV",
+        "schedule_time_pt": "19:00",
         "is_active": 1,
     },
     {
@@ -68,6 +71,43 @@ PRESET_ETF_TARGETS = [
         "daily_url": "https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf",
         "historical_base_url": "",
         "file_format": "XLS",
+        "schedule_time_pt": "19:00",
+        "is_active": 1,
+    },
+    {
+        "etf_symbol": "SFLO",
+        "etf_name": "VictoryShares Small Cap Free Cash Flow ETF",
+        "daily_url": "https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-small-cap-free-cash-flow-etf",
+        "historical_base_url": "",
+        "file_format": "CSV",
+        "schedule_time_pt": "20:00",
+        "is_active": 1,
+    },
+    {
+        "etf_symbol": "GFLW",
+        "etf_name": "VictoryShares Free Cash Flow Growth ETF",
+        "daily_url": "https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-free-cash-flow-growth-etf",
+        "historical_base_url": "",
+        "file_format": "CSV",
+        "schedule_time_pt": "20:00",
+        "is_active": 1,
+    },
+    {
+        "etf_symbol": "IFLO",
+        "etf_name": "VictoryShares International Free Cash Flow ETF",
+        "daily_url": "https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-international-free-cash-flow-etf",
+        "historical_base_url": "",
+        "file_format": "CSV",
+        "schedule_time_pt": "20:00",
+        "is_active": 1,
+    },
+    {
+        "etf_symbol": "GRIN",
+        "etf_name": "VictoryShares International Free Cash Flow Growth ETF",
+        "daily_url": "https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-international-free-cash-flow-growth-etf",
+        "historical_base_url": "",
+        "file_format": "CSV",
+        "schedule_time_pt": "20:00",
         "is_active": 1,
     },
     {
@@ -76,6 +116,7 @@ PRESET_ETF_TARGETS = [
         "daily_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/MFSG-active-growth-etf.html#",
         "historical_base_url": "https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/full-holdings/MFSG-active-growth-etf",
         "file_format": "XLS",
+        "schedule_time_pt": "19:00",
         "is_active": 0,
     },
 ]

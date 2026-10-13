@@ -23,6 +23,7 @@ class DailyScraperScheduler:
         self._thread: Optional[threading.Thread] = None
         self._stop_event = threading.Event()
         self._last_scheduled_run_date: Optional[str] = None
+        self._last_etf_run_date: Dict[str, str] = {}
         self._is_job_running: bool = False
 
     def start_background_loop(self) -> None:
@@ -38,35 +39,50 @@ class DailyScraperScheduler:
             try:
                 settings = get_settings()
                 state = settings.get("scraper_state", "ACTIVE")
-                sched_str = settings.get("schedule_time_pt", f"{SCHEDULE_HOUR:02d}:{SCHEDULE_MINUTE:02d}")
-                try:
-                    target_hour, target_min = [int(x) for x in sched_str.split(":")]
-                except Exception:
-                    target_hour, target_min = SCHEDULE_HOUR, SCHEDULE_MINUTE
+                default_sched = settings.get("schedule_time_pt", f"{SCHEDULE_HOUR:02d}:{SCHEDULE_MINUTE:02d}")
 
                 now_pt = datetime.now(tz)
                 today_str = now_pt.strftime("%Y-%m-%d")
 
-                if (
-                    state == "ACTIVE"
-                    and now_pt.hour == target_hour
-                    and now_pt.minute == target_min
-                    and self._last_scheduled_run_date != today_str
-                    and not self._is_job_running
-                ):
-                    with self._lock:
-                        self._is_job_running = True
-                        self._last_scheduled_run_date = today_str
-                    try:
-                        for target in get_etf_targets():
-                            if target.get("is_active", 1) and target.get("bot_state", "ACTIVE") == "ACTIVE":
-                                run_daily_scrape(
-                                    trigger_type="SCHEDULED_7PM_PT",
-                                    etf_symbol=target["etf_symbol"],
-                                )
-                    finally:
+                if state == "ACTIVE" and not self._is_job_running:
+                    due_targets = []
+                    for target in get_etf_targets():
+                        if not (target.get("is_active", 1) and target.get("bot_state", "ACTIVE") == "ACTIVE"):
+                            continue
+                        sym = target["etf_symbol"]
+                        etf_sched = target.get("schedule_time_pt") or default_sched
+                        try:
+                            t_hour, t_min = [int(x) for x in etf_sched.split(":")]
+                        except Exception:
+                            t_hour, t_min = SCHEDULE_HOUR, SCHEDULE_MINUTE
+                        if (
+                            now_pt.hour == t_hour
+                            and now_pt.minute == t_min
+                            and self._last_etf_run_date.get(sym) != today_str
+                        ):
+                            due_targets.append((sym, t_hour, t_min))
+
+                    if due_targets:
                         with self._lock:
-                            self._is_job_running = False
+                            self._is_job_running = True
+                            self._last_scheduled_run_date = today_str
+                            for sym, _, _ in due_targets:
+                                self._last_etf_run_date[sym] = today_str
+                        try:
+                            for sym, t_hour, t_min in due_targets:
+                                if t_hour == 19 and t_min == 0:
+                                    trig = "SCHEDULED_7PM_PT"
+                                elif t_hour == 20 and t_min == 0:
+                                    trig = "SCHEDULED_8PM_PT"
+                                else:
+                                    trig = f"SCHEDULED_{t_hour:02d}{t_min:02d}_PT"
+                                run_daily_scrape(
+                                    trigger_type=trig,
+                                    etf_symbol=sym,
+                                )
+                        finally:
+                            with self._lock:
+                                self._is_job_running = False
             except Exception as e:
                 print(f"Scheduler loop error: {e}")
 
@@ -77,20 +93,36 @@ class DailyScraperScheduler:
         now_pt = datetime.now(tz)
         settings = get_settings()
         state = settings.get("scraper_state", "ACTIVE")
-        sched_str = settings.get("schedule_time_pt", "19:00")
-        try:
-            target_hour, target_min = [int(x) for x in sched_str.split(":")]
-        except Exception:
-            target_hour, target_min = 19, 0
+        default_sched = settings.get("schedule_time_pt", "19:00")
 
-        next_run = now_pt.replace(hour=target_hour, minute=target_min, second=0, microsecond=0)
-        if now_pt >= next_run:
-            next_run += timedelta(days=1)
+        active_times = sorted(
+            {
+                (t.get("schedule_time_pt") or default_sched)
+                for t in get_etf_targets()
+                if t.get("is_active", 1) and t.get("bot_state", "ACTIVE") == "ACTIVE"
+            }
+        )
+        if not active_times:
+            active_times = [default_sched]
+
+        upcoming_candidates = []
+        for s in active_times:
+            try:
+                th, tm = [int(x) for x in s.split(":")]
+            except Exception:
+                th, tm = 19, 0
+            cand = now_pt.replace(hour=th, minute=tm, second=0, microsecond=0)
+            if now_pt >= cand:
+                cand += timedelta(days=1)
+            upcoming_candidates.append(cand)
+
+        next_run = min(upcoming_candidates)
+        sched_display = " & ".join(active_times) + " PT"
 
         return {
             "scraper_state": state,
             "is_job_running": self._is_job_running,
-            "schedule_time_pt": f"{target_hour:02d}:{target_min:02d} PT",
+            "schedule_time_pt": sched_display,
             "timezone": SCHEDULE_TIMEZONE,
             "current_time_pt": now_pt.strftime("%Y-%m-%d %I:%M:%S %p %Z"),
             "next_scheduled_run_pt": (

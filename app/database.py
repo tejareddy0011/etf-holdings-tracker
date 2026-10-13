@@ -30,6 +30,8 @@ def is_cash_or_sweep(ticker: str, cusip: str, company_name: str, gics_sector: st
         or "BLK CSH FND" in name
     ):
         return True
+    if "CURRENCY" in sec.upper():
+        return True
     if sec in ("-", "") and "CASH" in name:
         return True
     return False
@@ -58,6 +60,7 @@ def init_db() -> None:
                 is_active INTEGER NOT NULL DEFAULT 1,
                 bot_state TEXT NOT NULL DEFAULT 'ACTIVE',
                 file_format TEXT NOT NULL DEFAULT 'XLS',
+                schedule_time_pt TEXT NOT NULL DEFAULT '19:00',
                 created_at TEXT NOT NULL
             );
 
@@ -126,6 +129,8 @@ def init_db() -> None:
             conn.execute("ALTER TABLE etf_targets ADD COLUMN bot_state TEXT NOT NULL DEFAULT 'ACTIVE'")
         if "file_format" not in existing_cols:
             conn.execute("ALTER TABLE etf_targets ADD COLUMN file_format TEXT NOT NULL DEFAULT 'XLS'")
+        if "schedule_time_pt" not in existing_cols:
+            conn.execute("ALTER TABLE etf_targets ADD COLUMN schedule_time_pt TEXT NOT NULL DEFAULT '19:00'")
 
         now = datetime.now(timezone.utc).isoformat()
         defaults = {
@@ -158,16 +163,18 @@ def init_db() -> None:
             is_act = int(etf.get("is_active", 1))
             b_state = "ACTIVE" if is_act else "PAUSED"
             f_fmt = (etf.get("file_format") or "XLS").upper()
+            sched_pt = etf.get("schedule_time_pt") or "19:00"
             conn.execute(
                 """
                 INSERT INTO etf_targets (
-                    etf_symbol, etf_name, daily_url, historical_base_url, is_active, bot_state, file_format, created_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    etf_symbol, etf_name, daily_url, historical_base_url, is_active, bot_state, file_format, schedule_time_pt, created_at
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(etf_symbol) DO UPDATE SET
                     etf_name = excluded.etf_name,
                     daily_url = excluded.daily_url,
                     historical_base_url = excluded.historical_base_url,
-                    file_format = excluded.file_format
+                    file_format = excluded.file_format,
+                    schedule_time_pt = excluded.schedule_time_pt
                 """,
                 (
                     etf["etf_symbol"],
@@ -177,6 +184,7 @@ def init_db() -> None:
                     is_act,
                     b_state,
                     f_fmt,
+                    sched_pt,
                     now,
                 ),
             )
@@ -189,6 +197,7 @@ def get_etf_targets() -> List[Dict[str, Any]]:
             SELECT t.etf_symbol, t.etf_name, t.daily_url, t.historical_base_url,
                    t.is_active, COALESCE(t.bot_state, 'ACTIVE') AS bot_state,
                    COALESCE(t.file_format, 'XLS') AS file_format,
+                   COALESCE(t.schedule_time_pt, '19:00') AS schedule_time_pt,
                    COUNT(DISTINCT h.holding_date) AS snapshot_dates_count
             FROM etf_targets t
             LEFT JOIN holdings h ON h.etf_symbol = t.etf_symbol
@@ -198,7 +207,11 @@ def get_etf_targets() -> List[Dict[str, Any]]:
                 WHEN 'LSVD' THEN 1
                 WHEN 'VFLO' THEN 2
                 WHEN 'IVV' THEN 3
-                ELSE 4
+                WHEN 'SFLO' THEN 4
+                WHEN 'GFLW' THEN 5
+                WHEN 'IFLO' THEN 6
+                WHEN 'GRIN' THEN 7
+                ELSE 8
             END, t.etf_symbol ASC
             """
         ).fetchall()
@@ -234,6 +247,7 @@ def add_or_update_etf_target(
     daily_url: str,
     historical_base_url: str = "",
     file_format: str = "XLS",
+    schedule_time_pt: str = "19:00",
 ) -> Dict[str, Any]:
     sym = etf_symbol.strip().upper()
     if not sym:
@@ -242,21 +256,23 @@ def add_or_update_etf_target(
         raise ValueError("Daily Holdings URL is required")
     if not historical_base_url and "/daily-holdings/" in daily_url:
         historical_base_url = daily_url.split("#")[0].replace("/daily-holdings/", "/full-holdings/").replace(".html", "")
+    sched = (schedule_time_pt or "19:00").strip()
     now = datetime.now(timezone.utc).isoformat()
     with get_conn() as conn:
         conn.execute(
             """
             INSERT INTO etf_targets (
-                etf_symbol, etf_name, daily_url, historical_base_url, is_active, bot_state, file_format, created_at
+                etf_symbol, etf_name, daily_url, historical_base_url, is_active, bot_state, file_format, schedule_time_pt, created_at
             )
-            VALUES (?, ?, ?, ?, 1, 'ACTIVE', ?, ?)
+            VALUES (?, ?, ?, ?, 1, 'ACTIVE', ?, ?, ?)
             ON CONFLICT(etf_symbol) DO UPDATE SET
                 etf_name = excluded.etf_name,
                 daily_url = excluded.daily_url,
                 historical_base_url = excluded.historical_base_url,
-                file_format = excluded.file_format
+                file_format = excluded.file_format,
+                schedule_time_pt = excluded.schedule_time_pt
             """,
-            (sym, etf_name.strip() or sym, daily_url.strip(), historical_base_url.strip(), file_format.upper(), now),
+            (sym, etf_name.strip() or sym, daily_url.strip(), historical_base_url.strip(), file_format.upper(), sched, now),
         )
     return get_etf_target(sym) or {}
 

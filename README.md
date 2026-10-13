@@ -2,24 +2,41 @@
 
 Automated daily 7:00 PM PT anonymous ETF holdings ingestion pipeline (`.xls` and `.csv`), per-ETF archive folders (`data/raw_files/<ETF>/`), PT download date-and-time stamping (`_downloaded_YYYY-MM-DD_HH-MM-SS_PT`), 5+ year file retention policy, in-browser raw file viewer, SQLite/PostgreSQL database parser, email error alerting system (`Adam.smith.fintech@gmail.com`), per-ETF On/Pause/Off bot controls, and Date A vs Date B stock position comparison web app.
 
-## Configured Phase 1 ETFs (Daily 7:00 PM PT Automated Download)
+## Configured ETFs (Daily 7:00 PM PT & 8:00 PM PT Automated Download)
 
-1. **`MFSV` (MFS Active Value ETF)** — `.xls`
+1. **`MFSV` (MFS Active Value ETF)** — `.xls` (7:00 PM PT)
    * Target URL: `https://www.mfs.com/en-us/individual-investor/product-strategies/exchange-traded-funds/daily-holdings/MFSV-active-value-etf.html#`
    * Link: `"Download Daily Fund Holdings"`
    * Dedicated Folder: `data/raw_files/MFSV/`
-2. **`LSVD` (LSV Disciplined Value ETF)** — `.csv`
+2. **`LSVD` (LSV Disciplined Value ETF)** — `.csv` (7:00 PM PT)
    * Target URL: `https://www.lsvasset.com/disciplined-value-etf/`
    * Link: `"All Fund Holdings CSV Download"`
    * Dedicated Folder: `data/raw_files/LSVD/`
-3. **`VFLO` (VictoryShares Free Cash Flow ETF)** — `.csv`
+3. **`VFLO` (VictoryShares Free Cash Flow ETF)** — `.csv` (7:00 PM PT)
    * Target URL: `https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-free-cash-flow-etf`
    * Link: `"All Holdings"`
    * Dedicated Folder: `data/raw_files/VFLO/`
-4. **`IVV` (iShares Core S&P 500 ETF)** — `.xls`
+4. **`IVV` (iShares Core S&P 500 ETF)** — `.xls` (7:00 PM PT)
    * Target URL: `https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf`
    * Link: `"Data download"`
    * Dedicated Folder: `data/raw_files/IVV/`
+5. **`SFLO` (VictoryShares Small Cap Free Cash Flow ETF)** — `.csv` (8:00 PM PT)
+   * Target URL: `https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-small-cap-free-cash-flow-etf`
+   * Link: `"All Holdings"`
+   * Dedicated Folder: `data/raw_files/SFLO/`
+6. **`GFLW` (VictoryShares Free Cash Flow Growth ETF)** — `.csv` (8:00 PM PT)
+   * Target URL: `https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-free-cash-flow-growth-etf`
+   * Link: `"All Holdings"`
+   * Dedicated Folder: `data/raw_files/GFLW/`
+7. **`IFLO` (VictoryShares International Free Cash Flow ETF)** — `.csv` (8:00 PM PT)
+   * Target URL: `https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-international-free-cash-flow-etf`
+   * Link: `"All Holdings"`
+   * Dedicated Folder: `data/raw_files/IFLO/`
+8. **`GRIN` (VictoryShares International Free Cash Flow Growth ETF)** — `.csv` (8:00 PM PT)
+   * Target URL: `https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-international-free-cash-flow-growth-etf`
+   * Link: `"All Holdings"`
+   * Dedicated Folder: `data/raw_files/GRIN/`
+
 
 ## 1. Quick Start & Pulling Latest Updates
 

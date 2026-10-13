@@ -875,7 +875,7 @@
             ETF Holdings Intelligence
             <span id="stateBadge" class="badge badge-active">ACTIVE</span>
           </h1>
-          <p>Automated 7:00 PM PT Anonymous Cloud Scraper • MFSV, LSVD, VFLO, IVV • 5+ Year Raw File Retention</p>
+          <p>Automated 7:00 PM &amp; 8:00 PM PT Anonymous Cloud Scraper • MFSV, LSVD, VFLO, IVV, SFLO, GFLW, IFLO, GRIN • 5+ Year Retention</p>
         </div>
       </div>
 
@@ -885,16 +885,16 @@
           <select id="etfSelector" onchange="onEtfChange()" style="min-width:240px;"></select>
         </div>
         <div class="admin-meta">
-          <div>Schedule: <strong id="schedTime">19:00 PT (Daily)</strong></div>
+          <div>Schedule: <strong id="schedTime">19:00 &amp; 20:00 PT (Daily)</strong></div>
           <div>Next Run: <strong id="nextRunTime">Loading...</strong></div>
         </div>
         <div class="btn-group" role="group" aria-label="Master Scheduler Controls">
-          <button class="btn-sm btn-success" onclick="setScraperState('ACTIVE')" title="Run autonomously at 7:00 PM PT">▶ On</button>
+          <button class="btn-sm btn-success" onclick="setScraperState('ACTIVE')" title="Run autonomously on daily PT schedule">▶ On</button>
           <button class="btn-sm btn-warning" onclick="setScraperState('PAUSED')" title="Pause scheduled daily runs">⏸ Pause</button>
           <button class="btn-sm btn-danger" onclick="setScraperState('STOPPED')" title="Stop autonomous scraper">⏹ Off</button>
         </div>
         <button class="btn-primary" id="runNowBtn" onclick="triggerScrapeNow()">⚡ Scrape Selected</button>
-        <button class="btn-success" id="runAllBtn" onclick="triggerScrapeAllActive()" title="Download all active ETFs (MFSV, LSVD, VFLO, IVV) right now">🚀 Scrape All 4 ETFs</button>
+        <button class="btn-success" id="runAllBtn" onclick="triggerScrapeAllActive()" title="Download all active ETFs right now">🚀 Scrape All Active ETFs</button>
         <button id="seedBtn" onclick="triggerSeedHistory()" title="Pull historical snapshots for selected ETF">📅 Sync History</button>
         <a class="btn btn-sm" href="/logout" title="Sign out of dashboard">🚪 Sign Out</a>
       </div>
@@ -906,7 +906,7 @@
       <nav class="tabs" aria-label="Dashboard Sections">
         <button class="tab-btn active" onclick="switchTab('compareTab', this)">1. Position Changes (Phase 2: Date A vs Date B)</button>
         <button class="tab-btn" onclick="switchTab('holdingsTab', this)">2. Raw Files Archive (Phase 1: .xls / .csv • 5-Yr Retention)</button>
-        <button class="tab-btn" onclick="switchTab('etfRegistryTab', this)">3. Multi-ETF Bot Controls (MFSV • LSVD • VFLO • IVV)</button>
+        <button class="tab-btn" onclick="switchTab('etfRegistryTab', this)">3. Multi-ETF Bot Controls (8 Active ETFs • 7 PM &amp; 8 PM PT)</button>
         <button class="tab-btn" onclick="switchTab('alertsTab', this)">4. Error Alerts & Audit Log</button>
       </nav>
     </div>
@@ -1077,7 +1077,7 @@
           </div>
           <div style="display:flex; align-items:center; gap:10px;">
             <select id="rawFilesFilterSelect" onchange="renderRawFilesTable()" style="min-width:210px;">
-              <option value="ALL">Show All ETF Directories (MFSV, LSVD, VFLO, IVV)</option>
+              <option value="ALL">Show All ETF Directories (MFSV, LSVD, VFLO, IVV, SFLO, GFLW, IFLO, GRIN)</option>
               <option value="ACTIVE">Show Selected ETF Directory Only</option>
             </select>
           </div>
@@ -1177,7 +1177,7 @@
           <div>
             <h2 class="card-title">Configured ETF Bots (Individual On / Pause / Off Controls)</h2>
             <p class="card-subtitle">
-              Turn each ETF bot On, Pause, or Off independently. Only ETF bots set to <strong>ACTIVE</strong> run during the daily 7:00 PM PT schedule.
+              Turn each ETF bot On, Pause, or Off independently. Active bots run automatically on their daily PT schedule (7:00 PM PT for MFSV, LSVD, VFLO, IVV • 8:00 PM PT for SFLO, GFLW, IFLO, GRIN).
             </p>
           </div>
           <button class="btn-success" onclick="triggerScrapeAllActive()">🚀 Scrape All Active ETFs Now</button>
@@ -1188,7 +1188,7 @@
               <tr>
                 <th>ETF Symbol</th>
                 <th>ETF Name &amp; Target URL</th>
-                <th>Format</th>
+                <th>Format &amp; Schedule</th>
                 <th>Bot Status</th>
                 <th>Dedicated Directory</th>
                 <th class="num">Snapshots</th>
@@ -1508,6 +1508,8 @@
       etfBody.innerHTML = targets.map(t => {
         const bState = t.bot_state || 'ACTIVE';
         const bClass = bState === 'ACTIVE' ? 'badge-active' : (bState === 'PAUSED' ? 'badge-paused' : 'badge-stopped');
+        const rawSched = t.schedule_time_pt || '19:00';
+        const schedLabel = rawSched === '20:00' ? '8:00 PM PT' : (rawSched === '19:00' ? '7:00 PM PT' : `${rawSched} PT`);
         return `
           <tr>
             <td><span class="ticker-pill">${t.etf_symbol}</span></td>
@@ -1517,7 +1519,7 @@
                 <a href="${t.daily_url}" target="_blank" style="color:var(--accent); text-decoration:none;">${t.daily_url}</a>
               </div>
             </td>
-            <td><code>.${(t.file_format || 'XLS').toLowerCase()}</code></td>
+            <td><code>.${(t.file_format || 'XLS').toLowerCase()}</code> <span style="font-size:11.5px; color:var(--text-muted); margin-left:4px;">• ${schedLabel}</span></td>
             <td><span class="badge ${bClass}">${bState}</span></td>
             <td><code>data/raw_files/${t.etf_symbol}/</code></td>
             <td class="num">${t.snapshot_dates_count}</td>
@@ -1625,8 +1627,8 @@
         document.getElementById('kpiDateBCount').textContent = '0';
         document.getElementById('kpiAddedCount').textContent = '0';
         document.getElementById('kpiRemovedCount').textContent = '0';
-        document.getElementById('addedTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:24px;">Click "⚡ Scrape Selected" or "🚀 Scrape All 4 ETFs" in the top bar to load ${selectedEtf} holdings.</td></tr>`;
-        document.getElementById('removedTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:24px;">Click "⚡ Scrape Selected" or "🚀 Scrape All 4 ETFs" in the top bar to load ${selectedEtf} holdings.</td></tr>`;
+        document.getElementById('addedTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:24px;">Click "⚡ Scrape Selected" or "🚀 Scrape All Active ETFs" in the top bar to load ${selectedEtf} holdings.</td></tr>`;
+        document.getElementById('removedTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:24px;">Click "⚡ Scrape Selected" or "🚀 Scrape All Active ETFs" in the top bar to load ${selectedEtf} holdings.</td></tr>`;
         document.getElementById('retainedTableBody').innerHTML = '';
         return;
       }
@@ -1868,7 +1870,7 @@
       } finally {
         if (btn) {
           btn.disabled = false;
-          btn.textContent = '🚀 Scrape All 4 ETFs';
+          btn.textContent = '🚀 Scrape All Active ETFs';
         }
       }
     }

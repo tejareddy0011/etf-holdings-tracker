@@ -522,7 +522,14 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                 etf_name = str(body.get("etf_name", "")).strip()
                 daily_url = str(body.get("daily_url", "")).strip()
                 file_format = str(body.get("file_format", "XLS")).strip().upper()
-                target = add_or_update_etf_target(etf_sym, etf_name, daily_url, file_format=file_format)
+                schedule_time_pt = str(body.get("schedule_time_pt", "20:00")).strip()
+                target = add_or_update_etf_target(
+                    etf_sym,
+                    etf_name,
+                    daily_url,
+                    file_format=file_format,
+                    schedule_time_pt=schedule_time_pt,
+                )
                 self._send_json({"ok": True, "etf": target, "etf_targets": get_etf_targets()})
             except Exception as e:
                 self._send_json({"ok": False, "error": str(e)}, status=400)
@@ -618,7 +625,7 @@ def bootstrap_initial_data() -> None:
 
     def _async_seed() -> None:
         try:
-            for sym in ["MFSV", "LSVD", "VFLO", "IVV"]:
+            for sym in ["MFSV", "LSVD", "VFLO", "IVV", "SFLO", "GFLW", "IFLO", "GRIN"]:
                 if not get_available_dates(sym):
                     print(f"Bootstrapping initial daily holdings for {sym}...")
                     scheduler.run_now(trigger_type="INITIAL_BOOTSTRAP", etf_symbol=sym)

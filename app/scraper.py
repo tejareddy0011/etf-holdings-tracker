@@ -1,5 +1,6 @@
 import json
 import random
+import re
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -316,12 +317,22 @@ def scrape_lsvd_csv(target_url: str, etf_symbol: str = "LSVD") -> Path:
     return write_stamped_and_canonical_file(etf_symbol, "LSVD-holdings", ".csv", csv_text)
 
 
+VICTORYSHARES_FUND_NAMES = {
+    "VFLO": "VictoryShares Free Cash Flow ETF",
+    "SFLO": "VictoryShares Small Cap Free Cash Flow ETF",
+    "GFLW": "VictoryShares Free Cash Flow Growth ETF",
+    "IFLO": "VictoryShares International Free Cash Flow ETF",
+    "GRIN": "VictoryShares International Free Cash Flow Growth ETF",
+}
+
+
 def scrape_vflo_csv(target_url: str, etf_symbol: str = "VFLO") -> Path:
     """
-    Scrapes VFLO (https://advisor.vcm.com/products/victoryshares-etfs/victoryshares-etfs-list/victoryshares-free-cash-flow-etf):
+    Scrapes VictoryShares ETFs (VFLO, SFLO, GFLW, IFLO, GRIN on advisor.vcm.com):
     Verifies the "All Holdings" link (#allholdingsCSVExport), calls the VictoryShares AllHoldings API,
-    and generates VictorySharesFreeCashFlowETF_<MM_DD_YYYY>.csv.
+    and generates <FundNameNoSpaces>_<MM_DD_YYYY>.csv.
     """
+    sym = etf_symbol.strip().upper()
     page_html = http_get_text(target_url)
     soup = BeautifulSoup(page_html, "html.parser")
 
@@ -383,7 +394,8 @@ def scrape_vflo_csv(target_url: str, etf_symbol: str = "VFLO") -> Path:
             "portfolio_percentage": "Portfolio %",
         }
 
-    fund_name = "VictoryShares Free Cash Flow ETF"
+    title_text = soup.title.get_text(" ", strip=True).split(" - ")[0].strip() if soup.title else ""
+    fund_name = VICTORYSHARES_FUND_NAMES.get(sym) or title_text or f"VictoryShares {sym} ETF"
     header_line = ",".join(json_row.values())
     lines = [header_line]
     for item in arr_data:
@@ -399,8 +411,9 @@ def scrape_vflo_csv(target_url: str, etf_symbol: str = "VFLO") -> Path:
     date_part = datetime.now(ZoneInfo(SCHEDULE_TIMEZONE)).strftime("%m_%d_%Y")
     if arr_data and arr_data[0].get("as_of_date"):
         date_part = str(arr_data[0]["as_of_date"]).replace("/", "_")
-    base_stem = f"VictorySharesFreeCashFlowETF_{date_part}"
-    return write_stamped_and_canonical_file(etf_symbol, base_stem, ".csv", csv_content)
+    clean_prefix = re.sub(r"[^A-Za-z0-9]", "", fund_name) or f"VictoryShares{sym}ETF"
+    base_stem = f"{clean_prefix}_{date_part}"
+    return write_stamped_and_canonical_file(sym, base_stem, ".csv", csv_content)
 
 
 def scrape_ivv_xls(target_url: str, etf_symbol: str = "IVV") -> Path:
@@ -470,7 +483,7 @@ def run_daily_scrape(
         url_lower = target_url.lower()
         if sym == "LSVD" or "lsvasset.com" in url_lower:
             raw_file_path = scrape_lsvd_csv(target_url, etf_symbol=sym)
-        elif sym == "VFLO" or "vcm.com" in url_lower:
+        elif sym in VICTORYSHARES_FUND_NAMES or "vcm.com" in url_lower:
             raw_file_path = scrape_vflo_csv(target_url, etf_symbol=sym)
         elif sym == "IVV" or "ishares.com" in url_lower or "blackrock.com" in url_lower:
             raw_file_path = scrape_ivv_xls(target_url, etf_symbol=sym)
