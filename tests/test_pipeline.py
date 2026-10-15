@@ -114,6 +114,28 @@ class TestETFPipeline(unittest.TestCase):
         alerts = get_recent_alerts(10)
         self.assertGreaterEqual(len(alerts), 4)
 
+    def test_07_session_refresh_inactivity_and_logout(self) -> None:
+        from app.server import _ACTIVE_SESSIONS, create_user_session, destroy_session_token, get_valid_session
+
+        token = create_user_session("gvarun007")
+        session = get_valid_session(token, touch=True)
+        self.assertIsNotNone(session)
+        self.assertFalse(session["html_served"])
+
+        # Mark first page load served; refresh should be detected via html_served == True
+        session["html_served"] = True
+        self.assertTrue(get_valid_session(token, touch=False)["html_served"])
+
+        # Simulate inactivity beyond 10 minutes
+        session["last_active"] -= 605
+        self.assertIsNone(get_valid_session(token, touch=True))
+
+        # Explicit logout destroys active session
+        token2 = create_user_session("gvarun007")
+        self.assertIsNotNone(get_valid_session(token2, touch=False))
+        destroy_session_token(token2)
+        self.assertIsNone(get_valid_session(token2, touch=False))
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -179,6 +179,7 @@ AUTH_USERNAME = os.getenv("AUTH_USERNAME", "gvarun007")
 AUTH_PASSWORD = os.getenv("AUTH_PASSWORD", "".join(["tejava", "run7$"]))
 AUTH_SECRET = os.getenv("AUTH_SECRET", "etf-holdings-tracker-hmac-secret-2026")
 AUTH_ENABLED = os.getenv("AUTH_ENABLED", "true").lower() != "false"
+AUTH_IDLE_TIMEOUT_SECONDS = int(os.getenv("AUTH_IDLE_TIMEOUT_SECONDS", "600"))
 
 
 

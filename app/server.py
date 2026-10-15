@@ -4,16 +4,20 @@ import hmac
 import html as html_lib
 import json
 import os
+import secrets
+import threading
+import time
 import urllib.parse
 from datetime import datetime
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from zoneinfo import ZoneInfo
 
 from app.config import (
     AUTH_ENABLED,
+    AUTH_IDLE_TIMEOUT_SECONDS,
     AUTH_PASSWORD,
     AUTH_SECRET,
     AUTH_USERNAME,
@@ -42,6 +46,8 @@ from app.scheduler import scheduler
 from app.scraper import get_etf_raw_dir, seed_historical_mfs_dates
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
+_SESSIONS_LOCK = threading.Lock()
+_ACTIVE_SESSIONS: Dict[str, Dict[str, Any]] = {}
 
 
 def organize_legacy_raw_files() -> None:
@@ -123,20 +129,57 @@ def resolve_raw_file(rel_path: str) -> Path:
     return RAW_FILES_DIR / "__nonexistent__"
 
 
-def make_session_token(username: str) -> str:
-    msg = f"{username}:{AUTH_PASSWORD}".encode("utf-8")
-    sig = hmac.new(AUTH_SECRET.encode("utf-8"), msg, hashlib.sha256).hexdigest()
-    return f"{username}.{sig}"
+def _sign_session_id(session_id: str) -> str:
+    return hmac.new(AUTH_SECRET.encode("utf-8"), session_id.encode("utf-8"), hashlib.sha256).hexdigest()
 
 
-def verify_session_token(token: str) -> bool:
+def create_user_session(username: str) -> str:
+    now = time.time()
+    session_id = secrets.token_urlsafe(32)
+    sig = _sign_session_id(session_id)
+    with _SESSIONS_LOCK:
+        expired = [
+            sid
+            for sid, info in _ACTIVE_SESSIONS.items()
+            if now - info.get("last_active", 0) > AUTH_IDLE_TIMEOUT_SECONDS
+        ]
+        for sid in expired:
+            _ACTIVE_SESSIONS.pop(sid, None)
+        _ACTIVE_SESSIONS[session_id] = {
+            "username": username,
+            "created_at": now,
+            "last_active": now,
+            "html_served": False,
+        }
+    return f"{session_id}.{sig}"
+
+
+def get_valid_session(token: str, *, touch: bool = True) -> Optional[Dict[str, Any]]:
     if not token or "." not in token:
-        return False
-    username, _ = token.split(".", 1)
-    if username != AUTH_USERNAME:
-        return False
-    expected = make_session_token(AUTH_USERNAME)
-    return hmac.compare_digest(token, expected)
+        return None
+    session_id, sig = token.rsplit(".", 1)
+    expected_sig = _sign_session_id(session_id)
+    if not hmac.compare_digest(sig, expected_sig):
+        return None
+    now = time.time()
+    with _SESSIONS_LOCK:
+        session = _ACTIVE_SESSIONS.get(session_id)
+        if not session:
+            return None
+        if now - session.get("last_active", 0) > AUTH_IDLE_TIMEOUT_SECONDS:
+            _ACTIVE_SESSIONS.pop(session_id, None)
+            return None
+        if touch:
+            session["last_active"] = now
+        return session
+
+
+def destroy_session_token(token: str) -> None:
+    if not token or "." not in token:
+        return
+    session_id, _ = token.rsplit(".", 1)
+    with _SESSIONS_LOCK:
+        _ACTIVE_SESSIONS.pop(session_id, None)
 
 
 class ETFReportingHandler(BaseHTTPRequestHandler):
@@ -145,7 +188,8 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
-        self.send_header("Cache-Control", "no-store")
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Pragma", "no-cache")
         self.end_headers()
         self.wfile.write(body)
 
@@ -159,18 +203,20 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
         except Exception:
             return {}
 
-    def _is_authenticated(self) -> bool:
-        if not AUTH_ENABLED:
-            return True
+    def _get_cookie_token(self) -> str:
         cookie_hdr = self.headers.get("Cookie", "")
-        if cookie_hdr:
-            c = SimpleCookie()
-            try:
-                c.load(cookie_hdr)
-                if "etf_session" in c and verify_session_token(c["etf_session"].value):
-                    return True
-            except Exception:
-                pass
+        if not cookie_hdr:
+            return ""
+        c = SimpleCookie()
+        try:
+            c.load(cookie_hdr)
+            if "etf_session" in c:
+                return c["etf_session"].value
+        except Exception:
+            pass
+        return ""
+
+    def _has_valid_basic_auth(self) -> bool:
         auth_hdr = self.headers.get("Authorization", "")
         if auth_hdr.startswith("Basic "):
             try:
@@ -183,14 +229,36 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
                 pass
         return False
 
-    def _serve_html_file(self, filepath: Path) -> None:
+    def _is_authenticated(self, *, touch: bool = True) -> bool:
+        if not AUTH_ENABLED:
+            return True
+        token = self._get_cookie_token()
+        if token and get_valid_session(token, touch=touch) is not None:
+            return True
+        if self._has_valid_basic_auth():
+            return True
+        return False
+
+    def _serve_html_file(self, filepath: Path, extra_headers: Optional[List[tuple]] = None) -> None:
         content = filepath.read_bytes()
         self.send_response(200)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(content)))
-        self.send_header("Cache-Control", "no-store")
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Pragma", "no-cache")
+        if extra_headers:
+            for k, v in extra_headers:
+                self.send_header(k, v)
         self.end_headers()
         self.wfile.write(content)
+
+    def _redirect_to_login(self, reason: str = "") -> None:
+        loc = f"/login?reason={urllib.parse.quote(reason)}" if reason else "/login"
+        self.send_response(302)
+        self.send_header("Set-Cookie", "etf_session=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax")
+        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        self.send_header("Location", loc)
+        self.end_headers()
 
     def do_GET(self) -> None:
         parsed = urllib.parse.urlparse(self.path)
@@ -217,25 +285,36 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
             return
 
         if path == "/logout":
-            self.send_response(302)
-            self.send_header("Set-Cookie", "etf_session=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax")
-            self.send_header("Location", "/login")
-            self.end_headers()
+            destroy_session_token(self._get_cookie_token())
+            reason = qs.get("reason", ["logout"])[0]
+            self._redirect_to_login(reason)
             return
 
         if path == "/login":
-            if self._is_authenticated():
-                self.send_response(302)
-                self.send_header("Location", "/")
-                self.end_headers()
-                return
-            self._serve_html_file(STATIC_DIR / "login.html")
+            token = self._get_cookie_token()
+            if token:
+                destroy_session_token(token)
+            self._serve_html_file(
+                STATIC_DIR / "login.html",
+                extra_headers=[("Set-Cookie", "etf_session=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax")],
+            )
             return
 
         if path in ("/", "/index.html"):
-            if not self._is_authenticated():
-                self._serve_html_file(STATIC_DIR / "login.html")
+            if not AUTH_ENABLED or self._has_valid_basic_auth():
+                self._serve_html_file(STATIC_DIR / "index.html")
                 return
+            token = self._get_cookie_token()
+            session = get_valid_session(token, touch=True)
+            if session is None:
+                self._redirect_to_login()
+                return
+            if session.get("html_served"):
+                destroy_session_token(token)
+                self._redirect_to_login("refresh")
+                return
+            with _SESSIONS_LOCK:
+                session["html_served"] = True
             self._serve_html_file(STATIC_DIR / "index.html")
             return
 
@@ -458,14 +537,24 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
             u = str(body.get("username", "")).strip()
             p = str(body.get("password", ""))
             if hmac.compare_digest(u, AUTH_USERNAME) and hmac.compare_digest(p, AUTH_PASSWORD):
-                token = make_session_token(AUTH_USERNAME)
-                resp_bytes = json.dumps({"ok": True, "username": AUTH_USERNAME}).encode("utf-8")
+                old_token = self._get_cookie_token()
+                if old_token:
+                    destroy_session_token(old_token)
+                token = create_user_session(AUTH_USERNAME)
+                resp_bytes = json.dumps(
+                    {
+                        "ok": True,
+                        "username": AUTH_USERNAME,
+                        "idle_timeout_seconds": AUTH_IDLE_TIMEOUT_SECONDS,
+                    }
+                ).encode("utf-8")
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json; charset=utf-8")
                 self.send_header("Content-Length", str(len(resp_bytes)))
+                self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
                 self.send_header(
                     "Set-Cookie",
-                    f"etf_session={token}; HttpOnly; Path=/; Max-Age=2592000; SameSite=Lax",
+                    f"etf_session={token}; HttpOnly; Path=/; SameSite=Lax",
                 )
                 self.end_headers()
                 self.wfile.write(resp_bytes)
@@ -474,10 +563,12 @@ class ETFReportingHandler(BaseHTTPRequestHandler):
             return
 
         if path == "/api/logout":
+            destroy_session_token(self._get_cookie_token())
             resp_bytes = json.dumps({"ok": True}).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Content-Length", str(len(resp_bytes)))
+            self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
             self.send_header("Set-Cookie", "etf_session=; HttpOnly; Path=/; Max-Age=0; SameSite=Lax")
             self.end_headers()
             self.wfile.write(resp_bytes)

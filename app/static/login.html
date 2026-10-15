@@ -156,6 +156,18 @@
       margin-bottom: 18px;
     }
 
+    .info-box {
+      display: none;
+      background: #eff6ff;
+      color: #1e40af;
+      border: 1px solid #bfdbfe;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 18px;
+    }
+
     .btn-submit {
       width: 100%;
       padding: 12px 16px;
@@ -186,6 +198,7 @@
       text-align: center;
       font-size: 12px;
       color: var(--text-muted);
+      line-height: 1.5;
     }
   </style>
 </head>
@@ -198,9 +211,10 @@
         </svg>
       </div>
       <h1>ETF Holdings Intelligence</h1>
-      <p>Enter your credentials to access the dashboard</p>
+      <p>Sign in to open a fresh secure session</p>
     </div>
 
+    <div id="loginInfo" class="info-box" role="status"></div>
     <div id="loginError" class="error-box" role="alert"></div>
 
     <form id="loginForm" onsubmit="handleLogin(event)">
@@ -223,11 +237,31 @@
     </form>
 
     <div class="footer-note">
-      Protected Cloud Instance • Daily 7:00 PM PT Automated Scraper
+      Protected Cloud Instance • Auto-locks on Refresh &amp; 10m Inactivity
     </div>
   </div>
 
   <script>
+    (function showReasonBanner() {
+      const params = new URLSearchParams(window.location.search);
+      const reason = params.get('reason');
+      const infoBox = document.getElementById('loginInfo');
+      if (!reason || !infoBox) return;
+      const messages = {
+        logout: 'You have logged out cleanly.',
+        refresh: 'Session locked after page refresh. Please sign in again.',
+        inactivity: 'Logged out after 10 minutes of inactivity.',
+        expired: 'Session expired. Please sign in again.'
+      };
+      if (messages[reason]) {
+        infoBox.textContent = messages[reason];
+        infoBox.style.display = 'block';
+      }
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState({}, document.title, '/login');
+      }
+    })();
+
     function togglePasswordVisibility() {
       const pwInput = document.getElementById('loginPassword');
       const btn = document.getElementById('pwToggleBtn');
@@ -243,11 +277,13 @@
     async function handleLogin(e) {
       e.preventDefault();
       const errBox = document.getElementById('loginError');
+      const infoBox = document.getElementById('loginInfo');
       const btn = document.getElementById('loginSubmitBtn');
       const username = document.getElementById('loginUsername').value.trim();
       const password = document.getElementById('loginPassword').value;
 
       errBox.style.display = 'none';
+      if (infoBox) infoBox.style.display = 'none';
       btn.disabled = true;
       btn.textContent = 'Signing in...';
 
@@ -259,7 +295,7 @@
         });
         const data = await res.json();
         if (res.ok && data.ok) {
-          window.location.href = '/';
+          window.location.replace('/');
           return;
         }
         errBox.textContent = data.error || 'Invalid username or password.';
